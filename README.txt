@@ -1,4 +1,3 @@
-This folder is the root folder of a project based on the ProxiAD Platform.
 
 This file contains instructions for starting with this project. 
 
