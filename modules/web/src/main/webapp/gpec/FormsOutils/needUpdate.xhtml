@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+	<br/>
+	<b><h:outputText value="Votre logiciel n'est pas à jour!"/></b>
+	<br/><br/><br/><br/>
+	<table>
+		<tr><td><h:outputText value="Version actuelle "/></td><td><h:outputText value="#{updateBB.version}"/></td></tr>
+		<tr><td><h:outputText id="latest" value="Dernière version "/></td><td><h:outputText value="#{updateBB.latestVersion}"/></td></tr>
+	</table>
+	<br/><br/>
+	<ice:form id="idFormulaire">
+	     <ice:outputLink id="lnk" rendered="#{not updateBB.fileVide}" value="#{updateBB.urlTelechargement}" target="_blank">
+            	<u><ice:outputText value="Télécharger la dernière version"/></u>
+         </ice:outputLink>
+         
+         <br/>
+         <br/>
+	     <ice:outputText style="color:red;" 
+	     				 value="Attention : vous devez vous déconnecter de l'application pour que la mise à jour se passe correctement." />
+         
+	     <br/>
+	     <ice:outputText style="color:red;" 
+	     				 value="Erreur : Il n'y a pas de mise à jour dans le dossier. Veuillez contacter l'administrateur." 
+	     				 rendered="#{updateBB.fileVide}"/>
+	</ice:form><br /><br />
+	<b><h:outputText value="Les dernières évolutions "/></b><br />
+	<ice:inputTextarea id="changeLog" readonly="true" cols="90" rows="20" value="#{updateBB.changeLog}"></ice:inputTextarea>
+	</ui:define>
+</ui:composition>

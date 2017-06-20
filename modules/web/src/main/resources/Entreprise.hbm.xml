@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Entreprise"
+		table="ENTREPRISE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_ENTREPRISE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomEntreprise"
+			column="NOM_ENTREPRISE"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Numsiret"
+			column="NUMSIRET"
+			type="java.lang.Long"
+			not-null="false"
+			length="19"
+		/>
+		<property
+			name="Codeape"
+			column="CODEAPE"
+			type="string"
+			not-null="false"
+			length="5"
+		/>
+		<property
+			name="DateCreation"
+			column="DATE_CREATION"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="CciRattachement"
+			column="CCI_RATTACHEMENT"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="SuiviFormations"
+			column="SUIVI_FORMATIONS"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="SuiviAccidents"
+			column="SUIVI_ACCIDENTS"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="SuiviAbsences"
+			column="SUIVI_ABSENCES"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="SuiviCompetences"
+			column="SUIVI_COMPETENCES"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="SuiviDIF"
+			column="SUIVI_DIF"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="DIFMax"
+			column="DIf_MAX"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+	
+
+		<set name="SERVICEs" inverse="true">
+			<key column="ID_ENTREPRISE"/>
+			<one-to-many class="Service"/>
+		</set>
+
+		<set name="SALARIEs" inverse="true">
+			<key column="ID_ENTREPRISE"/>
+			<one-to-many class="Salarie"/>
+		</set>
+
+		<set name="PARAMSGENERAUXs" inverse="true">
+			<key column="ID_ENTREPRISE"/>
+			<one-to-many class="Paramsgeneraux"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

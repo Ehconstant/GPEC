@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<head>
+	<!-- page title param passed in by param -->
+	<title>GPEC - #{pageTitle}</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<!-- <link href="#{facesContext.externalContext.requestContextPath}/style/css/default.css" rel="stylesheet"
+		type="text/css" /> -->
+	<link href="#{facesContext.externalContext.requestContextPath}/style/rime/rime.css" rel="stylesheet"
+		type="text/css" />
+	<link href="#{facesContext.externalContext.requestContextPath}/style/tipsy/tipsy.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript" language="javascript"
+		src="#{facesContext.externalContext.requestContextPath}/style/tipsy/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" language="javascript"
+		src="#{facesContext.externalContext.requestContextPath}/style/tipsy/jquery.tipsy.js"></script>
+	<script type="text/javascript">
+		jQuery.noConflict(); 
+
+		jQuery(document).ready(function() {
+			jQuery('.tipsy').tipsy({
+				html : true,
+				fade : true,
+				gravity : 'ne'
+			});
+			jQuery('.tabdisabled').tipsy({
+				html : true,
+				fade : true,
+				gravity : 'ne'
+			});
+		});
+		function showLoadingTableauAnalyse() {
+			jQuery('#loadingTableauAnalyse').show();
+		}
+	</script>
+	<script type="text/javascript">
+
+		function recentre() {
+			if (document
+					.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration') != null) {
+				document
+						.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.left = ""
+						+ (document.body.clientWidth / 2) - 100 + "px";
+				document
+						.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.top = "10px";
+			}
+		}
+		function noSubmitOnEnter(e) {
+			var keycode;
+			if (window.event)
+				keycode = window.event.keyCode;
+			else if (e)
+				keycode = e.which;
+			else
+				return true;
+
+			if (keycode == 13) {
+				return false;
+			} else
+				return true;
+		}
+		
+		function focusOnUsernameInputText() {
+			 document.getElementById('loginForm:username').focus();
+		}
+	</script>
+</head>
+<body onload="focusOnUsernameInputText();" style="background-color: #f5f5f5;">
+	<div class="page">
+		<div class="header" style="width: 1240px;"> 
+			<ice:inputHidden
+				value="#{loginBB.delog}" />
+			<ui:insert name="header">
+				<ui:include src="/WEB-INF/pages/facelets/header.xhtml" />
+			</ui:insert>
+			<hr />
+		</div>
+		<div style="width: 1260px;padding-top:100px;" align="center" >
+			<h:panelGroup style=" padding-top:100px;" class="icePnlGrp" >
+				<fieldset style="border: 1px solid;width: 300px; padding-top:20px;">
+					<h:form id="loginForm" name="loginForm" autocomplete="off">
+			            <h:panelGrid columns="2">
+			                <h:outputLabel value="Identifiant " class="iceOutLbl" />
+			                <h:inputText id="username" onfocus='this.setAttribute("autocomplete","off");' value="#{loginBB.login}" autocomplete="off" class="iceInpTxt" />
+			                <h:outputLabel value="Mot de passe " class="iceOutLbl"/>
+			                <h:inputSecret id="password" value="#{loginBB.password}" autocomplete="off" class="iceInpSecrt" />
+			                
+			            </h:panelGrid>
+			            <h:commandButton action="#{loginBB.log}" value="Valider"/>
+			            
+			            <br/><br/>
+			            
+						<h:commandLink value="Mot de passe oublié" 
+								style="text-decoration: underline;" 
+								action="#{loginBB.toggleModalRenderedForgottenPwd}" class="iceCmdLnk"/>
+			            
+			            <ice:panelPopup id="modalPnlPopMotDePasseOublie" draggable="false"
+							modal="true" rendered="true"
+							visible="#{loginBB.modalRenderedForgottenPwd}"
+							styleClass="corePopup"
+							style="width: 385px;">
+							<f:facet name="header">
+								<h:panelGroup styleClass="popupHeaderWrapper">
+									<h:outputText value="Mot de passe oublié"
+										styleClass="popupHeaderText" />
+								</h:panelGroup>
+							</f:facet>
+							<f:facet name="body">
+							
+								<h:panelGroup style="width:100%;">
+								
+									<h:outputText value="Merci de saisir votre adresse mail afin que nous puissions vous envoyer des nouveaux identifiants de connexion." escape="false"/>
+									<br/><br/>
+	
+									<h:panelGrid columns="2" style="padding-left:50px;">		
+										<h:outputLabel value="Adresse mail " />
+										<h:panelGroup>
+											<h:inputText id="mail" value="#{loginBB.mailResetPwd}" />
+										</h:panelGroup>
+									</h:panelGrid>
+		
+									<h:message for="mail" errorStyle="color: red"></h:message>
+									<br/>
+								
+									<div style="padding-left:125px;">
+										<h:commandButton id="validerReset"
+											type="submit" value="Valider"
+											actionListener="#{loginBB.validerReset}" />
+										<h:commandButton id="annulerReset"
+											type="submit" value="Annuler"
+											action="#{loginBB.annulerReset}"
+											immediate="true" />
+									</div>
+										
+								</h:panelGroup>
+							</f:facet>
+						</ice:panelPopup>	
+						<br/>				
+					    <h:message for="username" errorStyle="color: red" />
+					    <div id="alignMessages" >
+					    	<h:messages errorStyle="color: red;" layout="table" />
+					    </div>
+					    <h:outputLabel value="Un mail vous a été envoyé avec vos nouveaux identifiants."
+				    				style="color: green;padding-left:20px;"
+				    				rendered="#{loginBB.displayMailConfirm}"/>
+			        </h:form>
+				</fieldset>
+			</h:panelGroup>
+		</div>
+		
+	</div>
+</body>
+</html>

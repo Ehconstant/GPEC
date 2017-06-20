@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="Entretien" table="ENTRETIEN">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="Id" type="integer" column="ID_ENTRETIEN">
+			<generator class="identity" />
+		</id>
+
+		<property 
+			name="PrincipaleConclusion"
+			column="PRINCIPALE_CONCLUSION"
+			type="text" 
+			not-null="false" />
+		<property 
+			name="Souhait" 
+			column="SOUHAIT" 
+			type="text"
+			not-null="false" />
+		<property 
+			name="Competence" 
+			column="COMPETENCE" 
+			type="text"
+			not-null="false" />
+		<property 
+			name="EvaluationGlobale" 
+			column="EVALUATION_GLOBALE" 
+			type="text"
+			not-null="false" />
+		<property 
+			name="DateEntretien" 
+			column="DATE_ENTRETIEN"
+			type="date" 
+			not-null="false" 
+			length="10" />
+		<property 
+			name="CrSigne" 
+			column="CR_SIGNE" 
+			type="string"
+			not-null="false" 
+			length="3" />
+		<property 
+			column="OBJ_MOYENS" 
+			name="ObjMoyens"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="SERVICE_MANAGER" 
+			name="ServiceManager"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="FORMATION_N_MOINS_UN" 
+			name="FormationNMoinsUn"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="COMMENTAIRE_FORMATION"
+			name="CommentaireFormation" 
+			not-null="false" 
+			type="text" />
+		<property column="MODIF_PROFIL" 
+			name="ModifProfil"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="BILAN_DESSOUS" 
+			name="BilanDessous"
+			not-null="false"
+			 type="text" />
+		<property 
+			column="BILAN_EGAL" 
+			name="BilanEgal"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="OBSERVATIONS" 
+			name="Observations"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="BILAN_DESSUS" 
+			name="BilanDessus"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="FORMATIONS" 
+			name="Formations" 
+			not-null="false"
+			type="text" />
+		<property 
+			column="FORMATIONS2" 
+			name="Formations2"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="FORMATIONS3" 
+			name="Formations3"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="FORMATIONS4" 
+			name="Formations4"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="FORMATIONS5" 
+			name="Formations5"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="COMMENTAIRE_BILAN" 
+			name="CommentaireBilan"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="OBJ_DELAIS" 
+			name="ObjDelais" 
+			not-null="false"
+			type="text" />
+		<property 
+			column="EVOLUTION_PERSO" 
+			name="EvolutionPerso"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="SYNTHESE" 
+			name="Synthese" 
+			not-null="false"
+			type="text" />
+		<property 
+			column="NOM_MANAGER" 
+			name="NomManager"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="OBJ_INTITULE" 
+			name="ObjIntitule"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="OBJ_CRITERES" 
+			name="ObjCriteres"
+			not-null="false" 
+			type="text" />
+		<property 
+			column="DOMAINES_FORMATION" 
+			name="DomainesFormation"
+			not-null="false" 
+			type="integer" />
+		<property 
+			column="DOMAINES_FORMATION2" 
+			name="DomainesFormation2"
+			not-null="false" 
+			type="integer" />
+		<property 
+			column="DOMAINES_FORMATION3" 
+			name="DomainesFormation3"
+			not-null="false" 
+			type="integer" />
+		<property 
+			column="DOMAINES_FORMATION4" 
+			name="DomainesFormation4"
+			not-null="false" 
+			type="integer" />
+		<property 
+			column="DOMAINES_FORMATION5" 
+			name="DomainesFormation5"
+			not-null="false" 
+			type="integer" />
+		<property 
+			name="Justificatif" 
+			column="JUSTIFICATIF" 
+			type="text"
+			not-null="false" />
+		<property 
+			column="ANNEE_REFERENCE" 
+			name="AnneeReference"
+			not-null="false" 
+			type="integer" />
+		<many-to-one 
+			name="Salarie" 
+			column="ID_SALARIE"
+			class="Salarie" 
+			not-null="false">
+		</many-to-one>
+
+
+	</class>
+</hibernate-mapping>

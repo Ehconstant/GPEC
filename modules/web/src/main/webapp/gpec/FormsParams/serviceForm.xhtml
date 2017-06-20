@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+
+<script language="javascript" type="text/javascript">
+function setChange(select) {
+   document.getElementById('Formulaire:input').value = document.getElementById('Formulaire:select').options[document.getElementById('Formulaire:select').selectedIndex].text
+}
+</script>
+
+<h3>Formulaire Service</h3>
+
+	<ice:form id="Formulaire">
+		
+		
+ 	<table>
+
+ 	<tr><td><ice:outputText value="Services proposés "/> </td>
+		
+		  <td><h:selectOneMenu id="select" onchange="setChange(this)" style="margin-left:2px;" >
+		  		<f:selectItem itemLabel="" itemValue="0"/>
+				<f:selectItems value="#{serviceGeneriqueList.selectItems}" />
+		 </h:selectOneMenu>
+		  </td></tr>
+		<tr>
+			<td>
+				<ice:outputText value="Nom du service "/>
+			</td>
+		    <td>
+		    	<ice:inputText size="40" 
+		    				   value="#{serviceFormBB.nom}" 
+		    				   id="input" 
+		    				   required="true" 
+		    				   requiredMessage="#{msg.required}"
+		    				   partialSubmit="false"/>
+		    	<h:message for="input" errorStyle="color: red"></h:message>
+		    </td>
+		</tr>
+		<tr><td><ice:outputText value="Entreprise "/> </td>
+		
+		  <td>
+			  <ice:selectOneMenu id="select2" value="#{serviceFormBB.idEntreprise}"> 		
+			  	<f:selectItem itemLabel="" itemValue="-1" />
+			  	<f:selectItems value="#{entrepriseList.selectItems}" />
+			  	<f:validator validatorId="selectOneMenuValidator"/>
+			 </ice:selectOneMenu>
+			 <h:message for="select2" errorStyle="color: red" ></h:message>
+		  </td></tr>
+		</table>
+		<br/><br/>
+		<h:commandButton value="Valider" action="#{serviceFormBB.saveOrUpdateService}"/>
+		<h:commandButton value="Annuler" action="#{serviceFormBB.annuler}" immediate="true"/>
+	  
+	</ice:form>
+    </ui:define>
+    
+</ui:composition>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Famillemetier"
+		table="FAMILLEMETIER"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_FAMILLE_METIER"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomFamilleMetier"
+			column="NOM_FAMILLE_METIER"
+			type="text"
+			not-null="false"
+		/>
+	
+
+		<set name="METIERs" inverse="true">
+			<key column="ID_FAMILLE_METIER"/>
+			<one-to-many class="Metier"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

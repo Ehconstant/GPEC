@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Typeabsence"
+		table="TYPEABSENCE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_TYPE_ABSENCE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomTypeAbsence"
+			column="NOM_TYPE_ABSENCE"
+			type="text"
+			not-null="false"
+		/>
+	
+
+		<set name="ABSENCEs" inverse="true">
+			<key column="ID_TYPE_ABSENCE"/>
+			<one-to-many class="Absence"/>
+		</set>
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:outputDeclaration doctypeRoot="HTML"
+	doctypePublic="-//W3C//DTD XHTML 1.0 Strict//EN"
+	doctypeSystem="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" />
+<head>
+	<!-- page title param passed in by param -->
+	<title>GPEC - #{pageTitle}</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<!-- <link href="#{facesContext.externalContext.requestContextPath}/style/css/default.css" rel="stylesheet"
+		type="text/css" /> -->
+	<link href="#{facesContext.externalContext.requestContextPath}/style/rime/rime.css" rel="stylesheet" type="text/css" />
+	<link href="#{facesContext.externalContext.requestContextPath}/style/tipsy/tipsy.css" rel="stylesheet" type="text/css" />
+	<!-- script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/jquery-1.4.2.min.js"></script-->
+	
+	<!-- link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"  /-->
+	<link href="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"  />
+	
+	<link href="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+	<!-- link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/ui-lightness/jquery-ui.css" /-->
+
+	<!-- script type="text/javascript" language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script-->
+	<!-- script type="text/javascript" language="javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script-->
+	<script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery-ui-1.9.2.custom.js"></script>
+	
+	
+	<script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/jquery.tipsy.js"></script>
+	<script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery.multiselect.js"></script>	
+	<script type="text/javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery.validate.min.js"></script>	
+
+	<script type="text/javascript">
+		jQuery.noConflict(); 
+		jQuery(document).ready(function(){
+			transformMultiSelect();
+			jQuery('.tipsy').tipsy({html: true, fade: true,gravity: 'ne'});
+			jQuery('.tabdisabled').tipsy({html: true, fade: true,gravity: 'ne'});
+			/*jQuery('#formulaire').validate();
+			jQuery(".validateButton").removeAttr("onclick").click(function(event){
+				if (! jQuery('#formulaire').valid()){
+					event.preventDefault();
+					event.stopPropagation();
+				}
+			});*/
+		});
+		function transformMultiSelect() {
+			jQuery('.multiSelect').multiselect({
+      			selectedList: 1,
+      			noneSelectedText: 'Options à sélectionner',
+      			selectedText: '# options séléctionnées',
+      			header: false
+     		});
+		}
+		/*function validate() {*/
+			/*alert('submit');*/
+			/*jQuery('#idSalarieForm').submit();*/
+			/*alert('validate');
+			jQuery('#formulaire').validate();
+		}*/
+		function showLoadingTableauAnalyse()
+		{
+			jQuery('#loadingTableauAnalyse').show();
+		}
+	</script>
+	<style type="text/css">
+		.cb {
+		    margin: 0px;
+		}
+		.multiSelect {
+			display: none;
+		}
+	</style>
+	<script type="text/javascript">
+	function bloque(champ){
+	    champ.disabled = true;
+	    setTimeout(function(){champ.disabled=false;}, 1000);
+	}
+	function recentre() {
+		if (document.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration') != null) {
+			document.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.left = ""+(document.body.clientWidth/2)-100+"px";
+			document.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.top = "10px";
+		}
+	}
+	function noSubmitOnEnter(e)
+	 {
+	 var keycode;
+	 if (window.event) keycode = window.event.keyCode;
+	 else if (e) keycode = e.which;
+	 else return true;
+	 
+	 if (keycode == 13)
+	    {
+	    return false;
+	    }
+	 else
+	    return true;
+	 }
+	 //<![CDATA[
+	function lockForInteger(event) {
+		// Compatibilité IE / Firefox
+		if(!event) {
+			if (window.event) {
+				event=window.event;
+			}
+		}
+		// IE
+		if((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 37 || event.keyCode > 40) && event.keyCode != 8 && event.keyCode != 16) {
+			event.returnValue = false;
+			event.cancelBubble = true;
+		}
+		// DOM
+		if((event.which < 48 || event.which > 57) && (event.which < 37 || event.which > 40) && event.which != 8 && event.which != 16) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
+	function lockForDouble(event) {
+		// Compatibilité IE / Firefox
+		if(!event) {
+			if (window.event) {
+				event=window.event;
+			}
+		}
+		// IE
+		if((event.keyCode < 48 || event.keyCode > 57) 
+				&& (event.keyCode < 37 || event.keyCode > 40) 
+				&& event.keyCode != 110 
+				&& event.keyCode != 44 
+				&& event.keyCode != 46 
+				&& event.keyCode != 8 
+				&& event.keyCode != 16
+				&& !(event.keyCode==59 && event.shiftKey)) {
+			event.returnValue = false;
+			event.cancelBubble = true;
+		}
+		// DOM
+		if((event.which < 48 || event.which > 57) 
+				&& (event.which < 37 || event.which > 40) 
+				&& event.which != 110 
+				&& event.which != 44 
+				&& event.which != 46 
+				&& event.which != 8 
+				&& event.which != 16
+				&& !(event.which==59 && event.shiftKey)) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
+		//]]>
+	</script>
+</head>
+	<body style="background-color: #f5f5f5;">
+		<div class="page">
+			<div class="header" style="width: 1240px;"><!-- <ice:inputHidden
+				value="#{salariesList.lastTransmission}" /> --> <ui:insert name="header">
+				<ui:include src="/WEB-INF/pages/facelets/header.xhtml" />
+				</ui:insert>
+				<hr />
+			</div>
+			<div style="min-width: 1240px;">
+				<div class="navigation" style="width: 200px; float: left;">
+					<ui:insert name="navigation">
+						<ui:include src="/WEB-INF/pages/facelets/navigation.xhtml" />
+					</ui:insert>
+				</div>
+				<div class="content" style="padding-left:30px;overflow-x:auto;">
+					
+					<!-- <ice:inputHidden value="#{salariesList.lastTransmission}" /> -->
+					<ui:insert name="content">
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Formulaire nature d'absence</h3>
+		<ice:outputText value="/!\ Le libellé de votre saisie doit impérativement commencer par 'Congé pour...' ou 'Absence pour...' /!\" />
+		<ice:form id="Formulaire">
+			<h:outputText value="Nature de l'absence " for="nom" />
+			<h:inputText id="nom" value="#{typeAbsenceFormBB.nom}"
+				required='true' requiredMessage="#{msg.required}" onkeypress="return noSubmitOnEnter(event);" />
+			<h:message for="nom" errorStyle="color: red" />
+			<br />
+			<br />
+			<ice:commandButton value="Valider"
+				rendered="#{typeAbsenceFormBB.affiche}"
+				actionListener="#{typeAbsenceFormBB.updateTest}" />
+			<ice:commandButton value="Valider"
+				rendered="#{not typeAbsenceFormBB.affiche}"
+				action="#{typeAbsenceFormBB.saveOrUpdateTypeAbsenceFin}" />
+			<ice:commandButton value="Annuler"
+				action="#{typeAbsenceFormBB.annuler}" immediate="true" />
+
+			<!-- Panel de confirmation de modification -->
+			<ice:panelPopup rendered="true"
+				visible="#{typeAbsenceFormBB.modalRenderedConfirm}"
+				draggable="false" autoCentre="true" modal="true">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Confirmation d'enregistrement"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGroup styleClass="popupBody">
+						<ice:outputText
+							value="Un salarié utilise déjà cette nature d'absence," />
+						<br />
+						<ice:outputText
+							value="êtes-vous sûr de vouloir la modifier ?" />
+						<br />
+						<div style="text-align: center;">
+						<ice:commandButton value="Oui"
+							action="#{typeAbsenceFormBB.validModif}" />
+						<ice:commandButton value="Non"
+							action="#{typeAbsenceFormBB.annulModif}" />
+						</div>
+					</ice:panelGroup>
+				</f:facet>
+			</ice:panelPopup>
+		</ice:form>
+	</ui:define>
+
+</ui:composition>

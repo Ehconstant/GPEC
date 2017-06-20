@@ -1,0 +1,14 @@
+# Ignore SVN
+.svn
+
+# Ignore ecliple file
+.settings
+.project
+.classpath
+.checkstyle
+target
+
+# ignore other
+.tern-project
+.hibernateSynchronizer
+pom.old.xml

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+	
+
+			<h:panelGroup rendered="#{adminFormBB.superAdminForm}">
+				<h3>Formulaire de saisie d'un superAdmin</h3>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not adminFormBB.superAdminForm}">
+				<h3>Formulaire de saisie d'un utilisateur</h3>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not adminFormBB.myAccount}">
+				<h3>Mon compte</h3>
+			</h:panelGroup>
+			
+			<h:panelGrid columns="2">
+	        	<ice:outputText value="Adresse mail"/>
+	        	<h:panelGroup>
+		        	<ice:inputText id="mail" 
+				        	value="#{adminFormBB.login}" 
+				        	partialSubmit="true"
+				        	onkeypress="return noSubmitOnEnter(event);" 
+				        	required="true" 
+				        	requiredMessage="#{msg.required}" 
+				        	style="width:150px;margin-left:54px;"
+				        	valueChangeListener="#{adminFormBB.checkLogin}" />
+				     <img alt="(?)" class="tipsy"
+						src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="L'adresse mail de l'utilisateur sera son identifiant de connexion. Le mot de passe de son compte lui sera envoyé sur cette adresse."
+						width="20px" 
+						height="20px" 
+						align="center" />
+						<br/>
+				     <h:message for="mail" errorStyle="color: red"></h:message>
+	        	</h:panelGroup>
+	        
+				<ice:outputText value="Nom"/>
+	        	<h:panelGroup>
+		        	<ice:inputText id="nom" 
+				        	value="#{adminFormBB.nomUser}" 
+				        	partialSubmit="true"
+				        	onkeypress="return noSubmitOnEnter(event);" 
+				        	required="true" 
+				        	requiredMessage="#{msg.required}" 
+				        	style="width:150px;margin-left:54px;" />
+				     <h:message for="nom" errorStyle="color: red"/>
+			     </h:panelGroup>
+			        	
+			    <ice:outputText value="Prenom"/>
+			    <h:panelGroup>
+		        	<ice:inputText id="prenom" 
+				        	value="#{adminFormBB.prenomUser}" 
+				        	partialSubmit="true"
+				        	onkeypress="return noSubmitOnEnter(event);" 
+				        	required="true" 
+				        	requiredMessage="#{msg.required}" 
+				        	style="width:150px;margin-left:54px;" />
+				     <h:message for="prenom" errorStyle="color: red"/>
+			     </h:panelGroup>
+				
+			</h:panelGrid>
+			
+			<br/><br/>
+			
+			<ice:panelGrid columns="3">
+				<ice:panelGroup>
+		 			<ice:outputText value="Saisir un mot de passe"/>
+		        	<h:inputSecret id="pwd" 
+				        	value="#{adminFormBB.password}" 
+				        	partialSubmit="true"
+				        	onkeypress="return noSubmitOnEnter(event);" 
+				        	required="#{not adminFormBB.modif and not adminFormBB.myAccount and adminFormBB.notAutoGenPwd}" 
+				        	requiredMessage="#{msg.required}" 
+				        	style="width:150px;margin-left:29px;" />
+				   	<img alt="(?)" class="tipsy"
+						src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="En modification, la saisie de ce champ entraine la mise à jour du mot de passe, sinon le mot de passe actuel est conservé. Le mot de passe doit être constitué de plus de 8 caractères dont au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
+						width="20px" 
+						height="20px" 
+						align="center" />
+					<br/>
+		            <h:message for="pwd" errorStyle="color: red"></h:message>
+				</ice:panelGroup>
+				
+				<ice:panelGroup>
+					<ice:outputText value=" ou "/>
+				</ice:panelGroup>
+				
+				<ice:panelGroup>
+					<ice:outputLabel value=" Générer un mot de passe automatiquement" />
+					<ice:selectBooleanCheckbox value="#{adminFormBB.resetPassword}"
+		       				style="margin-left: 10px;"
+		       				id="reset"
+		       				partialSubmit="true"
+		       				valueChangeListener="#{adminFormBB.switchNotAutoGenPwd}">
+		       		</ice:selectBooleanCheckbox>
+	            </ice:panelGroup>
+            </ice:panelGrid>
+            <br/>
+		    <br/>
+        
+        	<h:panelGroup rendered="#{not adminFormBB.superAdminForm and not adminFormBB.myAccount}">
+	        	<ice:panelGrid columns="2">
+		        	<ice:outputText value="Droits d'accès"/>
+		        	
+		        	<ice:panelGrid columns="5" style="text-align:center;margin-left:10px;border" >
+		        
+			        	<ice:outputText value="Onglet Evènements" style="margin-left:10px;margin-right:10px;"/>
+			        	<ice:outputText value="Onglet Contrats de travail" style="margin-left:10px;margin-right:10px;"/>
+			        	<ice:outputText value="Onglet Rémunérations" style="margin-left:10px;margin-right:10px;"/>
+			        	<ice:outputText value="Onglet Fiche de poste" style="margin-left:10px;margin-right:10px;"/>
+			        	<ice:outputText value="Onglet Entretiens" style="margin-left:10px;margin-right:10px;"/>
+			        	
+						<ice:selectBooleanCheckbox
+							value="#{adminFormBB.evenement}" 
+							id="eve"
+							partialSubmit="true"
+							 />
+						<ice:selectBooleanCheckbox
+							value="#{adminFormBB.contratTravail}" 
+							id="ct"
+							partialSubmit="true"
+							 />
+						<ice:selectBooleanCheckbox
+							value="#{adminFormBB.remuneration}" 
+							id="remu"
+							partialSubmit="true"
+							 />
+						<ice:selectBooleanCheckbox
+							value="#{adminFormBB.ficheDePoste}" 
+							id="fdp"
+							partialSubmit="true"
+							 />
+						<ice:selectBooleanCheckbox
+							value="#{adminFormBB.entretien}" 
+							id="ent"
+							partialSubmit="true"
+							 />
+							
+		        	</ice:panelGrid>
+	        	</ice:panelGrid>
+	        	
+	        	<br />
+				<br />
+	        	
+	        	<ice:outputText value="Administrateur"/>
+				<ice:selectBooleanCheckbox
+					style="margin-left:20px;"
+					value="#{adminFormBB.admin}" 
+					id="admin"
+					partialSubmit="true" />
+						
+				<br />
+				<br />
+				
+			</h:panelGroup>
+            
+            <ice:outputLabel value="Erreur lors de l'envoi de mail."
+			    				style="color: red;padding-left:20px;"
+			    				rendered="#{adminFormBB.displayEnvoiMailError}"/>
+	 
+			<h:commandButton value="Valider" action="#{adminFormBB.saveOrUpdateUser}"/>
+			<h:commandButton value="Annuler" actionListener="#{adminFormBB.toggleModal}" immediate="true"/>	
+
+</html>

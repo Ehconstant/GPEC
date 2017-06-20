@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+    
+		<h:form id="idForm">
+			<h3>Avantages/Commissions/Primes</h3>
+			
+			&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;"/>
+			<br />
+			<br />
+			<ice:commandButton id="idAjout" value="Ajouter un libellé - avantage/commission/prime " 
+							   action="#{revenuComplementaireFormBB.init}">	     
+			</ice:commandButton>
+			
+			<br />
+			<br />
+		
+			<h:outputText value="Afficher les données par type  " for="libelle"/>
+			<ice:selectOneMenu id="idRevCompl" tabindex="15"
+				partialSubmit="true"
+				value="#{revenuComplementaireFormBB.typeSelected}"
+				valueChangeListener="#{revenuComplementaireFormBB.majRevenuComplementaire}"
+				style="overflow: auto;">
+				<f:selectItem itemLabel="Tous" itemValue="tous" />
+				<f:selectItems
+					value="#{revenuComplementaireFormBB.typeList}" />
+			</ice:selectOneMenu>
+			
+			<br />
+			  
+			<ice:dataTable id="dataTable" value="#{revenuComplementaireFormBB.revenuComplementaireInventory}" 
+										  var="item" 
+										  rendered="#{not empty revenuComplementaireFormBB.revenuComplementaireInventory}">
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Type" />
+					</f:facet>
+					<ice:outputText value="#{item.type2}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libelle" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+				 
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Action" />
+					</f:facet>
+			
+					<ice:commandButton value="Modifier" 
+									   action="#{revenuComplementaireFormBB.modificationRevenuComplementaire}">  
+								 
+					    <f:setPropertyActionListener target="#{revenuComplementaireFormBB.libelle}" value="#{item.libelle}" />
+					    <f:setPropertyActionListener target="#{revenuComplementaireFormBB.type}" value="#{item.type}" />
+		
+					</ice:commandButton>
+							
+					<ice:commandButton id="idSupprimer" 
+									   value="Supprimer" 
+									   actionListener="#{revenuComplementaireFormBB.supprimerRevenuComplementaire}"
+							   		   panelConfirmation="deleteConfirmPanelRevComp">
+							   		   
+						<f:setPropertyActionListener target="#{revenuComplementaireFormBB.type}" value="#{item.type}" />
+					    <f:setPropertyActionListener target="#{revenuComplementaireFormBB.libelle}" value="#{item.libelle}" />
+					</ice:commandButton>
+		
+					<!-- Panel de confirmation de suppression -->
+					<ice:panelConfirmation id="deleteConfirmPanelRevComp" 
+										   message="Etes-vous sûr de vouloir supprimer ce libellé ?"
+		                    			   acceptLabel="Oui" 
+		                    			   cancelLabel="Non"
+		                    			   title="Confirmer"/>
+							
+				</ice:column>
+				
+			</ice:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<ice:inputHidden value="#{repriseDonneesBB.initList}" />
+		<h:form id="idForm">
+
+			<h3>Gestion des fichiers</h3>
+
+			<ice:outputText rendered="#{empty repriseDonneesBB.entrepriseList}"
+				value="Il n'existe pas encore d'entreprises." />
+			<br />
+			<br />
+			<ice:outputLabel rendered="#{not empty repriseDonneesBB.entrepriseList}"
+				for="entrepriseListSalarie" value="Entreprise " />
+			<ice:panelGroup rendered="#{not empty repriseDonneesBB.entrepriseList}"
+				styleClass="selectionListBoxGroup">
+				<ice:selectOneMenu id="entrepriseListSalarie"
+					value="#{repriseDonneesBB.idEntrepriseSelected}"
+					style="overflow: auto;"
+					valueChangeListener="#{repriseDonneesBB.filtre}" partialSubmit="true">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems value="#{repriseDonneesBB.entrepriseList}" />
+				</ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<ice:panelGroup rendered="#{not empty repriseDonneesBB.salarieList}">
+				<br />
+				<ice:panelGrid rendered="#{empty repriseDonneesBB.salarieList}">
+					<ice:outputText value="Aucun document n'a été rattaché."/>
+				</ice:panelGrid>
+	
+				<ice:panelGrid rendered="#{not empty repriseDonneesBB.salarieList}">
+					<ice:outputText value="Salariés pour lesquels des fichiers ont été enregistrés." />
+				</ice:panelGrid>
+				<br />
+				<ice:dataTable id="dataTable"
+					value="#{repriseDonneesBB.salarieList}" var="item"
+					rendered="#{not empty repriseDonneesBB.salarieList}">
+	
+					<!-- Stock number -->
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Nom" />
+						</f:facet>
+						<ice:outputText value="#{item.nom}" />
+					</ice:column>
+	
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Prenom" />
+						</f:facet>
+						<ice:outputText value="#{item.prenom}" />
+					</ice:column>
+	
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Action" />
+						</f:facet>
+	
+						<ice:commandButton value="Details"
+							actionListener="#{repriseDonneesBB.initRepriseDonneesForm}"
+							action="#{repriseDonneesBB.initRepriseDonneesForm}" >
+	
+						</ice:commandButton>
+	
+					</ice:column>
+	
+				</ice:dataTable>
+			</ice:panelGroup>
+				
+		<!-- *************************FICHE METIER****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListFm and not empty repriseDonneesBB.ficheMetierBeanList}">
+		
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListFm and not empty repriseDonneesBB.ficheMetierBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à la partie fiche métier." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListFm and not empty repriseDonneesBB.ficheMetierBeanList}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListFm}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListFm and not empty repriseDonneesBB.ficheMetierBeanList}" id="datatableFileFm" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs de fiche métier" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlFm}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadFm}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column>
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Fiche métier" rendered="#{not empty repriseDonneesBB.ficheMetierBeanList and not empty repriseDonneesBB.fileListFm}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.ficheMetierBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.ficheMetierBeanList and not empty repriseDonneesBB.fileListFm}" id="datatableFm">
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nom" />
+				</f:facet>
+				<ice:outputText value="#{item.intituleFicheMetier}" >
+				
+				</ice:outputText>
+			</ice:column>
+				
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlFm}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadFmFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkFmFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListFm}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileFm}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+				
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

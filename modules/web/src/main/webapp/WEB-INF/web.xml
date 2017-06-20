@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>GPEC-Web</display-name>
+	<description></description>
+	
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	
+    <context-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>  
+	        /WEB-INF/applicationContext.xml  
+	    </param-value>  
+    </context-param>
+    
+	<context-param>
+		<param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.synchronousUpdate</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.REFRESH_PERIOD</param-name>
+		<param-value>-1</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.icesoft.faces.uploadDirectory</param-name>
+		<param-value>upload</param-value>
+	</context-param>
+	<context-param>
+        <param-name>com.icesoft.faces.uploadMaxFileSize</param-name>
+        <param-value>1048576</param-value>
+    </context-param>
+	
+	<context-param>
+		<param-name>com.icesoft.faces.connectionTimeout</param-name>
+		<param-value>50000</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.icesoft.faces.heartbeatInterval</param-name>
+		<param-value>50000</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>com.icesoft.faces.heartbeatTimeout</param-name>
+		<param-value>50000</param-value>
+	</context-param> 
+
+	<filter>
+    	<filter-name>CustomCharacterEncodingFilter</filter-name>
+    	<filter-class>com.cci.gpec.icefaces.component.encoding.CustomCharacterEncodingFilter</filter-class>
+    	<init-param>
+      		<param-name>encoding</param-name>
+      		<param-value>UTF-8</param-value>
+    	</init-param>
+    	<init-param>
+     		<param-name>forceEncoding</param-name>
+      		<param-value>true</param-value>
+    	</init-param>
+  	</filter>
+  	
+  	<!--Servlet Filter that handles site authorization.-->
+<!-- 	<filter>
+	     <filter-name>AuthorizationFilter</filter-name>
+	     <description>This Filter authorizes user access to application
+	                  components based upon request URI.</description>
+	     <filter-class>com.cci.gpec.web.filter.SecurityWrapper</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	     <filter-name>AuthorizationFilter</filter-name>
+	     <url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	
+	<filter>
+	    <filter-name>antisamy-filter</filter-name>
+	    <filter-class>com.cci.gpec.web.AntiSamyFilter.AntiSamyFilter</filter-class>
+	    <init-param>
+	        <param-name>antisamy-policy-file</param-name>
+	        <param-value>/WEB-INF/antisamy.xml</param-value>
+	    </init-param>
+	</filter>
+	
+	
+	<filter-mapping>
+	  <filter-name>antisamy-filter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+		
+	<filter-mapping>
+    	<filter-name>CustomCharacterEncodingFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<listener>  
+        <listener-class>  
+            org.springframework.web.context.ContextLoaderListener  
+        </listener-class>  
+	</listener>
+	
+    <listener>
+	    <listener-class>
+	        org.springframework.security.web.session.HttpSessionEventPublisher
+	    </listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>downloadReport</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheIndivSalarie
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>SimpleCaptcha</servlet-name>
+	    <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printEntretienReport</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintEntretienIndividuelSalarie
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printEvenementReport</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintEvenementIndividuelSalarie
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printFicheIndivRemuneration</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheIndivRemuneration
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printFicheMetier</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheMetier
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printParamsGeneraux</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintParamsGeneraux
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printFicheMetierEntreprise</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheMetierEntreprise
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printFicheDePoste</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheDePoste
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>printPlanningAbsenceServlet</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.jasperreport.print.PrintPlanningAbsenceServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>exportDataTableToExcelServlet</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.servlet.ExportDataTableToExcelServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>exportExcelForSuiviServlet</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.servlet.ExportExcelForSuiviServlet
+		</servlet-class>
+	</servlet>
+	
+	
+	<!-- Servlet pour l'initialisation de la BDD via Hibernate-->
+	<servlet>
+		<servlet-name>initializer</servlet-name>
+		<servlet-class>
+			com.cci.gpec.web.servlet.InitializeConnection
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.webapp.xmlhttp.BlockingServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- file upload Servlet -->
+	<servlet>
+		<servlet-name>uploadServlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.component.inputfile.FileUploadServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- PrimeFaces Servlet and Servlet Mapping -->
+	<servlet>
+		<servlet-name>Resource Servlet</servlet-name>
+		<servlet-class>
+			org.primefaces.resource.ResourceServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>DownloadServlet</servlet-name>
+	    <servlet-class>com.cci.gpec.web.servlet.DownloadServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+        <servlet-name>ErrorHandler</servlet-name>
+        <servlet-class>com.cci.gpec.web.ErrorHandler</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>SimpleCaptcha</servlet-name>
+	    <url-pattern>/simpleCaptcha.png</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+        <servlet-name>ErrorHandler</servlet-name>
+        <url-pattern>/ErrorHandler</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>DownloadServlet</servlet-name>
+	    <url-pattern>*.download</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>/uploadHtml</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Resource Servlet</servlet-name>
+		<url-pattern>/primefaces_resource/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Faces Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>/xmlhttp/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<url-pattern>/block/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>downloadReport</servlet-name>
+		<url-pattern>*.rep</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printPlanningAbsenceServlet</servlet-name>
+		<url-pattern>*.printPlanningAbsenceServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printFicheMetier</servlet-name>
+		<url-pattern>*.printFicheMetier</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printFicheMetierEntreprise</servlet-name>
+		<url-pattern>*.printFicheMetierEntreprise</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printFicheDePoste</servlet-name>
+		<url-pattern>*.printFicheDePoste</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printFicheIndivRemuneration</servlet-name>
+		<url-pattern>*.printFicheIndivRemuneration</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printParamsGeneraux</servlet-name>
+		<url-pattern>*.printParamsGeneraux</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printEntretienReport</servlet-name>
+		<url-pattern>*.printEntretienReport</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>printEvenementReport</servlet-name>
+		<url-pattern>*.printEvenementReport</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>exportDataTableToExcelServlet</servlet-name>
+		<url-pattern>*.exportDataTableToExcelServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>exportExcelForSuiviServlet</servlet-name>
+		<url-pattern>*.exportExcelForSuiviServlet</url-pattern>
+	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>index2.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+	    <exception-type>java.lang.Throwable</exception-type >
+	    <location>/ErrorHandler</location>
+	</error-page>
+	
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/ErrorHandler</location>
+	</error-page> 
+	
+	<!-- Struts Tag Library Descriptors -->
+    <taglib>
+      <taglib-uri>struts-bean</taglib-uri>
+      <taglib-location>/WEB-INF/tld/struts-bean.tld</taglib-location>
+    </taglib>        
+
+    <taglib>
+      <taglib-uri>struts-html</taglib-uri>
+      <taglib-location>/WEB-INF/tld/struts-html.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+      <taglib-uri>struts-logic</taglib-uri>
+      <taglib-location>/WEB-INF/tld/struts-logic.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+      <taglib-uri>struts-nested</taglib-uri>
+      <taglib-location>/WEB-INF/tld/struts-nested.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+      <taglib-uri>struts-tiles</taglib-uri>
+      <taglib-location>/WEB-INF/tld/struts-tiles.tld</taglib-location>
+    </taglib>
+
+	<taglib>
+      <taglib-uri>jstl-fonction</taglib-uri>
+      <taglib-location>/WEB-INF/tld/fn.tld</taglib-location>
+    </taglib>
+</web-app>

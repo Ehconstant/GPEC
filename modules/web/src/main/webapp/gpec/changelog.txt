@@ -1,0 +1,17 @@
+Infos version :
+
+v1.7
+-Tableau d'analyse Accidents de travail / Taux de fréquence 
+	-Prise en compte uniquement des accidents de travail avec jours d’arrêts
+	-Initialisation du tableau avec les données de toutes les entreprises lorsque aucune entreprise n'est sélectionnée
+-Tableau d'analyse Accidents de travail / Taux de gravité
+	-Correction de la ventilation prenant maintenant en compte la totalité des accidents (un seul accident était auparavant ventilé)
+	
+v1.6
+-Retrait de la vérification des dates pour les "habilitations" et "formations" d'un salarié.
+
+v1.5
+-Gestion de l’affichage pour le « téléchargement »
+-Ventilation des accidents sur deux ans.
+-Calcul du plan d’action senior
+-Taux de transfert appliqué à "habilitation".

@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="FicheMetier" table="FICHEMETIER">
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			column="ID_FICHE_METIER"
+			name="Id"
+			type="integer"
+		>
+			<generator class="identity" />
+		</id>
+		<property
+			column="FINALITE_METIER"
+			name="FinaliteMetier"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="SAVOIR_FAIRE"
+			name="SavoirFaire"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="ACTIVITES_RESPONSABILITES"
+			name="ActivitesResponsabilites"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="INTITULE_METIER_TYPE"
+			name="IntituleMetierType"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="CSP_REFERENCE"
+			length="10"
+			name="CspReference"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="NIVEAU_FORMATION_REQUIS"
+			name="NiveauFormationRequis"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="SAVOIR_ETRE"
+			name="SavoirEtre"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="SAVOIR"
+			name="Savoir"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="PARTICULIARITE"
+			name="Particuliarite"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		
+<!-- 		<many-to-one
+			name="Entreprise"
+			column="ID_ENTREPRISE"
+			class="Entreprise"
+			not-null="false"
+		>
+		</many-to-one> -->
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

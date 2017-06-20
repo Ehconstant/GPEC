@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Gestion des accidents du travail / Taux de fréquence</h3>
+		<head>
+			<link href="../../style/panelGrid.css" rel="stylesheet"
+				type="text/css" />
+		</head>
+		<br />
+		<ice:form id="idForm">
+			<br />
+			<ice:outputText rendered="#{empty accidentMetierBB.entreprisesListItem}" value="Il n'existe pas encore d'entreprise."/>
+			<ice:panelGrid columns="2">
+				<ice:outputLabel rendered="#{not empty accidentMetierBB.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+				<ice:panelGroup rendered="#{not empty accidentMetierBB.entreprisesListItem}" styleClass="selectionListBoxGroup">
+						<ice:selectOneMenu id="selectEntreprise"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 value="#{accidentMetierBB.idEntreprise}"
+						 valueChangeListener="#{accidentMetierBB.change}">
+						 
+						<f:selectItems value="#{accidentMetierBB.entreprisesListItem}" />	
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+			
+				<ice:outputLabel rendered="#{not empty accidentMetierBB.servicesListItem}" value="Service " for="idSelectService"/>
+				<ice:panelGroup rendered="#{not empty accidentMetierBB.servicesListItem}" styleClass="selectionListBoxGroup">
+						<ice:selectOneMenu id="idSelectService"
+							 partialSubmit="true"
+							 style="overflow: auto;"
+							 value="#{accidentMetierBB.idService}"
+							 valueChangeListener="#{accidentMetierBB.change}">
+							 
+							<f:selectItem itemLabel="" itemValue="-1"/>
+							<f:selectItems value="#{accidentMetierBB.servicesListItem}" />	
+						</ice:selectOneMenu>
+				</ice:panelGroup>
+			</ice:panelGrid>
+			<br/><br/>
+			<h:commandButton rendered="#{not empty accidentMetierBB.listBean}" 
+							 actionListener="#{accidentMetierBB.download}" 
+							 value="Exporter au format Excel"/>
+			<ice:outputText rendered="#{empty accidentMetierBB.listBean2}" value="Aucun métier pour les critères sélectionnés."/>
+			<ice:dataTable id="dataTable" rendered="#{not empty accidentMetierBB.listBean2}" columnWidths="150px,70px,70px,70px"
+				value="#{accidentMetierBB.listBean2}" var="item">
+				
+				<f:facet name="header">
+		        <ice:columnGroup>
+		            <ice:headerRow>
+		            	<ice:column colspan="4">
+				        	<ice:outputText value="Accidents du travail / métier"/>
+				        	<br />
+				        	<ice:outputText value="Taux de fréquence / année"/>
+				        </ice:column>
+				    </ice:headerRow>
+	                   
+	                <ice:headerRow>
+	                   	 <ice:column>
+							<ice:outputText value="Métiers" />
+			             </ice:column>
+	
+	                 	<ice:column>
+			                <ice:outputText value="#{accidentMetierBB.twoYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{accidentMetierBB.oneYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{accidentMetierBB.curYear}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+	                 </ice:headerRow>
+	                 
+	           </ice:columnGroup>
+	           
+	        </f:facet>
+				
+				
+				<ice:column>
+					<ice:outputText value="#{item.nom}" />
+
+					<f:facet name="footer">
+						<ice:panelGrid styleClass="panelGridClass" width="100%"
+							columns="1" border="0">
+							<div class="val"><ice:outputText
+								value="Nombre d'accidents du travail / année" style="height:25px" /></div>
+							<hr />
+							<ice:outputText value="Taux de fréquence / année"
+								style="height:25px" />
+						</ice:panelGrid>
+					</f:facet>
+				</ice:column>
+
+				<ice:column>
+					<div align='center'>
+						<ice:outputText value="#{item.nbAccidentTwoYearAgoWithArret}" />
+					</div>
+					<f:facet name="footer">
+						<ice:panelGrid styleClass="panelGridClass" width="100%"
+							columns="1" border="0">
+							<div class="val"><ice:outputText
+								value="#{accidentMetierBB.nbAccidentTwoYearAgoWithArret}"
+								style="font-size:11pt;height:25px" /></div>
+							<hr />
+							<ice:outputText value="#{accidentMetierBB.tauxFreqTwoYearAgo}"
+								style="font-size:11pt;height:25px" />
+						</ice:panelGrid>
+					</f:facet>
+
+				</ice:column>
+
+				<ice:column>
+					<div align='center'><ice:outputText
+						value="#{item.nbAccidentOneYearAgoWithArret}" /></div>
+					<f:facet name="footer">
+						<ice:panelGrid styleClass="panelGridClass" width="100%"
+							columns="1" border="0">
+							<div class="val"><ice:outputText
+								value="#{accidentMetierBB.nbAccidentOneYearAgoWithArret}"
+								style="font-size:11pt;height:25px" /></div>
+							<hr />
+							<ice:outputText value="#{accidentMetierBB.tauxFreqOneYearAgo}"
+								style="font-size:11pt;height:25px" />
+						</ice:panelGrid>
+					</f:facet>
+
+				</ice:column>
+
+				<ice:column>
+					<div align='center'>
+						<ice:outputText value="#{item.nbAccidentCurYearWithArret}" />
+					</div>
+					<f:facet name="footer">
+						<ice:panelGrid styleClass="panelGridClass" width="100%"
+							columns="1" border="0">
+							<div class="val"><ice:outputText
+								value="#{accidentMetierBB.nbAccidentCurYearWithArret}"
+								style="font-size:11pt;height:25px" /></div>
+							<hr />
+							<ice:outputText value="#{accidentMetierBB.tauxFreqCurYear}"
+								style="font-size:11pt;height:25px" />
+						</ice:panelGrid>
+					</f:facet>
+
+				</ice:column>
+
+			</ice:dataTable>
+			<br />
+			<ice:panelGroup rendered="#{accidentMetierBB.afficheErreur}">
+				<ice:outputText value="Indéfini* :"/>
+				<ul>
+					<li>
+						<ice:outputText value="soit aucune entreprise n'a été séléctionnée"/>
+					</li>
+					<li>
+						<ice:outputText value="soit la durée de travail théorique année N / heures / effectif total n'est pas spécifiée dans les paramètres généraux." />
+					</li>
+				</ul>
+			</ice:panelGroup>
+			
+			<br />
+			<br />
+			<ice:outputText value="Mémo : " />
+			<ul>
+				<li>
+					<ice:outputText value="Le taux de fréquence représente le nombre d’accidents de travail avec arrêt de travail pour 1 000 000 heures travaillées" />
+				</li>
+				<li>
+					<ice:outputText value=" Mode de calcul du taux de fréquence (exprimé pour un million d’heures travaillées) :" />
+					<br />
+					<ice:outputText value="(Nbr d’accidents du travail avec arrêt x 1 000 000) &#247; nombre d'heures de travail annuel réalisé" />
+				</li>
+			</ul>
+		</ice:form>
+	</ui:define>
+</ui:composition>

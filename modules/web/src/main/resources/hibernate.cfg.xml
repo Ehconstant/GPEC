@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+		<!-- database connection settings -->
+
+	   <!-- Derby -->
+       <!-- property name="hibernate.dialect"> org.hibernate.dialect.DerbyDialect </property-->
+       <!-- property name="hibernate.connection.driver_class"> org.apache.derby.jdbc.ClientDriver </property-->
+       <!-- property name="hibernate.connection.driver_class"> org.apache.derby.jdbc.EmbeddedDriver</property-->
+	  
+	   <!-- MySQL -->
+       <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+       <property name="hibernate.connection.driver_class"> com.mysql.jdbc.Driver </property>
+       <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+       <property name="hibernate.c3p0.min_size">5</property><!-- Taille minimale du pool -->
+       <property name="hibernate.c3p0.max_size">30</property><!-- Taille maximale du pool -->
+       <property name="hibernate.c3p0.acquire_increment">5</property><!-- Nombre de connexion acquise quand le pool est saturé -->
+       <!-- Temps (en secondes) pendant lequel une connexion peut être utilisée avant d'être libérée. 0 signifie qu'une connexion n'expire pas. -->
+       <property name="hibernate.c3p0.timeout">300</property>
+       <!-- La taille du cache de statements de C3P0. 0 signifie qu'on désactive le cache -->
+       <property name="hibernate.c3p0.max_statements">50</property>
+       <property name="hibernate.c3p0.numHelperThreads">1</property>
+       <property name="hibernate.c3p0.maxAdministrativeTaskTime">120</property>
+       <property name="hibernate.c3p0.preferredTestQuery">SELECT 1;</property>
+        <!--
+            Most convenient way to speed up Connection testing is to define 
+        the parameter automaticTestTable
+            If provided, c3p0 will create an empty table of the specified name, 
+        and use queries against that table to test the Connection. If 
+        automaticTestTable is provided, c3p0 will generate its own test query, 
+        therefore any preferredTestQuery set will be ignored. You should not work 
+        with the named table after c3p0 creates it; it should be strictly for 
+        c3p0's use in testing your Connection
+        <property name="automaticTestTable" value ="connectionTestTable"/>
+        -->
+        
+        <!-- 
+            The most reliable time to test Connections is on check-out. But this 
+        is also the most costly choice from a client-performance perspective. Most 
+        applications should work quite reliably using a combination of 
+        idleConnectionTestPeriod (idle_test_period for hibernate) and testConnectionsOnCheckIn. Both the idle test 
+        and the check-in test are performed asynchronously, which leads to 
+        better performance, both perceived and actual.
+        -->
+         
+        <!-- 
+        idleConnectionTestPeriod Default: 0
+            If this is a number greater than 0, c3p0 will test all idle, 
+        pooled but unchecked-out connections, every this number of seconds. 
+         -->
+        <!-- Test the idle connections every 3 minutes (180)-->
+        <property name="hibernate.c3p0.idle_test_period">3600</property>
+        <!-- 
+        testConnectionOnCheckin Default: false
+            If true, an operation will be performed asynchronously at every 
+        connection check-in to verify that the connection is valid. Use 
+        in combination with idleConnectionTestPeriod for quite reliable, 
+        always asynchronous Connection testing
+         -->
+        <property name="hibernate.c3p0.testConnectionOnCheckin">true</property>
+        
+        <!-- 
+        testConnectionOnCheckout (validate for hibernate) Default: false
+        Use only if necessary. Expensive. If true, an operation will be performed 
+        at every connection checkout to verify that the connection is valid.
+         -->
+        <property name="hibernate.c3p0.validate">false</property>
+       
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.current_session_context_class">thread</property>
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="hibernate.connection.pool_size">5</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <!-- helper debug settings -->
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+       
+        <property name="hibernate.idle-timeout-minutes">5</property>
+	   
+	    <!-- close connections when they are too long (and we hope when transaction is not close)-->
+	    <property name="hibernate.c3p0.unreturnedConnectionTimeout">600</property>
+		<property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>
+
+        <property name="hibernate.use_outer_join">true</property>
+    	
+    	<mapping resource="Absence.hbm.xml" />
+    	<mapping resource="Accident.hbm.xml" />
+    	<mapping resource="Admin.hbm.xml" />
+    	<mapping resource="ContratTravail.hbm.xml" />
+    	<mapping resource="Domaineformation.hbm.xml" />
+    	<mapping resource="Groupe.hbm.xml" />
+    	<mapping resource="Entreprise.hbm.xml" />
+    	<mapping resource="Entretien.hbm.xml" />
+    	<mapping resource="Evenement.hbm.xml" />
+    	<mapping resource="Formation.hbm.xml" />
+    	<mapping resource="Fichemetier.hbm.xml" />
+    	<mapping resource="Fichedeposte.hbm.xml" />
+    	<mapping resource="Fichemetierentreprise.hbm.xml" />
+    	<mapping resource="Habilitation.hbm.xml" />
+    	<mapping resource="LienRemunerationRevenuComplementaire.hbm.xml" />
+    	<mapping resource="MappingReprise.hbm.xml"/>
+    	<mapping resource="Metier.hbm.xml" />
+    	<!-- <mapping resource="Metierplanningembauche.hbm.xml" /> -->
+    	<mapping resource="Motifrupturecontrat.hbm.xml" />
+    	<mapping resource="ObjectifsEntretien.hbm.xml" />
+    	<mapping resource="Parcours.hbm.xml" />
+    	<mapping resource="PersonneACharge.hbm.xml" />
+    	<mapping resource="PiecesJustificatives.hbm.xml" />
+    	<!-- <mapping resource="Planningembauche.hbm.xml" /> -->
+    	<mapping resource="Remuneration.hbm.xml" />
+    	<mapping resource="RevenuComplementaire.hbm.xml" />
+    	<mapping resource="Salarie.hbm.xml" />
+    	<mapping resource="Service.hbm.xml" />
+    	<mapping resource="Servicegenerique.hbm.xml" />
+    	<mapping resource="Statut.hbm.xml" />
+    	<mapping resource="Typeabsence.hbm.xml" />
+    	<mapping resource="Typeaccident.hbm.xml" />
+    	<mapping resource="Typecauseaccident.hbm.xml" />
+    	<mapping resource="Typecontrat.hbm.xml" />
+    	<mapping resource="Typehabilitation.hbm.xml" />
+    	<mapping resource="Typelesion.hbm.xml" />
+    	<mapping resource="Typerecoursinterim.hbm.xml" />
+    	<mapping resource="Famillemetier.hbm.xml" />
+    	<mapping resource="Paramsgeneraux.hbm.xml" />
+    	<mapping resource="Transmission.hbm.xml" />
+    	<mapping resource="User.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

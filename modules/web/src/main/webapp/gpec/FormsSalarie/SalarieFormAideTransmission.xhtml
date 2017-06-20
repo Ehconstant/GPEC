@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+La transmission est impossible pour une des raisons suivantes :
+<UL>
+<LI>L'entreprise est rattachée à "Autre CCI"</LI>
+<LI>L'entreprise n'est rattachée à aucune CCI</LI>
+</UL>
+Pour rattacher une entreprise à une CCI, veuillez vous rendre dans le menu "Paramètres" puis &#xa0;
+<ice:commandLink action="#{navigationBB.entreprises}"
+									 style="text-decoration: underline;"
+									 panelConfirmation="exitWithoutSaveNavigation"
+									 rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText value="Entreprises" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.entreprises}"
+									 style="text-decoration: underline;"
+									 rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText value="Entreprises" />
+					</ice:commandLink>
+					<br /><br />
+
+	<ice:commandButton value="Quitter"
+					   actionListener="#{salarieFormBB.toggleModalTransmissionAide}"
+					   immediate="true"/>	
+</html>

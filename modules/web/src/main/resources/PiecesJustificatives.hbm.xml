@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="PiecesJustificatives" table="PIECES_JUSTIFICATIVES">
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			column="ID_PIECES_JUSTIFICATIVES"
+			name="Id"
+			type="integer"
+		>
+				<generator class="identity" />
+		</id>
+		<property
+			name="CarteIdentite"
+			column="CARTE_IDENTITE"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="AttestationSecu"
+			column="ATTESTATION_SECU"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="PermisConduire"
+			column="PERMIS_CONDUIRE"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Rib"
+			column="RIB"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Diplomes"
+			column="DIPLOMES"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="CertificatTravail"
+			column="CERTIFICAT_TRAVAIL"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="AttestaionVisiteMedicale"
+			column="ATTESTATION_VISITE_MEDICALE"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Habilitations"
+			column="HABILITATIONS"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

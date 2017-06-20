@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	<h3>Formulaire de saisie d'un cursus</h3>
+	
+		<ice:panelGrid columns="2">
+			
+			<ice:outputLabel value="Nom de la formation ou du cursus " />
+			<h:inputText value="#{salarieCVsFormBB.poste}" onkeypress="return noSubmitOnEnter(event);"/>
+			
+			<ice:outputLabel value="Date de début " />
+			<ice:selectInputDate id="dateDebutCV" value="#{salarieCVsFormBB.debut}"
+				highlightClass="weekend: august:"
+				renderMonthAsDropdown="true"
+				renderYearAsDropdown="true"
+				highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+				renderAsPopup="true">
+				<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+			</ice:selectInputDate>
+			
+			<ice:outputLabel value="Date de fin " />
+			<ice:selectInputDate id="dateFinCV" value="#{salarieCVsFormBB.fin}"
+				highlightClass="weekend: august:"
+				renderMonthAsDropdown="true"
+				renderYearAsDropdown="true"
+				highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+				renderAsPopup="true">
+				<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+			</ice:selectInputDate>
+			
+			<ice:outputLabel value="Etablissement " />
+			<h:inputText value="#{salarieCVsFormBB.nomEntrepriseEtablissement}" onkeypress="return noSubmitOnEnter(event);"/>
+			
+			<ice:outputLabel value="Diplôme ou attestation obtenue " />
+			<h:inputText value="#{salarieCVsFormBB.diplomeStatut}" onkeypress="return noSubmitOnEnter(event);"/>
+			
+			<ice:commandButton id="modalPnlValiderCV" type="submit"
+		                               value="Valider"
+		                               actionListener="#{salarieCVsFormBB.saveOrUpdateSalarieCV}"/>
+			<ice:commandButton id="modalPnlCloseCV" type="submit"
+		                               value="Quitter"
+		                               actionListener="#{salarieCVsFormBB.toggleModal}"/>
+		</ice:panelGrid>
+
+</html>

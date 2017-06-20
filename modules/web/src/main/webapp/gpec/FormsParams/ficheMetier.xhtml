@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="content">
+
+		<!-- ice:outputLabel value="" rendered="#{ficheMetierFormBB.init}"/-->
+
+		<h:form id="idForm">
+			<h3>Fiche Métier</h3>
+			<ice:commandButton value="Ajouter une fiche métier"
+				action="#{ficheMetierFormBB.init}">
+				<ice:commandButton id="modalPnlAffichageMetierEntreprise"
+					value="#{ficheMetierFormBB.libelleAffichage}"
+					actionListener="#{ficheMetierFormBB.toggleAffichage}" />
+				<ice:commandButton value="Exporter le catalogue métiers"
+					actionListener="#{ficheMetierFormBB.printFicheMetier}">
+				</ice:commandButton>
+
+			</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable0:idSupprimer" style="color:red;" />
+
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Exporter les fiches par entreprise" />
+				<ice:panelGroup>
+					<ice:selectOneMenu id="entrepriseList"
+						value="#{ficheMetierFormBB.idEntrepriseExport}"
+						partialSubmit="false" style="overflow: auto;">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{ficheMetierFormBB.entreprisesList}" />
+					</ice:selectOneMenu>
+					<h:message for="entrepriseList" errorStyle="color: red"></h:message>
+					<ice:commandButton id="modalPnlValiderFicheMetierEntreprise"
+						value="Valider"
+						actionListener="#{ficheMetierFormBB.printFicheMetierEntreprise}" />
+				</ice:panelGroup>
+
+
+			</ice:panelGrid>
+			<br />
+			<br />
+			
+			<c:if test="#{not empty ficheMetierList.ficheMetiersInventory}">
+				<ice:dataTable id="dataTable0" style="width:100%;"
+					value="#{ficheMetierList.ficheMetiersInventory}" var="item"
+					rendered="#{ficheMetierFormBB.affichage}">
+	
+					<ice:column style="width:60%;">
+						<f:facet name="header">
+							<ice:outputText value="Nom" />
+						</f:facet>
+						<ice:outputText value="#{item.nom}" style="font-weight: bold;" />
+						<ice:inputHidden value="#{item.id}"
+							binding="#{ficheMetierFormBB.idFicheMetierBinding}"></ice:inputHidden>
+					</ice:column>
+	
+					<ice:column style="width: 100%">
+						<f:facet name="header">
+							<ice:outputText value="Entreprise rattachée" />
+						</f:facet>
+						<ice:dataTable id="dataTable2" style="width:100%;"
+							value="#{ficheMetierFormBB.entreprisesInventory}" var="item2"
+							rendered="#{not empty ficheMetierFormBB.entreprisesInventory}">
+							<ice:column style="width:100%;">
+								<ice:outputText value="#{item2.nom}" />
+							</ice:column>
+	
+							<ice:column>
+								<ice:commandButton id="idSupprimerEntreprise"
+									value="Désactiver le lien"
+									action="#{ficheMetierFormBB.supprimerFicheMetierEntreprise}"
+									panelConfirmation="deleteConfirmPanelMetierEntreprise">
+	
+									<f:setPropertyActionListener
+										target="#{ficheMetierFormBB.idFicheMetierEntreprise}"
+										value="#{item2.id}" />
+									<f:setPropertyActionListener
+										target="#{ficheMetierFormBB.idFicheMetierSelected}"
+										value="#{item.id}" />
+	
+								</ice:commandButton>
+								<ice:panelConfirmation id="deleteConfirmPanelMetierEntreprise"
+									message="Êtes-vous sûr de vouloir retirer le lien avec cette entreprise ?"
+									acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+	
+							</ice:column>
+						</ice:dataTable>
+					</ice:column>
+	
+	 				<ice:column style="white-space: nowrap;">
+						<f:facet name="header">
+							<ice:outputText value="Justificatif" />
+						</f:facet>
+						<ice:outputText value="/!\ Un fichier est associé à cet élément mais est introuvable ou illisible." 
+							style="color: red" 
+							rendered="#{item.fileError}"/>
+						<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+							<ice:commandLink actionListener="#{ficheMetierFormBB.download}"
+											 style="text-decoration: underline;">
+								<ice:outputText value="#{item.justif.name}" />
+							</ice:commandLink>
+							<ice:commandLink 
+								actionListener="#{ficheMetierFormBB.removeUploadedFileFicheMetier}"
+								style="text-decoration: underline; color: red;"
+								panelConfirmation="deleteConfirmPanelFileFicheMetier">
+								<h:graphicImage url="../../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+								<ui:insert />
+							</ice:commandLink>
+						</ice:panelGrid>
+						<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+							<ice:outputText value="-" />
+						</ice:panelGrid>
+						
+					</ice:column>
+	
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Action" />
+						</f:facet>
+	
+						<ice:panelGroup>
+							<ice:commandButton value="Modifier"
+								action="#{ficheMetierFormBB.initFicheMetier}">
+	
+								<f:setPropertyActionListener target="#{ficheMetierFormBB.id}"
+									value="#{item.id}" />
+							</ice:commandButton>
+	
+	
+							<ice:commandButton id="idSupprimer" value="Supprimer"
+								actionListener="#{ficheMetierFormBB.supprimerFicheMetier}"
+								panelConfirmation="deleteConfirmPanelMetier">
+	
+								<f:setPropertyActionListener target="#{ficheMetierFormBB.id}"
+									value="#{item.idFicheMetier}" />
+	
+							</ice:commandButton>
+							<br />
+							<ice:commandButton id="idAjouterEntreprise"
+								value="Activer le lien entreprise"
+								actionListener="#{ficheMetierFormBB.ajouterFicheMetierEntreprise}"
+								style="width: 160px">
+	
+								<f:setPropertyActionListener
+									target="#{ficheMetierFormBB.idFicheMetierSelected}"
+									value="#{item.id}" />
+	
+							</ice:commandButton>
+						</ice:panelGroup>
+						<ice:panelConfirmation id="deleteConfirmPanelMetier"
+							message="Êtes-vous sûr de vouloir supprimer cette fiche métier ?"
+							acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+						<ice:panelConfirmation id="deleteConfirmPanelFileFicheMetier"
+							message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+							acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+	
+					</ice:column>
+	
+				</ice:dataTable>
+			</c:if>
+
+			<ice:dataTable id="dataTable3" style="width:100%;"
+				value="#{ficheMetierFormBB.listEntreprise}" var="item3"
+				rendered="#{not empty ficheMetierFormBB.listEntreprise and !ficheMetierFormBB.affichage}">
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Entreprise" />
+					</f:facet>
+					<ice:outputText value="#{item3.label}" />
+					<ice:inputHidden value="#{item3.value}"
+						binding="#{ficheMetierFormBB.idEntrepriseBinding}"></ice:inputHidden>
+				</ice:column>
+
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Fiche(s) métier" />
+					</f:facet>
+
+
+					<ice:dataTable id="dataTable4" style="width:100%;"
+						value="#{ficheMetierFormBB.fichesMetierInventoryByEntreprise}"
+						var="item4"
+						rendered="#{not empty ficheMetierFormBB.fichesMetierInventoryByEntreprise}">
+						<ice:column style="width:100%;">
+							<f:facet name="header">
+								<ice:outputText value="Nom" />
+							</f:facet>
+							<ice:outputText value="#{item4.nom}" style="font-weight: bold;" />
+						</ice:column>
+
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="Action" />
+							</f:facet>
+
+							<ice:panelGroup>
+								<ice:commandButton value="Voir la fiche"
+									action="#{ficheMetierFormBB.viewFiche}">
+									<f:setPropertyActionListener target="#{ficheMetierFormBB.id}"
+										value="#{item4.id}" />
+								</ice:commandButton>
+							</ice:panelGroup>
+
+						</ice:column>
+					</ice:dataTable>
+
+				</ice:column>
+
+			</ice:dataTable>
+
+			<br />
+			<br />
+
+
+
+
+			<!-- Modal Panel Popup -->
+			<ice:panelPopup id="modalPnlPopFicheMetier" draggable="true"
+				modal="true" rendered="true"
+				visible="#{ficheMetierFormBB.modalRenderedEntreprise}"
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Lier une entreprise"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<c:if test="#{ficheMetierFormBB.modalRenderedEntreprise}">
+						<h3>Liaison d'une entreprise</h3>
+
+						<ice:panelGrid columns="2">
+
+							<ice:outputLabel value="Entreprise " />
+							<ice:panelGroup>
+								<ice:selectOneMenu id="lienEntrepriseList"
+									value="#{ficheMetierFormBB.idEntrepriseSelected}"
+									partialSubmit="false" style="overflow: auto;">
+									<f:validator validatorId="selectOneMenuValidator" />
+									<f:selectItem itemLabel="" itemValue="-1" />
+									<f:selectItems value="#{ficheMetierFormBB.entreprisesList}" />
+								</ice:selectOneMenu>
+								<h:message for="lienEntrepriseList" errorStyle="color: red"></h:message>
+							</ice:panelGroup>
+
+							<ice:commandButton id="modalPnlValiderFicheMetierLienEntreprise"
+								type="submit" value="Valider"
+								actionListener="#{ficheMetierFormBB.ajouterFicheMetierEntrepriseFin}" />
+							<ice:commandButton id="modalPnlCloseFicheMetierLienEntreprise"
+								type="submit" value="Quitter"
+								actionListener="#{ficheMetierFormBB.toggleModal}"
+								immediate="true" />
+						</ice:panelGrid>
+					</c:if>
+				</f:facet>
+			</ice:panelPopup>
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>

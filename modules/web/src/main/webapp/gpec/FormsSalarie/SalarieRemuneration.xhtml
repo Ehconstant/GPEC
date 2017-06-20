@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+<h3>Rémunération du salarié</h3>
+
+<ice:commandButton id="toggleModalRemuneration"
+	value="Ajouter une rémunération" style="margin-right: 2px;font-size:12px"
+	action="#{salarieRemunerationsFormBB.initSalarieRemunerationForm}"/> 
+
+<br />
+<br />
+
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDRe"
+				value="#{salarieFormBB.debutRe}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesRe}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFRe"
+				value="#{salarieFormBB.finRe}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesRe}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerRE}" />
+	</ice:panelGrid>
+</fieldset>
+
+<br />
+
+<ice:commandButton
+	rendered="#{not empty salarieFormBB.remunerationBeanList}"
+	value="Exporter au format Excel"
+	actionListener="#{salarieRemunerationsFormBB.download}" />
+
+<ice:dataTable value="#{salarieFormBB.remunerationBeanList}" var="item"
+			   rendered="#{not empty salarieFormBB.remunerationBeanList}"
+			   id="idDatatableRemunerations"
+			   rows="10"
+			   columnWidths="35px,180px,180px,50px,50px,50px,50px,70px,75px,230px">
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Année" />
+		</f:facet>
+		
+		<ice:outputText value="#{item.annee}">
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Métier" />
+		</f:facet>
+		
+		<ice:outputText value="#{item.nomMetier}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="CSP" />
+		</f:facet>
+		
+		<ice:outputText value="#{item.nomCsp}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Echelon" />
+		</f:facet>
+		
+		<ice:outputText value="#{item.echelon}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Niveau" />
+		</f:facet>
+		
+		<ice:outputText value="#{item.niveau}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Coef." />
+		</f:facet>
+		
+		<ice:outputText value="#{item.coefficient}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Horaire mensuel" />
+		</f:facet>
+		
+		<ice:outputText style="text-align: right;" value="#{item.horaireMensuelTravailleDisplay}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Taux horaire brut" />
+		</f:facet>
+		
+		<ice:outputText style="text-align: right;" value="#{item.tauxHoraireBrutDisplay}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Salaire mensuel brut" />
+		</f:facet>
+		
+		<ice:outputText style="text-align: right;" value="#{item.salaireMensuelBrutDisplay}" />
+	</ice:column>
+	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Action" />
+		</f:facet>
+		
+		<ice:commandButton value="Modifier"
+			action="#{salarieRemunerationsFormBB.modifRemuneration}">
+				<!--f:param name="annee" value="#{item.annee}"/>
+				<f:param name="idSalarie" value="#{item.idSalarie}"/-->
+				<f:setPropertyActionListener value="#{item.annee}" target="#{salarieRemunerationsFormBB.annee}" />
+				<f:setPropertyActionListener value="#{item.idSalarie}" target="#{salarieRemunerationsFormBB.idSalarie}" />
+		</ice:commandButton>
+		
+		<ice:commandButton value="Supprimer"
+			action="#{salarieFormBB.supprRemuneration}"
+			panelConfirmation="deleteConfirmPanelRemu">
+				<f:setPropertyActionListener value="#{item.idRemuneration}" target="#{salarieFormBB.idRem}" />
+		</ice:commandButton>
+		
+		<ice:commandButton value="Imprimer"
+				action="#{salarieRemunerationsFormBB.printFicheIndivRemuneration}" >
+				<f:setPropertyActionListener value="#{item.idRemuneration}" target="#{salarieRemunerationsFormBB.id}" />
+				<f:setPropertyActionListener value="#{item.annee}" target="#{salarieRemunerationsFormBB.annee}" />
+				<f:setPropertyActionListener value="#{item.idSalarie}" target="#{salarieRemunerationsFormBB.idSalarie}" />
+				<f:setPropertyActionListener value="#{item.idRemuneration}" target="#{salarieRemunerationsFormBB.id}" />
+		</ice:commandButton>
+		
+		<!-- Panel de confirmation de suppression -->
+		<ice:panelConfirmation id="deleteConfirmPanelRemu" 
+							   message="Êtes-vous sûr de vouloir supprimer cette rémunération ?"
+                   			   acceptLabel="Oui" 
+                   			   cancelLabel="Non"
+                   			   title="Confirmer"/>
+		
+		<!-- ice:commandButton value="Imprimer"
+			actionListener="#{salarieRemunerationsFormBB.printRemunerationIndividuelSalarie}"	>
+		</ice:commandButton-->
+	
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+                   <ice:dataPaginator id="dataScrollDatatableRemunerations"
+                                   for="idDatatableRemunerations"
+                                   paginator="true"
+                                   fastStep="3">
+                    <f:facet name="first">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-first.gif"
+                            style="border:none;"
+                            title="First Page"/>
+                    </f:facet>
+                    <f:facet name="last">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-last.gif"
+                            style="border:none;"
+                            title="Last Page"/>
+                    </f:facet>
+                    <f:facet name="previous">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-previous.gif"
+                            style="border:none;"
+                            title="Previous Page"/>
+                    </f:facet>
+                    <f:facet name="next">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-next.gif"
+                            style="border:none;"
+                            title="Next Page"/>
+                    </f:facet>
+                    <f:facet name="fastforward">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+                                          style="border:none;"
+                                          title="Fast Forward"/>
+                    </f:facet>
+                    <f:facet name="fastrewind">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+                                          style="border:none;"
+                                          title="Fast Backwards"/>
+                    </f:facet>
+                </ice:dataPaginator>
+<!-- Modal Panel Popup -->
+
+<ice:panelPopup id="modalPnlPopRemuneration" modal="true"
+	rendered="true" visible="#{salarieRemunerationsFormBB.modalRendered}"
+	styleClass="corePopup" >
+	
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajouter une rémunération" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	
+	<f:facet name="body">
+		<c:if test="#{salarieRemunerationsFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieRemunerationForm.xhtml" />
+		</c:if>
+	</f:facet>
+	
+</ice:panelPopup>
+</html>

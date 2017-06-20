@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+ 	<head>
+		<link href="../../style/panelGrid.css" rel="stylesheet" type="text/css" />
+	</head>
+		<h3>Nombre d'heures de formation - Coût de la formation</h3>
+	<br/>
+	<ice:outputText rendered="#{empty heureFormationBB.entreprisesListItem}" value="Il n'existe pas encore d'entreprise."/>
+	<ice:outputText rendered="#{not heureFormationBB.hasParams}" value="Paramètres généraux non renseignés pour cette entreprise." />
+	<ice:form id="idForm" >
+		<ice:panelGrid columns="2">
+			<ice:outputLabel rendered="#{not empty heureFormationBB.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+			<ice:panelGroup rendered="#{not empty heureFormationBB.entreprisesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectEntreprise"
+					 partialSubmit="true"
+					 style="overflow: auto;"
+					 value="#{heureFormationBB.idEntreprise}"
+					 valueChangeListener="#{heureFormationBB.change}">
+					 
+					<f:selectItems value="#{heureFormationBB.entreprisesListItem}" />	
+				</ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<ice:outputLabel rendered="#{not empty heureFormationBB.servicesListItem}" value="Service " for="idSelectService"/>
+			<ice:panelGroup rendered="#{not empty heureFormationBB.servicesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="idSelectService"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 value="#{heureFormationBB.idService}"
+						 valueChangeListener="#{heureFormationBB.change}">
+						 
+						<f:selectItem itemLabel="" itemValue="-1"/>
+						<f:selectItems value="#{heureFormationBB.servicesListItem}" />	
+					</ice:selectOneMenu>
+			</ice:panelGroup>
+		</ice:panelGrid>
+			<br/>
+			<br />
+			<ice:commandButton rendered="#{heureFormationBB.afficheTable}" 
+							   actionListener="#{heureFormationBB.download}" 
+							   value="Exporter au format Excel"/>
+			<ice:outputText rendered="#{not heureFormationBB.afficheTable}" 
+							value="Aucun résultat pour les critères sélectionnés."/>					 
+			<ice:dataTable id="dataTable" 
+						   rendered="#{heureFormationBB.afficheTable}"
+						   value="#{heureFormationBB.heureBeanList}" 
+						   var="item">
+						   <!-- columnWidths="220px,70px,70px,70px,95px" -->
+				
+				<f:facet name="header">
+				        <ice:columnGroup>
+				            <ice:headerRow>
+				            	<ice:column colspan="19">
+						        	<ice:outputText value="Nombre d'heures de formation - Coût de la formation"/>
+						        </ice:column>
+						    </ice:headerRow>
+			                   
+			                <ice:headerRow>
+			                   	 <ice:column rowspan="3" >
+									<ice:outputText value="Intitulés" />
+					             </ice:column>
+			
+			                 	<ice:column colspan="6">
+					                <ice:outputText value="#{heureFormationBB.twoYearAgo}" 
+					                				/>
+					            </ice:column>
+					            <ice:column colspan="6">
+					                <ice:outputText value="#{heureFormationBB.oneYearAgo}" 
+					                				/>
+					            </ice:column>
+					            <ice:column colspan="6">
+					                <ice:outputText value="#{heureFormationBB.curYear}" 
+					                				/>
+					            </ice:column>
+			                 </ice:headerRow>
+			                 
+			                 <ice:headerRow>
+				            	<ice:column rowspan="2">
+						        	<ice:outputText value="Nombre d'heures"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Hommes"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Femmes"/>
+						        </ice:column>
+						        
+						        <ice:column colspan="3">
+						        	<ice:outputText value="Répartition du coût de la formation"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Nombre d'heures"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Hommes"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Femmes"/>
+						        </ice:column>
+						        
+						        <ice:column colspan="3">
+						        	<ice:outputText value="Répartition du coût de la formation"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Nombre d'heures"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Hommes"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2">
+						        	<ice:outputText value="Femmes"/>
+						        </ice:column>
+						        
+						        <ice:column colspan="3">
+						        	<ice:outputText value="Répartition du coût de la formation"/>
+						        </ice:column>
+						    </ice:headerRow>
+						    
+						    <ice:headerRow>
+						        <ice:column>
+						        	<ice:outputText value="OPCA"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="ENTREPRISE"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="AUTRE"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="OPCA"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="ENTREPRISE"/>
+						        </ice:column>
+						         
+						        <ice:column>
+						        	<ice:outputText value="AUTRE"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="OPCA"/>
+						        </ice:column>
+						        
+						        <ice:column>
+						        	<ice:outputText value="ENTREPRISE"/>
+						        </ice:column>
+						         
+						        <ice:column>
+						        	<ice:outputText value="AUTRE"/>
+						        </ice:column>
+						        
+						    </ice:headerRow>
+			                 
+			           </ice:columnGroup>
+			           
+			        </f:facet> 
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='center'>
+						<ice:outputText value="#{item.libelle}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureTwoYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureTwoYearAgoH : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureTwoYearAgoF : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutOPCATwoYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutENTTwoYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutAUTRETwoYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureOneYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureOneYearAgoH : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureOneYearAgoF : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutOPCAOneYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutENTOneYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutAUTREOneYearAgo : ''}" />
+					</div>
+				</ice:column>
+				
+				
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureCurYear : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureCurYearH : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div style="text-align:right;padding-right:4px;" >
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalHeureFormation eq 'true' and item.footer eq 'true') ? item.heureCurYearF : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutOPCACurYear : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutENTCurYear : ''}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.footer eq 'false' or (item.totalCoutFormation eq 'true' and item.footer eq 'true') ? item.coutAUTRECurYear : ''}" />
+					</div>
+				</ice:column>
+			
+				
+			</ice:dataTable> 
+			
+			
+			<ice:dataTable id="dataTableFooter" 
+			   rendered="#{heureFormationBB.afficheTable2}"
+			   value="#{heureFormationBB.heureBeanListFooter}" 
+			   var="item">
+				
+				<f:facet name="header">
+			        <ice:columnGroup>
+			            <ice:headerRow>
+		                   	 <ice:column style="width: 300px;">
+								<ice:outputText value="Intitulés" />
+				             </ice:column>
+		
+		                 	<ice:column >
+				                <ice:outputText value="#{heureFormationBB.twoYearAgo}"/>
+				            </ice:column>
+				            
+				            <ice:column >
+				                <ice:outputText value="#{heureFormationBB.oneYearAgo}"/>
+				            </ice:column>
+				            
+				            <ice:column >
+				                <ice:outputText value="#{heureFormationBB.curYear}"/>
+				            </ice:column>
+					    </ice:headerRow>
+				   </ice:columnGroup>
+			  </f:facet>
+			  
+			  <ice:column >
+	                <ice:outputText value="#{item.libelle}"/>
+	            </ice:column>
+			  
+			  <ice:column>
+			 		 <div align='right'>
+		        		<ice:outputText value="#{item.coutOPCATwoYearAgo}"/>
+		        	</div>
+		        </ice:column>
+		        
+		        <ice:column>
+		        	<div align='right'>
+		        		<ice:outputText value="#{item.coutOPCAOneYearAgo}"/>
+		        	</div>
+		        </ice:column>
+		        
+		        <ice:column>
+		        	<div align='right'>
+		        		<ice:outputText value="#{item.coutOPCACurYear}"/>
+		        	</div>
+		        </ice:column>
+		    </ice:dataTable>
+						    
+	<br/>
+	</ice:form>
+	</ui:define>
+</ui:composition>

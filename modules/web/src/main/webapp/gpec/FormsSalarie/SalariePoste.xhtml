@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+		<!-- <h3>Parcours du Salarié</h3> -->
+		<h3>Fiche de poste</h3>
+		<ice:inputHidden value="#{ficheDePosteFormBB.initFiche}" />
+			<ice:panelGrid columns="1">
+			</ice:panelGrid>
+			 
+			 <ice:dataTable value="#{ficheDePosteFormBB.columnsModel}" var="row">		        
+		       
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Intitulé du métier" />
+					</f:facet>
+					<ice:outputText value="#{ficheDePosteFormBB.intituleMetier}" >
+					
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Service" />
+					</f:facet>
+					<ice:outputText value="#{ficheDePosteFormBB.libelleService}" >
+						
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de création" />
+					</f:facet>
+					<ice:outputText value="#{ficheDePosteFormBB.dateCreationAffiche}" >
+					</ice:outputText>
+				</ice:column>
+				
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de modification" />
+					</f:facet>
+					<ice:outputText value="#{ficheDePosteFormBB.dateModificationAffiche}" >
+					</ice:outputText>
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Justificatif" />
+					</f:facet>
+					<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+							style="color: red" 
+							rendered="#{ficheDePosteFormBB.fileError}"/>
+					<ice:panelGrid rendered="#{not empty ficheDePosteFormBB.justificatif and not ficheDePosteFormBB.fileError}" columns="2">
+<!-- 						<a id="lien" href="#{ficheDePosteFormBB.url}#{ficheDePosteFormBB.justificatif}" target="_blank">
+							<ice:outputText value="#{ficheDePosteFormBB.justificatif}" />
+						</a> -->
+						<ice:commandLink actionListener="#{ficheDePosteFormBB.download}"
+										 rendered="#{not item.fileError}" style="text-decoration: underline;">
+							<ice:outputText rendered="#{not item.fileError}" value="#{ficheDePosteFormBB.justificatif}" />
+						</ice:commandLink>
+						<ice:commandLink 
+							actionListener="#{ficheDePosteFormBB.removeUploadedFileFicheDePoste}"
+							style="text-decoration: underline; color: red;"
+							panelConfirmation="deleteConfirmPanelFileFicheDePoste">
+							<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+							<ui:insert />
+						</ice:commandLink>
+					</ice:panelGrid>
+					<ice:panelGrid rendered="#{empty ficheDePosteFormBB.justificatif and not ficheDePosteFormBB.fileError}">
+						<ice:outputText value="-" />
+					</ice:panelGrid>
+		
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Action" />
+					</f:facet>
+					<ice:commandButton value="Modifier"
+						action="#{ficheDePosteFormBB.initSalariePosteForm}" id="save_SkipValidation">					
+					</ice:commandButton>
+					<ice:commandButton value="Imprimer"
+						action="#{ficheDePosteFormBB.imprimer}" id="impression">					
+					</ice:commandButton>					
+				
+				<ice:panelConfirmation id="deleteConfirmPanelFileFicheDePoste"
+					message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+					acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+				</ice:column>  
+		    </ice:dataTable>		
+			 
+<!-- Modal Panel Popup -->
+<ice:panelPopup style="top: 15px;" id="modalPnlPopEntretien" modal="true"
+	rendered="true" visible="#{ficheDePosteFormBB.modalRendered}"
+	styleClass="corePopup" autoPosition="true" positionOnLoadOnly="true" autoCentre="true">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Fiche de poste"
+				styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{ficheDePosteFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalariePosteForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+
+<ice:panelPopup style="top: 15px;" id="modalPnlPopImpression" modal="true"
+	rendered="true" visible="#{ficheDePosteFormBB.modalRenderedImpression}"
+	styleClass="corePopup" autoPosition="true" positionOnLoadOnly="true" autoCentre="true">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Impression fiche de poste"
+				styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGrid columns="2">
+			<ice:commandButton value="Imprimer fiche de poste"
+				disabled="#{!ficheDePosteFormBB.newSalarie or ficheDePosteFormBB.id eq 0}"
+				actionListener="#{ficheDePosteFormBB.printFicheDePoste}" />
+				
+			<ice:commandButton value="Imprimer évaluation des compétences"
+				disabled="#{!ficheDePosteFormBB.newSalarie or ficheDePosteFormBB.id eq 0}"
+				actionListener="#{ficheDePosteFormBB.printFicheDePoste2}" />
+				
+			<ice:commandButton value="Annuler"
+				actionListener="#{ficheDePosteFormBB.cancelPrintFicheDePoste}" />
+		</ice:panelGrid>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

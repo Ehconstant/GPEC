@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+<h3>Avantages/Commissions/Primes</h3>
+
+	<h:form id="Formulaire">
+	
+		<h:message for="valider" errorStyle="color: red"/>
+		<br/><br/>
+		
+		<h:outputText value="Libellé " for="libelle"/>
+		<h:inputText id="libelle" value="#{revenuComplementaireFormBB.libelle}" style="margin-left:9px;width:140px;" onkeypress="return noSubmitOnEnter(event);"/>
+		<h:message for="libelle" errorStyle="color: red"/>
+		<br/><br/>
+		<h:outputText value="Type    "/>
+		
+		<ice:selectOneMenu id="idRevCompl" tabindex="15"
+			partialSubmit="true"
+			value="#{revenuComplementaireFormBB.type}"
+			style="overflow: auto;margin-left:20px;">
+			<f:selectItem itemLabel="" itemValue="" />
+			<f:selectItems
+				value="#{revenuComplementaireFormBB.typeList}" />
+		</ice:selectOneMenu>
+		<h:message for="idRevCompl" errorStyle="color: red"/>
+		<br/><br/>
+		
+		<br /><br />
+		<h:commandButton id="valider" value="Valider" action="#{revenuComplementaireFormBB.saveOrUpdateRevenuComplementaire}" />
+		<h:commandButton value="Annuler" action="#{revenuComplementaireFormBB.annulerRevenuComplementaire}" immediate="true"/>	
+	</h:form>
+    </ui:define>
+    
+</ui:composition>

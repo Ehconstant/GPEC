@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<!--
+
+  Checkstyle configuration that checks the ProxiAd coding conventions.
+  Each ProxiAd project must extend this configuration with an appropriate 
+  header check module.
+  See http://checkstyle.sourceforge.net/config_header.html
+
+-->
+
+<module name="Checker">
+
+    <!-- Checks that a package.html file exists for each package. -->
+    <!-- module name="PackageHtml">
+        <property name="severity" value="warning"/>
+    </module-->
+
+    <!-- Checks that property files contain the same keys. -->
+    <module name="Translation"/>
+    
+    <!-- Disable LONG METHODS errors by using comments :
+         //BEGIN LONG METHOD 
+         [...]
+         //END LONG METHOD
+    -->
+    <module name="SuppressionCommentFilter" >
+        <property name="offCommentFormat" value="BEGIN LONG METHOD"/>
+        <property name="onCommentFormat" value="END LONG METHOD"/>
+        <property name="checkFormat" value="MethodLength"/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <!-- Required for the SuppressionCommentFilter to work properly -->
+        <module name="FileContentsHolder"/>
+
+        <!-- Checks for Javadoc comments. -->
+        <module name="JavadocType">
+            <property name="allowMissingParamTags" value="true"/>
+        </module>
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingThrowsTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+        </module>
+        <module name="JavadocVariable">
+            <property name="scope" value="public"/>
+        </module>
+        <module name="JavadocStyle"/>
+
+        <!-- Checks for Naming Conventions. -->
+        <module name="ConstantName"/>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+        <module name="PackageName">
+            <property name="format"
+              value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+        <module name="ParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+
+        <!-- Checks for imports -->
+        <module name="AvoidStarImport"/>
+        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+        <module name="ImportOrder">
+            <property name="groups" value="java,javax"/>
+            <property name="ordered" value="false"/>
+            <property name="separated" value="true"/>
+        </module>
+
+        <!-- Checks for Size Violations. -->
+        <module name="FileLength"/>
+        <module name="MethodLength"/>
+        <module name="AnonInnerLength"/>
+        <module name="ParameterNumber"/>
+
+        <!-- Checks for whitespace -->
+        <module name="EmptyForIteratorPad"/>
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround">
+           <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND, WILDCARD_TYPE"/>
+        </module>
+
+        <!-- Modifier Checks -->
+        <module name="ModifierOrder"/>
+
+        <!-- Checks for blocks. You know, those {}'s -->
+        <module name="EmptyBlock">
+            <property name="option" value="text"/>
+        </module>
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+        <module name="AvoidNestedBlocks"/>
+
+        <!-- Checks for common coding problems -->
+        <module name="CovariantEquals"/>
+        <module name="DoubleCheckedLocking"/>
+        <module name="EmptyStatement"/>
+        <module name="EqualsHashCode"/>
+        <module name="IllegalInstantiation"/>
+        <module name="InnerAssignment"/>
+        <module name="MagicNumber">
+            <property name="severity" value="warning"/>
+        </module>
+        <module name="ModifiedControlVariable"/>
+        <module name="RedundantThrows">
+            <property name="allowUnchecked" value="true"/>
+        </module>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="StringLiteralEquality"/>
+        <module name="SuperClone"/>
+        <module name="SuperFinalize"/>
+        <module name="PackageDeclaration"/>
+        <module name="DeclarationOrder"/>
+        <module name="ParameterAssignment"/>
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- Checks for class design -->
+        <module name="FinalClass"/>
+        <module name="HideUtilityClassConstructor"/>
+
+    		<!-- Checks for metrics (code complexity) -->
+    		<module name="CyclomaticComplexity">
+    			<property name="severity" value="warning"/>
+    		</module>
+
+        <!-- Miscellaneous other checks. -->
+        <module name="GenericIllegalRegexp">
+            <!-- Une ligne vide contenant plus de deux characteres blancs (a l'exception des tabulations) -->
+            <property name="format" value="^[ \x0B\f]{3,}$"/>
+            <property name="message" value="Empty line has more than 2 whitespace characters."/>
+        </module>
+        <module name="GenericIllegalRegexp">
+            <!-- Une fin de ligne precedee de plus de deux characteres blancs (espace, tab, etc) -->
+            <property name="format" value="\S\s{2,}$"/>
+            <property name="message" value="End of line has more than 2 whitespace characters."/>
+        </module>
+        <module name="GenericIllegalRegexp">
+            <property name="format" value="System\.out\.print"/>
+            <property name="message" value="System.out.print*() method must not be used."/>
+            <property name="ignoreComments " value="true"/>
+        </module>
+        <module name="GenericIllegalRegexp">
+            <property name="format" value="System\.err\.print"/>
+            <property name="message" value="System.err.print*() method must not be used."/>
+            <property name="ignoreComments " value="true"/>
+        </module>
+        <module name="GenericIllegalRegexp">
+            <property name="format" value="printStackTrace"/>
+            <property name="message" value="printStackTrace() method must not be used."/>
+            <property name="ignoreComments " value="true"/>
+        </module>
+        <module name="TodoComment">
+            <property name="severity" value="warning"/>
+            <property name="format" value="TODO"/>
+        </module>
+        <module name="TodoComment">
+            <property name="severity" value="warning"/>
+            <property name="format" value="@todo"/>
+        </module>
+        <module name="TodoComment">
+            <property name="severity" value="warning"/>
+            <property name="format" value="FIXME"/>
+        </module>
+        <module name="TodoComment">
+            <property name="severity" value="warning"/>
+            <property name="format" value="XXX"/>
+        </module>
+        <module name="UpperEll"/>
+        <module name="ArrayTypeStyle"/>
+
+    </module>
+
+</module>

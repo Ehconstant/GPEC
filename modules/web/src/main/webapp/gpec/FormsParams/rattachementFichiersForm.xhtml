@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Gestion des documents liés au salarié <ice:outputText value="#{repriseDonneesBB.nomPrenom}"/></h3>
+		<h:form id="formulaire">
+		
+		<h:commandButton action="#{repriseDonneesBB.retour}" value="Retour à la liste des salariés">
+		</h:commandButton>
+
+		<!-- *************************CV****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListCv}">
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet coordonnées" style="text-decoration:underline;font-weight:bold;"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListCv}" var="item" id="datatableFileCv" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Cv" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlCv}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadCv}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.salarieBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.salarieBeanList and not empty repriseDonneesBB.fileListCv}" id="datatableCv">
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nom" />
+				</f:facet>
+				<ice:outputText value="#{item.nom}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Prénom" />
+				</f:facet>
+				<ice:outputText value="#{item.prenom}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date de naissance" />
+				</f:facet>
+				<ice:outputText value="#{item.dateNaissanceExport}" />
+			</ice:column>
+
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Age" />
+				</f:facet>
+				<ice:outputText value="#{item.age}" />
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date d'entrée dans l'entreprise" />
+				</f:facet>
+				<ice:outputText value="#{item.dateEntree}">
+					<f:convertDateTime pattern="dd/MM/yy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date de sortie de l'entreprise" />
+				</f:facet>
+				<ice:outputText value="#{item.dateSortie}">
+					<f:convertDateTime pattern="dd/MM/yy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Poste occupé" />
+				</f:facet>
+				<ice:outputText value="#{item.posteOccupe}">
+					<f:convertDateTime pattern="dd/MM/yy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date d'entrée dans le poste" />
+				</f:facet>
+				<ice:outputText value="#{item.depuis}">
+					<f:convertDateTime pattern="dd/MM/yy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>	
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Contrat" />
+				</f:facet>
+				<ice:outputText	value="#{item.typeContrat}" />			
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+				<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.cv}">
+					<!-- <a id="lien" href="#{repriseDonneesBB.urlCv}#{item.cv}" target="_blank">
+						<ice:outputText value="#{item.cv}" />
+					</a> -->
+					<ice:commandLink actionListener="#{repriseDonneesBB.downloadCvFromDatatable}"
+									 style="text-decoration: underline;" immediate="true">
+						<ice:outputText value="#{item.cv}" />
+					</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.cv}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.cv}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkCvFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListCv}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileCv}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+		</ice:dataTable>
+		</ice:panelGrid>
+		
+		
+		
+		<!-- *************************FORMATIONS****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListEv and not empty repriseDonneesBB.evenementBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListEv and not empty repriseDonneesBB.evenementBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet évènements." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListEv and not empty repriseDonneesBB.evenementBeanList}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListEv}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListEv and not empty repriseDonneesBB.evenementBeanList}" id="datatableFileEv" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs d'évènements" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlForm}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadEv}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des évènements" rendered="#{not empty repriseDonneesBB.evenementBeanList and not empty repriseDonneesBB.fileListEv}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.evenementBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.evenementBeanList and not empty repriseDonneesBB.fileListEv}" id="datatableEv">
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date de l'évènement" />
+				</f:facet>
+				<ice:outputText value="#{item.dateEvenement}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nom de l'interlocuteur" />
+				</f:facet>
+				<ice:outputText value="#{item.interlocuteur}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nature de l'évènement" />
+				</f:facet>
+				<ice:outputText value="#{item.cutNature}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Décision" />
+				</f:facet>
+				<ice:outputText value="#{item.hasDecision}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlForm}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadEvFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkEvFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListEv}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileEvenement}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+		
+		
+				
+		<!-- *************************CONTRAT TRAVAIL****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListCt and not empty repriseDonneesBB.contratTravailBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListCt and not empty repriseDonneesBB.contratTravailBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet contrat de travail."  style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListCt and not empty repriseDonneesBB.contratTravailBeanList}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListCt}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListCt and not empty repriseDonneesBB.contratTravailBeanList}" id="datatableFileCt" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs de contrat" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlCt}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadCt}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des contrats" rendered="#{not empty repriseDonneesBB.contratTravailBeanList and not empty repriseDonneesBB.fileListCt}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.contratTravailBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.contratTravailBeanList and not empty repriseDonneesBB.fileListCt}" id="datatableCt">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Type de contrat" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeContrat}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="renouvellement CDD" />
+				</f:facet>
+				<ice:outputText value="#{(item.renouvellementCDD==false)?'':'oui'}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Métier" />
+				</f:facet>
+				<ice:outputText value="#{item.nomMetier}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Début de contrat" />
+				</f:facet>
+				<ice:outputText value="#{item.debutContrat}" >
+					<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Fin de contrat" />
+				</f:facet>
+				<ice:outputText value="#{item.finContrat}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Motif de rupture" />
+				</f:facet>
+				<ice:outputText value="#{item.nomMotifRuptureContrat}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlCt}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadCtFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkCtFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListCt}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileContrat}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+
+
+		<!-- *************************PARCOURS PROF****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListPar and not empty repriseDonneesBB.parcoursBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListPar and not empty repriseDonneesBB.parcoursBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet parcours professionnel."  style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListPar and not empty repriseDonneesBB.parcoursBeanList}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListPar}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListPar and not empty repriseDonneesBB.parcoursBeanList}" id="datatableFilePar" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs de poste" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlPar}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadPar}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des postes occupés" rendered="#{not empty repriseDonneesBB.parcoursBeanList and not empty repriseDonneesBB.fileListPar}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.parcoursBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.parcoursBeanList and not empty repriseDonneesBB.fileListPar}" id="datatablePar">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Métier" />
+					</f:facet>
+					<ice:outputText value="#{item.nomMetier}" >
+					
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Catégorie socio-professionnelle" />
+					</f:facet>
+					<ice:outputText value="#{item.nomTypeStatut}" >
+						
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Type de contrat" />
+					</f:facet>
+					<ice:outputText value="#{item.nomTypeContrat}" >
+
+					</ice:outputText>
+				</ice:column>
+				
+				
+				<!-- Stock number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Début de prise de fonction" />
+					</f:facet>
+					<ice:outputText value="#{item.debutFonction}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+
+				<!-- Model number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Fin de prise de fonction" />
+					</f:facet>
+					<ice:outputText value="#{item.finFonction}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Equivalence Temps plein " />
+					</f:facet>
+					<ice:outputText value="#{item.equivalenceTempsPlein}" />
+				</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlPar}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadParFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkParFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListPar}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileParcours}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+		
+
+
+		<!-- *************************HABILITATION****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListHab and not empty repriseDonneesBB.habilitationBeanList}">
+
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListHab and not empty repriseDonneesBB.habilitationBeanList}"
+						style="align: center;" />
+		</p>
+<br />		
+		<ice:outputText value="Liste des documents liés à l'onglet habilitations." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.habilitationBeanList and not empty repriseDonneesBB.fileListHab}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListHab}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListHab and not empty repriseDonneesBB.habilitationBeanList}" id="datatableFileHab" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs d'habilitation" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlHab}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadHab}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des habilitations" rendered="#{not empty repriseDonneesBB.habilitationBeanList and not empty repriseDonneesBB.fileListHab}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.habilitationBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.habilitationBeanList and not empty repriseDonneesBB.fileListHab}" id="datatableHab">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<!-- Stock number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Habilitation" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeHabilitation}" />
+			</ice:column>
+		
+			<!-- Model number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Valable du " />
+				</f:facet>
+				<ice:outputText value="#{item.delivrance}" >
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Valable au " />
+				</f:facet>
+				<ice:outputText value="#{item.expiration}" >
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Durée de validité restante (en jours) " />
+				</f:facet>
+				<ice:outputText value="#{item.dureeValidite}" 
+							style="color: green;font-weight:bold;"
+							rendered="#{item.dureeValidite >= 0}"/>
+				<ice:outputText value="Validité dépassée" 
+							style="color: red;font-weight:bold;"
+							rendered="#{0 > item.dureeValidite}"/>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlHab}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadHabFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkHabFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListHab}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileHabilitation}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+
+
+		<!-- *************************FORMATIONS****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListForm and not empty repriseDonneesBB.formationBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListForm and not empty repriseDonneesBB.formationBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet formations." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListForm and not empty repriseDonneesBB.formationBeanList}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListForm}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListForm and not empty repriseDonneesBB.formationBeanList}" id="datatableFileForm" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs de formations" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlForm}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadForm}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des formations" rendered="#{not empty repriseDonneesBB.formationBeanList and not empty repriseDonneesBB.fileListForm}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.formationBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.formationBeanList and not empty repriseDonneesBB.fileListForm}" id="datatableForm">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<!-- Stock number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Intitulé de la formation" />
+				</f:facet>
+				<ice:outputText value="#{item.nomFormation}" />
+			</ice:column>
+		
+			<!-- Model number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Organisme de formation" />
+				</f:facet>
+				<ice:outputText value="#{item.organismeFormation}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Titre obtenu" />
+				</f:facet>
+				<ice:outputText value="#{item.mode}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Domaine de formation" />
+				</f:facet>
+				<ice:outputText value="#{item.nomDomaineFormation}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Début de la formation" />
+				</f:facet>
+				<ice:outputText value="#{item.debutFormation}" >
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Fin de la formation" />
+				</f:facet>
+				<ice:outputText value="#{item.finFormation}" >
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Volume d'heures" />
+				</f:facet>
+				<ice:outputText value="#{item.volumeHoraire}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="DIF" />
+				</f:facet>
+		
+				<ice:outputText value="Oui" rendered="#{item.dif == 1}"/>
+			
+				<ice:outputText value="Non" rendered="#{item.dif == 0}"/>
+		
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlForm}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadFormFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkFormFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListForm}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileFormation}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+
+
+		<!-- *************************ABSENCES****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListAbs and not empty repriseDonneesBB.absenceBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListAbs and not empty repriseDonneesBB.absenceBeanList}"
+						style="align: center;" />
+		</p>
+
+		<ice:outputText value="Liste des documents liés à l'onglet absences." style="text-decoration:underline;font-weight:bold;" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListAbs}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListAbs and not empty repriseDonneesBB.absenceBeanList}" id="datatableFileAbs" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs d'absences" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlAbs}#{item.name}" target="_blank" download="#{repriseDonneesBB.urlAbs}#{item.name}">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadAbs}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des absences" rendered="#{not empty repriseDonneesBB.absenceBeanList and not empty repriseDonneesBB.fileListAbs}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.absenceBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.absenceBeanList and not empty repriseDonneesBB.fileListAbs}" id="datatableAbs">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<!-- Stock number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nature de l'absence" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeAbsence}" />
+			</ice:column>
+		
+			<!-- Model number -->
+			<ice:column style="white-space: nowrap;">
+				<f:facet name="header">
+					<ice:outputText value="Début de l'absence" />
+				</f:facet>
+				<ice:outputText value="#{item.debutAbsence}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Fin de l'absence" />
+				</f:facet>
+				<ice:outputText value="#{item.finAbsence}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlAbs}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadAbsFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkAbsFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListAbs}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileAbsence}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+
+
+		<!-- *************************ACCIDENTS****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListAcc and not empty repriseDonneesBB.accidentBeanList}">
+		
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListAcc and not empty repriseDonneesBB.accidentBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet accidents." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListAcc and not empty repriseDonneesBB.accidentBeanList}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListAcc}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListAcc and not empty repriseDonneesBB.accidentBeanList}" id="datatableFileAcc" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs d'accidents" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlAcc}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadAcc}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des accidents" rendered="#{not empty repriseDonneesBB.accidentBeanList and not empty repriseDonneesBB.fileListAcc}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.accidentBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.accidentBeanList and not empty repriseDonneesBB.fileListAcc}" id="datatableAcc">
+		
+			<!-- ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<!-- Stock number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Type d'accident" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeAccident}" />
+			</ice:column>
+		
+			<!-- Model number -->
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date de l'accident" />
+				</f:facet>
+				<ice:outputText value="#{item.dateAccident}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Nombre de jours d'arrêt" />
+				</f:facet>
+				<ice:outputText value="#{item.nombreJourArret}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Siège de la lésion" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeLesion}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Cause de l'accident" />
+				</f:facet>
+				<ice:outputText value="#{item.nomTypeCauseAccident}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlAcc}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadAccFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkAccFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListAcc}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileAccident}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+		
+
+		<!-- *************************FICHE DE POSTE****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListFdp and not empty repriseDonneesBB.ficheDePosteBeanList}">
+		
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+						rendered="#{not empty repriseDonneesBB.fileListFdp and not empty repriseDonneesBB.ficheDePosteBeanList}"
+						style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet fiche de poste." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListFdp and not empty repriseDonneesBB.ficheDePosteBeanList}" />
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListFdp}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListFdp and not empty repriseDonneesBB.ficheDePosteBeanList}" id="datatableFileFdp" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs de fiche de poste" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlFdp}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadFdp}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Fiche de poste" rendered="#{not empty repriseDonneesBB.ficheDePosteBeanList and not empty repriseDonneesBB.fileListFdp}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.ficheDePosteBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.ficheDePosteBeanList and not empty repriseDonneesBB.fileListFdp}" id="datatableFdp">
+		
+			<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Intitulé du métier" />
+					</f:facet>
+					<ice:outputText value="#{repriseDonneesBB.intituleMetierFicheDePoste}" >
+					
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Service" />
+					</f:facet>
+					<ice:outputText value="#{repriseDonneesBB.intituleServiceFicheDePoste}" >
+						
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de création" />
+					</f:facet>
+					<ice:outputText value="#{item.dateCreation}">
+					</ice:outputText>
+				</ice:column>
+				
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de modification" />
+					</f:facet>
+					<ice:outputText value="#{item.dateModification}" >
+					</ice:outputText>
+				</ice:column>
+
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlFdp}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadFdpFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkFdpFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListFdp}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileFdp}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+
+		
+		<!-- *************************ENTRETIENS****************************** -->
+		<ice:panelGrid rendered="#{not empty repriseDonneesBB.fileListEnt and not empty repriseDonneesBB.entretienBeanList}">
+<br />
+		<p align="center">
+			<ice:outputText value="-----------------------------------------------------------"
+					rendered="#{not empty repriseDonneesBB.fileListEnt and not empty repriseDonneesBB.entretienBeanList}"
+					style="align: center;" />
+		</p>
+<br />
+		
+		<ice:outputText value="Liste des documents liés à l'onglet entretiens." style="text-decoration:underline;font-weight:bold;" rendered="#{not empty repriseDonneesBB.fileListEnt and not empty repriseDonneesBB.entretienBeanList}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.fileListEnt}" var="item"
+			rendered="#{not empty repriseDonneesBB.fileListEnt and not empty repriseDonneesBB.entretienBeanList}" id="datatableFileEnt" >
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatifs d'entretiens" />
+				</f:facet>
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlEnt}#{item.name}" target="_blank">
+					<ice:outputText value="#{item.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadEnt}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.name}" />
+				</ice:commandLink>
+			</ice:column>
+			
+			<!-- <ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Emplacement" />
+				</f:facet>
+				<ice:outputText value="#{item.absolutePath}" />
+			</ice:column> -->
+		</ice:dataTable>
+<br />
+		<ice:outputText value="Liste des entretiens" rendered="#{not empty repriseDonneesBB.entretienBeanList and not empty repriseDonneesBB.fileListEnt}"/>
+<br />
+		<ice:dataTable value="#{repriseDonneesBB.entretienBeanList}" var="item"
+			rendered="#{not empty repriseDonneesBB.entretienBeanList and not empty repriseDonneesBB.fileListEnt}" id="datatableEnt">
+		
+			<!--  ice:column>
+				<f:facet name="header">
+					<ice:outputText value="id" />
+				</f:facet>
+				<ice:outputText value="#{item.id}" />
+			</ice:column-->
+		
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Date de l'entretien" />
+				</f:facet>
+				<ice:outputText value="#{item.dateEntretien}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+				</ice:outputText>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Synthèse" />
+				</f:facet>
+				<ice:outputText value="#{item.synthese}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Compte rendu signé" />
+				</f:facet>
+				<ice:outputText value="#{item.crSigne}" />
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Justificatif" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not empty item.justificatif and item.justif.name != 'null'}">
+				<!-- <a id="lien" href="#{repriseDonneesBB.urlEnt}#{item.justif.name}" target="_blank">
+					<ice:outputText value="#{item.justif.name}" />
+				</a> -->
+				<ice:commandLink actionListener="#{repriseDonneesBB.downloadEntFromDatatable}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{item.justif.name}" />
+				</ice:commandLink>
+				</ice:panelGrid>
+				<ice:panelGrid rendered="#{empty item.justificatif or item.justif.name == 'null'}">
+					<ice:outputText value="-" />
+				</ice:panelGrid>
+			</ice:column>
+			
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputText value="Document à rattacher" />
+				</f:facet>
+				<ice:selectOneMenu id="som"
+						disabled="#{not empty item.justificatif}"
+						partialSubmit="true" immediate="true"
+						valueChangeListener="#{repriseDonneesBB.linkEntFile}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{repriseDonneesBB.fileItemListEnt}" />
+				</ice:selectOneMenu> 
+			</ice:column>
+			
+			<ice:column>
+				<ice:commandLink value="Supprimer document"
+						actionListener="#{repriseDonneesBB.removeFileEntretien}"
+						style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+			
+		</ice:dataTable>
+		</ice:panelGrid>
+		
+		
+		<br />
+		<br />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

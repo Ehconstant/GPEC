@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+    <ui:define name="content">
+	<head>
+	</head>
+		<h:form>
+			<h3>Tableaux de suivi du personnel</h3>
+			
+			<br />
+
+			<ice:panelGrid columns="5">
+				<ice:outputLabel rendered="#{not empty salariesList.entrepriseList}"
+					for="entrepriseListSalarie" value="Entreprise " />
+				<ice:panelGroup rendered="#{not empty salariesList.entrepriseList}"
+					styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListSalarie"
+						value="#{salariesList.idEntrepriseSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{salariesList.filtre}" partialSubmit="true">
+						<f:selectItems value="#{salariesList.entrepriseList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				<!--<ice:outputLabel rendered="#{not empty salariesList.alphabetList}" for="alphabetisation" value="Trier par "/>
+				<ice:panelGroup rendered="#{not empty salariesList.alphabetList}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="alphabetisation"
+						value="#{salariesList.alphabetSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{salariesList.filtre}"   
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="" />
+						<f:selectItems value="#{salariesList.alphabetList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>   -->
+				<ice:outputLabel value="Effectif "/>
+				<img alt="(?)" 
+						class="tipsy" 
+						src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Effectif physique hors intérimaires et stagiaires"
+						width="12px" 
+						height="12px"
+						align="top" 
+						style="padding:1px;"
+						id="tipsy"/>
+				<ice:outputLabel value=": #{salariesList.libelleNbSalarie}"/>
+			</ice:panelGrid>
+			
+			<br />
+			
+			<fieldset style="border: 1px solid;width: 500px;">
+				<legend>Filtre d'extraction</legend>
+				<ice:panelGrid columns="4">
+					<ice:outputLabel value="Salariés concernés  "/>
+					<ice:commandButton id="tousSalarie"
+						value="Tous"
+						actionListener="#{salariesList.changeTousSalarie}" />
+					<ice:commandButton id="presentSalarie"
+						value="Présents"
+						actionListener="#{salariesList.changePresentSalarie}" />
+					<ice:commandButton id="sortiSalarie"
+						value="Sortis" actionListener="#{salariesList.changeSortieSalarie}" />
+				</ice:panelGrid>
+				<ice:outputText
+					value="#{salariesList.filtreChoisi}"
+					style="padding-left:32px;" />
+				<br />
+				<br />
+					
+				<ice:panelGrid columns="3">
+					<ice:outputText value="Période concernée "
+						rendered="#{salariesList.idEntrepriseSelected != -1}" />
+					<ice:selectInputDate id="dateDebutExtraction"
+						value="#{salariesList.debutExtraction}"
+						highlightClass="weekend: august:" renderMonthAsDropdown="true"
+						renderYearAsDropdown="true" highlightUnit="DAY_OF_WEEK: MONTH"
+						highlightValue="1,7: 8" renderAsPopup="true" partialSubmit="false"
+						immediate="false" converterMessage="#{msg.dateTimeConverter}"
+						rendered="#{salariesList.idEntrepriseSelected != -1}">
+						<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+						<f:converter converterId="dateConverter"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:selectInputDate>
+					<ice:panelGroup>
+						<h:message for="dateDebutExtraction" errorStyle="color: red"></h:message>
+						<!-- ice:outputText value="Fin de l'extraction "
+							rendered="#{salariesList.idEntrepriseSelected != -1}" /-->
+						<ice:selectInputDate id="dateFinExtraction"
+							value="#{salariesList.finExtraction}"
+							highlightClass="weekend: august:" renderMonthAsDropdown="true"
+							renderYearAsDropdown="f" highlightUnit="DAY_OF_WEEK: MONTH"
+							highlightValue="1,7: 8" renderAsPopup="true" partialSubmit="false"
+							immediate="false" converterMessage="#{msg.dateTimeConverter}"
+							rendered="#{salariesList.idEntrepriseSelected != -1}">
+							<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}"/> -->
+							<f:converter converterId="dateConverter"
+								timeZone="#{dateSelect.timeZone}" />
+						</ice:selectInputDate>
+						<h:message for="dateFinExtraction" errorStyle="color: red"></h:message>
+					</ice:panelGroup>
+					<!-- ice:panelGroup>
+						<ice:outputText
+							value="Filtres appliquables sur les suivis d'absences, d'accidents et de formations."
+							rendered="#{salariesList.idEntrepriseSelected != -1}" />
+					</ice:panelGroup-->
+			</ice:panelGrid>
+			</fieldset>
+			
+			<br />
+			<!-- <ice:outputLabel for="yearListPlanningA" value="Année de départ "/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="yearListPlanningA"
+						value="#{salarieFormBB.idYearSelected}"
+						style="overflow: auto;" 
+						partialSubmit="true"">
+						<f:validator validatorId="selectOneMenuValidator"/>
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{salarieFormBB.yearList}" />
+					</ice:selectOneMenu>
+					<h:message for="yearListPlanningA" errorStyle="color: red"></h:message>
+				</ice:panelGroup>	
+				<ice:outputLabel for="monthListPlanningA" value="Mois de départ:" />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="monthListPlanningA"
+						value="#{salarieFormBB.idMonthSelected}"
+						style="overflow: auto;"
+						partialSubmit="true">
+						<f:validator validatorId="selectOneMenuValidator"/>
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{salarieFormBB.monthList}" />
+					</ice:selectOneMenu>
+					<h:message for="monthListPlanningA" errorStyle="color: red"></h:message>
+				</ice:panelGroup>	  -->
+
+			<br />
+			<!--  -->
+			<ice:panelGroup  width="100%" style="text-align:center;">
+				<ice:panelGrid columns="3">
+					<ice:commandButton id="suiviCont"
+						rendered="#{not empty salariesList.salariesInventory}"
+						value="Suivi des contrats de travail"
+						style="width:210px;margin:10px;"
+						action="#{salariesList.exportExcelContratTravail}" />
+					<ice:commandButton id="suiviParc"
+						rendered="#{not empty salariesList.salariesInventory2}"
+						value="Suivi des parcours professionnels"
+						action="#{salariesList.exportExcelParcoursProfessionnels}"
+						style="width:210px;margin:10px;" />
+					<ice:commandButton id="suiviRem"
+						rendered="#{not empty salariesList.salariesInventory2 and loginBB.remuneration}"
+						value="Suivi des rémunérations"
+						style="width:210px;margin:10px;"
+						action="#{salariesList.exportExcelRemunerations}" />
+					<ice:commandButton id="suiviHab2"
+						rendered="#{not empty salariesList.salariesInventory2 and salariesList.colorButtonDisplay}"
+						value="Suivi des habilitations"
+						action="#{salariesList.exportExcelHabilitations}"
+						style="background-color:#FA5858;width:210px;margin:10px;" />
+					<ice:commandButton id="suiviHab"
+						rendered="#{not empty salariesList.salariesInventory2 and not salariesList.colorButtonDisplay}"
+						value="Suivi des habilitations"
+						action="#{salariesList.exportExcelHabilitations}"
+						style="width:210px;margin:10px;" />
+					<ice:commandButton id="suiviForma"
+						rendered="#{not empty salariesList.salariesInventory2}"
+						value="Suivi des formations"
+						action="#{salariesList.exportExcelFormations}"
+						style="width:210px;margin:10px;" />
+					<ice:commandButton id="suiviAbs"
+						rendered="#{not empty salariesList.salariesInventory2}"
+						value="Suivi des absences"
+						action="#{salariesList.exportExcelAbsences}"
+						style="width:210px;margin:10px;" />
+					<ice:commandButton id="suiviAccid"
+						rendered="#{not empty salariesList.salariesInventory2}"
+						value="Suivi des accidents"
+						action="#{salariesList.exportExcelAccidents}"
+						style="width:210px;margin:10px;" />
+					<ice:commandButton id="suiviComp"
+						rendered="#{not empty salariesList.salariesInventory2 and loginBB.ficheDePoste}"
+						value="Suivi des compétences"
+						style="width:210px;margin:10px;"
+						action="#{salariesList.exportExcelCompetences}" />
+					<ice:commandButton id="suiviEnt"
+						rendered="#{not empty salariesList.salariesInventory2 and loginBB.entretien}"
+						value="Suivi des entretiens"
+						style="width:210px;margin:10px;"
+						action="#{salariesList.exportExcelEntretiens}" />
+				</ice:panelGrid>
+			
+			</ice:panelGroup>
+
+			<!-- Modal Panel Popup Login Competences-->
+			<ice:panelPopup id="modalPnlPopLogSuiviTabComp" draggable="true"
+				modal="true" rendered="true"
+				visible="#{salariesList.modalLoginRenderedComp}" styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Identification"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="2">
+						<ice:outputText value="Mot de passe " rendered="#{!salariesList.loggedRendered}"/>
+						<ice:panelGroup styleClass="popupHeaderWrapper" rendered="#{!salariesList.loggedRendered}">
+							<ice:inputSecret value="#{salariesList.passwordComp}"
+								id="TxtPwSuiviTabComp" />
+							<ice:message id="pwMsgSuiviTabComp" for="TxtPwSuiviTabComp"
+								style="color:#CB5D5D; 
+									 		line-height:200%;
+									 		padding-left:15px;" />
+						</ice:panelGroup>
+						<ice:commandButton id="validLoginSuiviTabComp"
+							value="Tableaux des Compétences"
+							style="margin-right: 2px;font-size:12px"
+							action="#{salariesList.logCompetences}" />
+						<ice:commandButton id="annulLoginSuiviTabComp" value="Annuler"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salariesList.toggleModalLoginRenderedComp}" />
+					</ice:panelGrid>
+
+					
+				</f:facet>
+			</ice:panelPopup>
+			
+			<!-- Modal Panel Popup Login Entretiens-->
+			<ice:panelPopup id="modalPnlPopLogSuiviTabEnt" draggable="true"
+				modal="true" rendered="true"
+				visible="#{salariesList.modalLoginRenderedEnt}" styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Identification"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="2">
+						<ice:outputText value="Mot de passe " rendered="#{!salariesList.loggedRendered}"/>
+						<ice:panelGroup styleClass="popupHeaderWrapper" rendered="#{!salariesList.loggedRendered}">
+							<ice:inputSecret value="#{salariesList.passwordEnt}"
+								id="TxtPwSuiviTabEnt" />
+							<ice:message id="pwMsgSuiviTabEnt" for="TxtPwSuiviTabEnt"
+								style="color:#CB5D5D; 
+									 		line-height:200%;
+									 		padding-left:15px;" />
+						</ice:panelGroup>
+						<ice:commandButton id="validLoginSuiviTabEntr"
+							value="Tableaux des Entretiens"
+							style="margin-right: 2px;font-size:12px"
+							action="#{salariesList.logEntretiens}" />
+						<ice:commandButton id="annulLoginSuiviTabEnt" value="Annuler"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salariesList.toggleModalLoginRenderedEnt}" />
+					</ice:panelGrid>
+
+					
+				</f:facet>
+			</ice:panelPopup>
+			
+			<ice:panelPopup id="modalPnlPopLogSuiviRemu" draggable="true"
+				modal="true" rendered="true"
+				visible="#{salariesList.modalLoginRenderedRemu}" styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Identification"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="2">
+						<ice:outputText value="Mot de passe " rendered="#{!salariesList.loggedRendered}"/>
+						<ice:panelGroup styleClass="popupHeaderWrapper" rendered="#{!salariesList.loggedRendered}">
+							<ice:inputSecret value="#{salariesList.passwordRemu}"
+								id="TxtPwSuiviRemu" />
+							<ice:message id="pwMsgSuiviRemu" for="TxtPwSuiviRemu"
+								style="color:#CB5D5D; 
+									 		line-height:200%;
+									 		padding-left:15px;" />
+						</ice:panelGroup>
+						<ice:commandButton id="validLoginSuiviRemu"
+							value="Tableaux des Rémunérations"
+							style="margin-right: 2px;font-size:12px"
+							action="#{salariesList.logRemu}" />
+						<ice:commandButton id="annulLoginSuiviRemu" value="Annuler"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salariesList.toggleModalLoginRenderedRemu}" />
+					</ice:panelGrid>
+
+					
+				</f:facet>
+			</ice:panelPopup>	        
+		</h:form>
+	</ui:define>
+</ui:composition>

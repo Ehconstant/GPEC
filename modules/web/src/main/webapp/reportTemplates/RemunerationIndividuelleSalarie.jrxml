@@ -1,0 +1,3531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EntretienIndividuelSalarie" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<subDataset name="cListDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="actualisation" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="primeFixeDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="actualisation" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="primeVariableDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="actualisation" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="avantageAssujettiDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="actualisation" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="avantageNonAssujettiDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="actualisation" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="fraisProfDataset">
+		<field name="libelle" class="java.lang.String"/>
+		<field name="montantNPrec" class="java.lang.String"/>
+		<field name="montant" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Table Dataset 1"/>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="nomEntreprise" class="java.lang.String"/>
+	<field name="justificatif" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
+	<field name="annee" class="java.lang.Integer"/>
+	<field name="nomMetier" class="java.lang.String"/>
+	<field name="nomCsp" class="java.lang.String"/>
+	<field name="echelon" class="java.lang.String"/>
+	<field name="niveau" class="java.lang.String"/>
+	<field name="coefficient" class="java.lang.String"/>
+	<field name="salaireDeBaseCommentaire" class="java.lang.String"/>
+	<field name="salaireMinimumConventionnelCommentaire" class="java.lang.String"/>
+	<field name="augmentationCollectiveCommentaire" class="java.lang.String"/>
+	<field name="augmentationIndividuelleCommentaire" class="java.lang.String"/>
+	<field name="heuresSup50Commentaire" class="java.lang.String"/>
+	<field name="commentaire" class="java.lang.String"/>
+	<field name="heuresSup25Commentaire" class="java.lang.String"/>
+	<field name="horaireMensuelTravaille" class="java.lang.String"/>
+	<field name="tauxHoraireBrut" class="java.lang.String"/>
+	<field name="salaireMensuelBrut" class="java.lang.String"/>
+	<field name="salaireMensuelConventionnelBrut" class="java.lang.String"/>
+	<field name="salaireMinimumConventionnel" class="java.lang.String"/>
+	<field name="salaireMinimumConventionnelActualisation" class="java.lang.String"/>
+	<field name="salaireMinimumConventionnelNPrec" class="java.lang.String"/>
+	<field name="salaireMinimumConventionnelEvol" class="java.lang.String"/>
+	<field name="salaireDeBase" class="java.lang.String"/>
+	<field name="salaireDeBaseActualisation" class="java.lang.String"/>
+	<field name="salaireDeBaseNPrec" class="java.lang.String"/>
+	<field name="salaireDeBaseEvol" class="java.lang.String"/>
+	<field name="augmentationCollective" class="java.lang.String"/>
+	<field name="augmentationCollectiveActualisation" class="java.lang.String"/>
+	<field name="augmentationCollectiveNPrec" class="java.lang.String"/>
+	<field name="augmentationCollectiveEvol" class="java.lang.String"/>
+	<field name="augmentationIndividuelle" class="java.lang.String"/>
+	<field name="augmentationIndividuelleActualisation" class="java.lang.String"/>
+	<field name="augmentationIndividuelleNPrec" class="java.lang.String"/>
+	<field name="augmentationIndividuelleEvol" class="java.lang.String"/>
+	<field name="heuresSup25" class="java.lang.String"/>
+	<field name="heuresSup25Actualisation" class="java.lang.String"/>
+	<field name="heuresSup25NPrec" class="java.lang.String"/>
+	<field name="heuresSup25Evol" class="java.lang.String"/>
+	<field name="heuresSup50" class="java.lang.String"/>
+	<field name="heuresSup50Actualisation" class="java.lang.String"/>
+	<field name="heuresSup50NPrec" class="java.lang.String"/>
+	<field name="heuresSup50Evol" class="java.lang.String"/>
+	<field name="baseBruteAnnuelle" class="java.lang.String"/>
+	<field name="baseBruteAnnuelleNPrec" class="java.lang.String"/>
+	<field name="baseBruteAnnuelleActu" class="java.lang.String"/>
+	<field name="baseBruteAnnuelleEvol" class="java.lang.String"/>
+	<field name="remunerationBruteAnnuelle" class="java.lang.String"/>
+	<field name="remunerationBruteAnnuelleNPrec" class="java.lang.String"/>
+	<field name="remunerationBruteAnnuelleActu" class="java.lang.String"/>
+	<field name="remunerationBruteAnnuelleEvol" class="java.lang.String"/>
+	<field name="remuGlobale" class="java.lang.String"/>
+	<field name="remuGlobaleNPrec" class="java.lang.String"/>
+	<field name="remuGlobaleActu" class="java.lang.String"/>
+	<field name="remuGlobaleEvol" class="java.lang.String"/>
+	<field name="totalNCommission" class="java.lang.String"/>
+	<field name="totalNPrecCommission" class="java.lang.String"/>
+	<field name="totalActuCommission" class="java.lang.String"/>
+	<field name="totalComEvol" class="java.lang.String"/>
+	<field name="totalNPrimeFixe" class="java.lang.String"/>
+	<field name="totalNPrecPrimeFixe" class="java.lang.String"/>
+	<field name="totalActuPrimeFixe" class="java.lang.String"/>
+	<field name="totalPfEvol" class="java.lang.String"/>
+	<field name="totalNPrimeVariable" class="java.lang.String"/>
+	<field name="totalNPrecPrimeVariable" class="java.lang.String"/>
+	<field name="totalActuPrimeVariable" class="java.lang.String"/>
+	<field name="totalPvEvol" class="java.lang.String"/>
+	<field name="totalNAvantageAssujetti" class="java.lang.String"/>
+	<field name="totalNPrecAvantageAssujetti" class="java.lang.String"/>
+	<field name="totalActuAvantageAssujetti" class="java.lang.String"/>
+	<field name="totalAaEvol" class="java.lang.String"/>
+	<field name="totalNAvantageNonAssujetti" class="java.lang.String"/>
+	<field name="totalNPrecAvantageNonAssujetti" class="java.lang.String"/>
+	<field name="totalActuAvantageNonAssujetti" class="java.lang.String"/>
+	<field name="totalAnaEvol" class="java.lang.String"/>
+	<field name="totalNFraisProf" class="java.lang.String"/>
+	<field name="totalNPrecFraisProf" class="java.lang.String"/>
+	<field name="totalActuFraisProf" class="java.lang.String"/>
+	<field name="totalFpEvol" class="java.lang.String"/>
+	<field name="comList" class="java.util.List"/>
+	<field name="pfList" class="java.util.List"/>
+	<field name="pvList" class="java.util.List"/>
+	<field name="aaList" class="java.util.List"/>
+	<field name="anaList" class="java.util.List"/>
+	<field name="fpList" class="java.util.List"/>
+	<group name="lvl1">
+		<groupHeader>
+			<band height="124">
+				<staticText>
+					<reportElement x="0" y="32" width="143" height="14"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salarié]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="143" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Catégorie socio-professionnelle]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="46" width="143" height="14"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fonction / Métier]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="88" width="143" height="14"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Niveau]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="74" width="143" height="14"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Echelon]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="102" width="143" height="14"/>
+					<box leftPadding="10">
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Coefficient]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="60" width="179" height="14"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Horaire mensuel travaillé]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="74" width="179" height="14"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Taux horaire brut]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="32" width="179" height="14"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Année de référence]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="88" width="179" height="14"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salaire mensuel brut en €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="102" width="179" height="14" isPrintWhenDetailOverflows="true"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salaire mensuel conventionnel brut en €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="5" width="555" height="20"/>
+					<box leftPadding="3">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="10" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[COLLABORATEUR]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="142" y="32" width="167" height="14"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom} + " " + $F{nom}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="46" width="167" height="14"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomMetier}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="60" width="167" height="14"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomCsp}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="74" width="167" height="14"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{echelon}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="88" width="167" height="14"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{niveau}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="142" y="102" width="167" height="14" isRemoveLineWhenBlank="true"/>
+					<box>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{coefficient}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="488" y="74" width="67" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tauxHoraireBrut}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="488" y="88" width="67" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMensuelBrut}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="488" y="102" width="67" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMensuelConventionnelBrut}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="488" y="32" width="67" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{annee}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="488" y="60" width="67" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{horaireMensuelTravaille}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="309" y="46" width="246" height="14"/>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="100">
+				<staticText>
+					<reportElement x="0" y="11" width="555" height="20"/>
+					<box leftPadding="3">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="10" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[COMMENTAIRES]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="31" width="555" height="38" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl2">
+		<groupHeader>
+			<band height="23">
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="234" y="0" width="46" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Montant année N]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="182" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE BRUTE ANNUELLE - €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="182" y="0" width="52" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Montant année N-1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="335" y="0" width="52" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box leftPadding="5" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Evolution en % N/N-1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="387" y="0" width="168" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Commentaires]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="280" y="0" width="55" height="23" isPrintWhenDetailOverflows="true" backcolor="#C0C0C0"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Actualisation en numéraire]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="53">
+				<componentElement>
+					<reportElement key="table" x="0" y="14" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{fpList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="fraisProfDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{fpList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{fpList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FRAIS PROFESSIONNELS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="28" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total frais professionnels]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="28" width="168" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecFraisProf}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="28" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNFraisProf}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="28" width="55" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+				</textField>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{fpList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="fraisProfDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{fpList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="14" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{fpList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FRAIS PROFESSIONNELS]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl3">
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMinimumConventionnelEvol}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMinimumConventionnelCommentaire}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMinimumConventionnelActualisation}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{salaireMinimumConventionnelEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["%"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salaire minimum conventionnel]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMinimumConventionnel}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireMinimumConventionnelNPrec}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="102">
+				<componentElement>
+					<reportElement key="table" positionType="Float" x="0" y="27" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{anaList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="avantageNonAssujettiDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{anaList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="13" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{anaList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[	AVANTAGES NON ASSUJETTIS BRUTS ANNUELS - €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="41" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total avantages non assujettis ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="41" width="168" height="14" backcolor="#E6E6E6"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="41" width="55" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalActuAvantageNonAssujetti}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="41" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecAvantageNonAssujetti}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="41" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNAvantageNonAssujetti}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="71" width="182" height="14" backcolor="#808080"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[REMUNERATION BRUTE GLOBALE - €]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="71" width="168" height="14" backcolor="#808080"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="71" width="52" height="14" backcolor="#808080"/>
+					<box rightPadding="14">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remuGlobaleEvol}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="71" width="55" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remuGlobaleActu}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="71" width="52" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remuGlobaleNPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="71" width="46" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remuGlobale}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="376" y="71" width="11" height="14" backcolor="#808080">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{remuGlobaleEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["%"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="41" width="52" height="14" backcolor="#E6E6E6"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<componentElement>
+					<reportElement key="table" positionType="Float" x="0" y="13" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{anaList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="avantageNonAssujettiDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{anaList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="27" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{anaList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[	AVANTAGES NON ASSUJETTIS BRUTS ANNUELS - €]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl4">
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireDeBase}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireDeBaseEvol}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{salaireDeBaseEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireDeBaseCommentaire}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salaire de base]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireDeBaseNPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{salaireDeBaseActualisation}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="71">
+				<componentElement>
+					<reportElement key="table" x="0" y="14" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{aaList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="avantageAssujettiDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{aaList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{aaList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[AVANTAGES ASSUJETTIS BRUTS ANNUELS - €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="28" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total avantages assujettis]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="28" width="168" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="28" width="55" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalActuAvantageAssujetti}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecAvantageAssujetti}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="28" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNAvantageAssujetti}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="57" width="182" height="14" backcolor="#808080"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[REMUNERATION BRUTE ANNUELLE - €]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="57" width="168" height="14" backcolor="#808080"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="57" width="52" height="14" backcolor="#808080"/>
+					<box rightPadding="14">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remunerationBruteAnnuelleEvol}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="57" width="55" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remunerationBruteAnnuelleActu}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="57" width="52" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remunerationBruteAnnuelleNPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="57" width="46" height="14" backcolor="#808080"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{remunerationBruteAnnuelle}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="376" y="57" width="11" height="14" backcolor="#808080">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{remunerationBruteAnnuelleEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["%"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{aaList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="avantageAssujettiDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{aaList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="14" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{aaList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[AVANTAGES ASSUJETTIS BRUTS ANNUELS - €]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl5">
+		<groupHeader>
+			<band height="14">
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Augmentation collective]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationCollectiveCommentaire}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationCollectiveNPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationCollective}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationCollectiveEvol}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{augmentationCollectiveEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationCollectiveActualisation}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<componentElement>
+					<reportElement key="table" x="0" y="14" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pvList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="primeVariableDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pvList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pvList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRIMES VARIABLES BRUTES ANNUELLES - €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="28" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total primes variables]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="28" width="168" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="28" width="55" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalActuPrimeVariable}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecPrimeVariable}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="28" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrimeVariable}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pvList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="primeVariableDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pvList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="14" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pvList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRIMES VARIABLES BRUTES ANNUELLES - €]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl6">
+		<groupHeader>
+			<band height="14">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationIndividuelleCommentaire}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationIndividuelleEvol}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationIndividuelleActualisation}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationIndividuelle}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{augmentationIndividuelleEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{augmentationIndividuelleNPrec}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Augmentation individuelle]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<componentElement>
+					<reportElement key="table" x="0" y="14" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pfList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="primeFixeDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pfList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pfList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRIMES FIXES BRUTES ANNUELLES - €]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="28" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total primes fixes]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="28" width="55" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalActuPrimeFixe}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecPrimeFixe}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="28" width="168" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="28" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrimeFixe}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pfList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="primeFixeDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pfList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="14" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{pfList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PRIMES FIXES BRUTES ANNUELLES - €]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl7">
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup25Evol}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup25NPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup25Actualisation}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup25}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Heures supplémentaires à 25%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{heuresSup25Evol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup25Commentaire}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{comList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[COMMISSIONS BRUTES ANNUELLES - €]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="0" y="14" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{comList}.size()>0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="cListDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="28" width="182" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total commissions]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="280" y="28" width="55" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalActuCommission}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="182" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNPrecCommission}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="387" y="28" width="168" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="234" y="28" width="46" height="14" backcolor="#E6E6E6"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{totalNCommission}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="335" y="28" width="52" height="14" backcolor="#E6E6E6"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="14" width="555" height="14" backcolor="#C0C0C0">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{comList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[COMMISSIONS BRUTES ANNUELLES - €]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="555" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{comList}.size()==0)]]></printWhenExpression>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="cListDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="182">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{libelle}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montantNPrec}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="46">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="46" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{montant}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="55" height="14"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Right">
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{actualisation}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="52">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="52" height="14" isPrintWhenDetailOverflows="true"/>
+									<box rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="168">
+							<jr:detailCell height="14" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+									<box leftPadding="4" rightPadding="4">
+										<pen lineWidth="0.5"/>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement>
+										<font size="8"/>
+									</textElement>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl8">
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup50Evol}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="182" height="14" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC"/>
+					<box leftPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Heures supplémentaires à 50%]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="168" height="14" isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup50Commentaire}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{heuresSup50Evol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup50}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup50NPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{heuresSup50Actualisation}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="335" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="18">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{baseBruteAnnuelleEvol}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="387" y="0" width="168" height="14" backcolor="#C0C0C0"/>
+					<box leftPadding="4" rightPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="182" height="14" backcolor="#C0C0C0"/>
+					<box rightPadding="4">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total - Base brute annuelle]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="52" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{baseBruteAnnuelleNPrec}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="234" y="0" width="46" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{baseBruteAnnuelle}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="55" height="14"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{baseBruteAnnuelleActu}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="11" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{baseBruteAnnuelleEvol}.equals(""))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement x="158" y="0" width="244" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHE REMUNERATION]]></text>
+			</staticText>
+			<image hAlign="Left" onErrorType="Blank">
+				<reportElement x="0" y="0" width="150" height="60">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{justificatif}.equals("") & $F{justificatif}!=null)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$F{url}+$F{justificatif}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="60" width="170" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomEntreprise}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="465" y="13" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="13" width="186" height="14"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom} + " " + $F{nom}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="5" width="535" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ice:inputHidden value="#{salarieFormationsFormBB.init}" />
+<!--<h3>Formations du salarié</h3>-->
+	<br />
+	<ice:commandButton id="toggleModalFormation"
+		value="Ajouter une formation" style="margin-right: 2px;font-size:12px;width:130px;height:30px;"
+		action="#{salarieFormationsFormBB.initSalarieFormationForm}" 
+		disabled="#{empty salarieFormationsFormBB.domaineFormationList}"/>
+	<br />
+	<br />
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDFo"
+				value="#{salarieFormBB.debutFo}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesFo}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFFo"
+				value="#{salarieFormBB.finFo}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesFo}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerFO}" />
+	</ice:panelGrid>
+</fieldset>
+	
+	<br />
+	<ice:panelGrid columns="2">
+	
+		<ice:outputLabel value="Niveau de formation initial" />
+		<!-- ice:selectOneMenu id="nivFormationItinialList"
+				value="#{salarieFormBB.nivFormationInit}"
+				partialSubmit="false" 
+				style="overflow: auto;" 
+				required="true"
+				requiredMessage="#{msg.required}" 
+				onclick="return false;">
+				<f:selectItems value="#{salarieFormBB.nivFormationAtteintList}" />
+		</ice:selectOneMenu-->
+		<ice:outputText rendered="#{salarieFormBB.nivFormationInit == 'VB'}" value="V Bis" style="margin-left:10px;font-size:12px;" />
+		<ice:outputText rendered="#{salarieFormBB.nivFormationInit != 'VB'}" value="#{salarieFormBB.nivFormationInit}" style="margin-left:10px;" />
+			
+			
+		<ice:outputLabel value="Niveau de formation atteint" />
+		<ice:panelGrid columns="2">
+			<ice:selectOneMenu id="nivFormationAtteintList"
+				value="#{salarieFormBB.nivFormationAtteint}"
+				partialSubmit="false" 
+				style="overflow: auto;" 
+				required="true"
+				requiredMessage="#{msg.required}">
+				<f:selectItems value="#{salarieFormBB.nivFormationAtteintList}" />
+			</ice:selectOneMenu>
+			<ice:panelGroup>
+				<ice:commandButton id="modalPnlAideFormation"
+					actionListener="#{salarieFormBB.toggleModalFormationAide}"
+					value="Aide" alt="Close" immediate="true" partialSubmit="false" />
+
+				<ice:panelPopup rendered="true"
+					visible="#{salarieFormBB.modalFormationAide}" draggable="false"
+					modal="true">
+
+					<f:facet name="header">
+						<ice:panelGroup styleClass="popupHeaderWrapper">
+							<ice:outputText value="Aide" styleClass="popupHeaderText" />
+						</ice:panelGroup>
+					</f:facet>
+					<f:facet name="body">
+						<ui:include
+							src="/gpec/FormsSalarie/SalarieFormationAide.xhtml" />
+					</f:facet>
+				</ice:panelPopup>
+			</ice:panelGroup>
+		</ice:panelGrid>
+		<h:message for="nivFormationAtteintList" errorStyle="color: red"></h:message>
+	</ice:panelGrid>
+
+<ice:panelGrid columns="1">
+	<ice:outputText value="Vous devez préalablement saisir les domaines de formation dans paramètres." 
+					rendered="#{empty salarieFormationsFormBB.domaineFormationList}" 
+					style="color: red" />
+</ice:panelGrid>
+
+<ice:dataTable value="#{salarieFormBB.formationBeanList}" var="item"
+				rendered="#{not empty salarieFormBB.formationBeanList}"
+				id="idDatatableFormations"
+				rows="12">
+	<f:facet name="header">
+    	<ice:columnGroup>
+			<ice:headerRow>
+				<ice:column rowspan="2">
+					<ice:outputText value="Intitulé"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Organisme"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Titre obtenu"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Domaine de formation"/>
+				</ice:column>
+				<ice:column colspan="2">
+					<ice:outputText value="Période de formation"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Volume d'heures"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="DIF"/>
+				</ice:column>
+				<ice:column colspan="3">
+					<ice:outputText value="Coût de la formation"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Justificatif"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Actions"/>
+				</ice:column>
+			</ice:headerRow>
+			
+			<ice:headerRow>
+				<ice:column>
+					<ice:outputText value="DU"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="AU"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="OPCA"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="Entreprise"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="Autre"/>
+				</ice:column>
+			</ice:headerRow>
+
+
+		</ice:columnGroup>
+	</f:facet>
+	<!-- Stock number -->
+	<ice:column>
+		<ice:outputText value="#{item.nomFormation}" />
+	</ice:column>
+
+	<!-- Model number -->
+	<ice:column>
+		<ice:outputText value="#{item.organismeFormation}" />
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.mode}" />
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.nomDomaineFormation}" />
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.debutFormation}" >
+			<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.finFormation}" >
+			<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+
+	<ice:column>
+		<ice:outputText value="#{item.volumeHoraire}" />
+	</ice:column>
+	
+	<ice:column>
+
+		<ice:outputText value="Oui" rendered="#{item.dif > 0}"/>
+	
+		<ice:outputText value="Non" rendered="#{item.dif == 0}"/>
+
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText style="text-align: right;" value="#{item.coutOpcaDisplay}" >
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText style="text-align: right;" value="#{item.coutEntrepriseDisplay}" >
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText style="text-align: right;" value="#{item.coutAutreDisplay}" >
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+			style="color: red" 
+			rendered="#{item.fileError}"/>
+		<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 			<a id="lien" href="#{salarieFormationsFormBB.url}#{item.justif.name}" target="_blank">
+				<ice:outputText value="#{item.justif.name}" />
+			</a> -->
+			<ice:commandLink actionListener="#{salarieFormationsFormBB.download}"
+							 rendered="#{not item.fileError}" style="text-decoration: underline;">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</ice:commandLink>
+			<ice:commandLink 
+				actionListener="#{salarieFormationsFormBB.removeUploadedFileFormation}"
+				style="text-decoration: underline; color: red;"
+				panelConfirmation="deleteConfirmPanelFileFormation">
+				<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+				<ui:insert />
+			</ice:commandLink>
+		</ice:panelGrid>
+		<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+			<ice:outputText value="-" />
+		</ice:panelGrid>
+		
+	</ice:column>
+	
+	<ice:column>
+		<ice:commandButton value="Modifier"
+			actionListener="#{salarieFormationsFormBB.modifFormation}">
+
+		</ice:commandButton>
+		<ice:commandButton value="Supprimer"
+			actionListener="#{salarieFormationsFormBB.deleteFormation}"
+			panelConfirmation="deleteConfirmPanelFormation">
+		</ice:commandButton>
+		<!-- Panel de confirmation de suppression -->
+		<ice:panelConfirmation id="deleteConfirmPanelFileFormation"
+			message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="deleteConfirmPanelFormation" 
+							   message="Êtes-vous sûr de vouloir supprimer cette formation ?"
+                   					   acceptLabel="Oui" 
+                   					   cancelLabel="Non"
+                   					   title="Confirmer"/>
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+                <ice:dataPaginator id="dataScrollDatatableFormations"
+                                   for="idDatatableFormations"
+                                   paginator="true"
+                                   fastStep="3">
+                    <f:facet name="first">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-first.gif"
+                            style="border:none;"
+                            title="First Page"/>
+                    </f:facet>
+                    <f:facet name="last">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-last.gif"
+                            style="border:none;"
+                            title="Last Page"/>
+                    </f:facet>
+                    <f:facet name="previous">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-previous.gif"
+                            style="border:none;"
+                            title="Previous Page"/>
+                    </f:facet>
+                    <f:facet name="next">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-next.gif"
+                            style="border:none;"
+                            title="Next Page"/>
+                    </f:facet>
+                    <f:facet name="fastforward">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+                                          style="border:none;"
+                                          title="Fast Forward"/>
+                    </f:facet>
+                    <f:facet name="fastrewind">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+                                          style="border:none;"
+                                          title="Fast Backwards"/>
+                    </f:facet>
+                </ice:dataPaginator>
+              <!-- ice:dataTable width="350px"
+								value="#{salarieFormationsFormBB.fileListFormation}" var="file"
+								rendered="#{not empty salarieFormationsFormBB.fileListFormation}">
+								<ice:column>
+									<f:facet name="header">
+										<ice:panelGroup>
+					                    	<ice:outputLabel
+					                            value="Nom du fichier"/>
+					                	</ice:panelGroup>
+					                </f:facet>
+					                <ice:panelGroup>
+					                	<ice:outputResource 
+					                		rendered="#{not salarieFormationsFormBB.fileError}"
+					                   		resource="#{file.byteArrayResource}" 
+					                    	fileName="#{file.fileInfo.fileName}" 
+					                    	shared="false"
+					                    	style="text-decoration: underline; color: red;"
+					                    	attachment="true" />
+					                </ice:panelGroup>
+									<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+										style="color: red" 
+										rendered="#{salarieFormationsFormBB.fileError}"/>
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+					                    <ice:outputLabel
+					                            value="Action"/>
+					                </f:facet>
+									<ice:commandLink value="Supprimer"
+										actionListener="#{salarieFormationsFormBB.removeUploadedFileFormation}"
+										style="text-decoration: underline; color: red;">
+										<f:param name="fileName" value="#{file.fileInfo.fileName}" />
+									</ice:commandLink>
+								</ice:column>
+							</ice:dataTable-->
+<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPopFormation" draggable="true" modal="true"
+	rendered="true" visible="#{salarieFormationsFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout Formation" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieFormationsFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieFormationsForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+		<h3>Cursus du Salarié</h3>
+
+			<ice:commandButton id="toggleModalCV" value="Ajouter un cursus"
+								style="margin-right: 2px;font-size:12px"
+								action="#{salarieCVsFormBB.initSalarieCVForm}" />
+			
+			<ice:dataTable value="#{salarieFormBB.cvBeanList}" var="item"
+							rendered="#{not empty salarieFormBB.cvBeanList}">
+
+				<!-- Stock number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Absence" />
+					</f:facet>
+					<ice:outputText value="#{item.nomEntrepriseEtablissement}" />
+				</ice:column>
+
+				<!-- Model number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de l'accident" />
+					</f:facet>
+					<ice:outputText value="#{item.poste}" />
+				</ice:column>
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Nombre de jours d'arrêt" />
+					</f:facet>
+					<ice:outputText value="#{item.debut}" />
+				</ice:column>
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Durée de validité " />
+					</f:facet>
+					<ice:outputText value="#{item.fin}" />
+				</ice:column>
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Durée de validité " />
+					</f:facet>
+					<ice:outputText value="#{item.diplomeStatut}" />
+				</ice:column>
+			</ice:dataTable>
+	<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPopCV" draggable="true" modal="true"
+	rendered="true" visible="#{salarieCVsFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout Cursus"
+				styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<ui:include src="/gpec/FormsSalarie/SalarieCVsForm.xhtml" />
+	</f:facet>
+</ice:panelPopup>
+</html>

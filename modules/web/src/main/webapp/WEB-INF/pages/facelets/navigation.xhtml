@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" />
+<link
+	href="#{facesContext.externalContext.requestContextPath}/style/rime/rime.css"
+	rel="stylesheet" type="text/css" />
+</head>
+
+<ice:form id="idNavigation">
+	<ice:panelGroup styleClass="componentBox">
+		<ice:panelGroup styleClass="pnlClpsblWrapper panelCollapsible">
+			<ice:panelConfirmation id="exitWithoutSaveNavigation"
+				message="Avez-vous enregistré votre dernière saisie ? "
+				acceptLabel="Oui" cancelLabel="Non"
+				rendered="#{navigationBB.exitWithoutSaveSalarie}" title="Confirmer" />
+			<ice:panelCollapsible id="linkPanel"
+				expanded="#{navigationBB.personnelEntreprise}" 
+				toggleOnClick="true"
+				rendered="#{loginBB.superAdmin == false}">
+				<f:facet name="header">
+					<ice:panelGroup>
+						<ice:outputText id="linkHeader" value="Personnel de l'entreprise" />
+					</ice:panelGroup>
+				</f:facet>
+				<ice:panelGrid columns="1" cellpadding="4" cellspacing="4"
+					width="100%">
+					<ice:commandLink id="pageSalaries"
+						action="#{navigationBB.salaries}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkSalaries" value="Salariés" />
+					</ice:commandLink>
+					<ice:commandLink id="pageSalaries"
+						action="#{navigationBB.salaries}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkSalaries" value="Salariés" />
+					</ice:commandLink>
+
+					<!-- <ice:commandLink  id="pageOrganigramme"
+                            action="#{navigationBB.organigramme}"
+                            style="text-decoration: underline;"
+                            panelConfirmation="exitWithoutSaveNavigation"
+                            rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkOrganigramme" value="Organigramme" />
+					</ice:commandLink> 
+					<ice:commandLink  id="pageOrganigramme"
+                            action="#{navigationBB.organigramme}"
+                            style="text-decoration: underline;"
+                            rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkOrganigramme" value="Organigramme" />
+					</ice:commandLink> -->
+
+					<ice:commandLink id="pageTableauxSuivi"
+						action="#{navigationBB.tableauxSuivi}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkTableauxSuivi"
+							value="Tableaux de suivi du personnel" />
+					</ice:commandLink>
+					<ice:commandLink id="pageTableauxSuivi"
+						action="#{navigationBB.tableauxSuivi}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkTableauxSuivi"
+							value="Tableaux de suivi du personnel" />
+					</ice:commandLink>
+
+					<ice:commandLink id="pagePlanningAbsence"
+						action="#{navigationBB.planningAbsence}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkPlanningAbsence"
+							value="Planning des absences" />
+					</ice:commandLink>
+					<ice:commandLink id="pagePlanningAbsence"
+						action="#{navigationBB.planningAbsence}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkPlanningAbsence"
+							value="Planning des absences" />
+					</ice:commandLink>
+
+					<ice:commandLink id="pageFiltreMultiCriteres"
+						action="#{navigationBB.filtreMultiCriteres}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkFiltreMultiCriteres"
+							value="Filtre multi-critères" />
+					</ice:commandLink>
+					<ice:commandLink id="pageFiltreMultiCriteres"
+						action="#{navigationBB.filtreMultiCriteres}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkFiltreMultiCriteres"
+							value="Filtre multi-critères" />
+					</ice:commandLink>
+				</ice:panelGrid>
+			</ice:panelCollapsible>
+			<ice:panelCollapsible id="analysePanel"
+				expanded="#{navigationBB.analyse}" 
+				toggleOnClick="true"
+				rendered="#{loginBB.superAdmin == false}">
+				<f:facet name="header">
+					<ice:panelGroup>
+						<ice:outputText id="analyseHeader" value="Analyse" />
+					</ice:panelGroup>
+				</f:facet>
+				<ice:panelGrid columns="1" cellpadding="4" cellspacing="4"
+					width="100%">
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="absencesMetier" action="#{navigationBB.absencesMetier}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkabsencesMetier"
+							value="Gestion des absences par métier" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="absencesMetier" action="#{navigationBB.absencesMetier}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkabsencesMetier"
+							value="Gestion des absences par métier" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="absencesNature" action="#{navigationBB.absencesNature}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkabsencesNature"
+							value="Gestion des absences / Taux d'absentéisme" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="absencesNature" action="#{navigationBB.absencesNature}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkabsencesNature"
+							value="Gestion des absences / Taux d'absentéisme " />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="accidentMetier" action="#{navigationBB.accidentMetier}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkaccidentMetier"
+							value="Gestion des accidents du travail / Taux de fréquence" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="accidentMetier" action="#{navigationBB.accidentMetier}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkaccidentMetier"
+							value="Gestion des accidents du travail / Taux de fréquence" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="arretTravail" action="#{navigationBB.arretTravail}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkarretTravail"
+							value="Gestion des accidents du travail / Taux de gravité" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="arretTravail" action="#{navigationBB.arretTravail}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkarretTravail"
+							value="Gestion des accidents du travail / Taux de gravité" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="turnOver" action="#{navigationBB.turnOver}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkturnOver" value="Turn over" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="turnOver" action="#{navigationBB.turnOver}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkturnOver" value="Turn over" />
+					</ice:commandLink>
+
+					<br />
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="suiviEffectif"
+						action="#{navigationBB.suiviEffectif}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linksuiviEffectif"
+							value="Gestion des effectifs" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="suiviEffectif"
+						action="#{navigationBB.suiviEffectif}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linksuiviEffectif"
+							value="Gestion des effectifs" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="negociationSalariale"
+						action="#{navigationBB.negociationSalariale}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and loginBB.remuneration}">
+						<ice:outputText id="linkNegociationSalariale"
+							value="Négociation salariale - Suivi de la rémunération" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="negociationSalariale"
+						action="#{navigationBB.negociationSalariale}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and loginBB.remuneration}">
+						<ice:outputText id="linkNegociationSalariale"
+							value="Négociation salariale - Suivi de la rémunération" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="heuresFormation" action="#{navigationBB.heuresFormation}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkHeuresFormation"
+							value="Nombre d'heures de formation - Coût de la formation" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="heuresFormation" action="#{navigationBB.heuresFormation}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkHeuresFormation"
+							value="Nombre d'heures de formation - Coût de la formation" />
+					</ice:commandLink>
+					<!--  -->
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="tabCompetences"
+						action="#{navigationBB.tabCompetences}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and loginBB.ficheDePoste}">
+						<ice:outputText id="linkTabCompetences"
+							value="Evaluation des compétences" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="tabCompetences"
+						action="#{navigationBB.tabCompetences}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and loginBB.ficheDePoste}">
+						<ice:outputText id="linkTabCompetences"
+							value="Evaluation des compétences" />
+					</ice:commandLink>
+
+
+					<br />
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="pagePyramideAge" action="#{navigationBB.exportPyramideAge}"
+						panelConfirmation="exitWithoutSaveNavigation"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkPyramideAge" value="Pyramide des âges"
+							style="color:black;" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="pagePyramideAge" action="#{navigationBB.exportPyramideAge}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkPyramideAge" value="Pyramide des âges"
+							style="color:black;" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="pagePyramide2"
+						action="#{navigationBB.exportPyramideAnciennete}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkPyramide2"
+							value="Pyramide de l'ancienneté" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="pagePyramide2"
+						action="#{navigationBB.exportPyramideAnciennete}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkPyramide2"
+							value="Pyramide de l'ancienneté" />
+					</ice:commandLink>
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="departRetraite" action="#{navigationBB.departRetraite}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkDepartRetraite"
+							value="Planning prévisionnel des départs en retraite" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="departRetraite" action="#{navigationBB.departRetraite}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkDepartRetraite"
+							value="Planning prévisionnel des départs en retraite" />
+					</ice:commandLink>
+
+
+
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="projectionPS" action="#{navigationBB.projectionPS}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkprojectionPS"
+							value="Projection plan d'action sénior" />
+					</ice:commandLink>
+					<ice:commandLink onclick="showLoadingTableauAnalyse();"
+						id="projectionPS" action="#{navigationBB.projectionPS}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkprojectionPS"
+							value="Projection plan d'action sénior" />
+					</ice:commandLink>
+
+				</ice:panelGrid>
+
+				<!-- Modal Panel Popup Login-->
+				<ice:panelPopup id="modalPnlPopLogTabComp" draggable="true"
+					modal="true" rendered="true"
+					visible="#{navigationBB.modalLoginRendered}" styleClass="corePopup">
+					<f:facet name="header">
+						<ice:panelGroup styleClass="popupHeaderWrapper">
+							<ice:outputText value="Identification"
+								styleClass="popupHeaderText" />
+						</ice:panelGroup>
+					</f:facet>
+					<f:facet name="body">
+						<ice:panelGrid columns="2">
+							<ice:outputText value="Mot de passe " />
+							<ice:panelGroup styleClass="popupHeaderWrapper">
+								<ice:inputSecret value="#{navigationBB.password}"
+									id="TxtPwTabComp" />
+								<ice:message id="pwMsgTabComp" for="TxtPwTabComp"
+									style="color:red; 
+											 		line-height:200%;
+											 		padding-left:15px;" />
+							</ice:panelGroup>
+							<ice:commandButton id="validLoginTabComp" value="Valider"
+								style="margin-right: 2px;font-size:12px"
+								action="#{navigationBB.log}" />
+							<ice:commandButton id="annulLoginTabComp" value="Annuler"
+								style="margin-right: 2px;font-size:12px"
+								actionListener="#{navigationBB.toggleModalLoginRendered}" />
+						</ice:panelGrid>
+					</f:facet>
+				</ice:panelPopup>
+
+			</ice:panelCollapsible>
+			<ice:panelCollapsible id="utilitairePanel"
+				expanded="#{navigationBB.parametres}" 
+				toggleOnClick="true">
+				<f:facet name="header">
+					<ice:panelGroup>
+						<ice:outputText id="utilitaireHeader" value="Paramètres" />
+					</ice:panelGroup>
+				</f:facet>
+
+				<ice:panelGrid columns="1" cellpadding="4" cellspacing="4"
+					width="100%">
+
+					<ice:commandLink action="#{navigationBB.groupe}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Groupe" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.groupe}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Groupe" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.entreprises}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Entreprises" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.entreprises}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Entreprises" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.services}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Services" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.services}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Services" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.metiers}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Métiers" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.metiers}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Métiers" />
+					</ice:commandLink>
+
+					<ice:commandLink id="pageMetier"
+						action="#{navigationBB.ficheMetier}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText id="linkUpdate" value="Fiche Métier" />
+					</ice:commandLink>
+					<ice:commandLink id="pageMetier"
+						action="#{navigationBB.ficheMetier}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText id="linkUpdate" value="Fiche Métier" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.typesAbsences}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Natures d'absence" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.typesAbsences}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Natures d'absence" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.typesHabilitation}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Natures d'habilitation" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.typesHabilitation}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Natures d'habilitation" />
+					</ice:commandLink>
+
+					<!-- ************1.9************* -->
+
+					<ice:commandLink action="#{navigationBB.fraisProf}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Frais professionnels" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.fraisProf}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Frais professionnels" />
+					</ice:commandLink>
+
+					<ice:commandLink action="#{navigationBB.revenusComplementaires}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Revenus complementaires" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.revenusComplementaires}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Avantages/Commissions/Primes" />
+					</ice:commandLink>
+
+					<!--  ************************* -->
+
+					<ice:commandLink action="#{navigationBB.paramsGeneraux}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie and not loginBB.superAdmin}">
+						<ice:outputText value="Paramètres Généraux" />
+					</ice:commandLink>
+					<ice:commandLink action="#{navigationBB.paramsGeneraux}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false and not loginBB.superAdmin}">
+						<ice:outputText value="Paramètres Généraux" />
+					</ice:commandLink>
+
+					<ice:commandLink id="Rattachement" action="#{navigationBB.link}"
+						style="text-decoration: underline;"
+						rendered="#{loginBB.admin and not loginBB.superAdmin}">
+						<ice:outputText id="link" value="Gestion des documents" />
+					</ice:commandLink>
+					
+					<ice:commandLink id="Administration" action="#{navigationBB.admin}"
+						actionListener="#{adminFormBB.resetMyAccount}"
+						style="text-decoration: underline;"
+						rendered="#{loginBB.admin and not loginBB.superAdmin}">
+						<ice:outputText id="link" value="Administration des utilisateurs" />
+					</ice:commandLink>
+					
+					<ice:commandLink id="SuperAdministration" action="#{navigationBB.superAdmin}"
+						style="text-decoration: underline;"
+						rendered="#{loginBB.superAdmin}">
+						<ice:outputText id="link" value="Administration" />
+					</ice:commandLink>
+
+					<!-- ice:commandLink id="pageUpdate" action="#{navigationBB.update}"
+						style="text-decoration: underline;"
+						panelConfirmation="exitWithoutSaveNavigation"
+						rendered="#{navigationBB.exitWithoutSaveSalarie}">
+						<ice:outputText id="linkUpdate" value="Mettre à jour le logiciel" />
+					</ice:commandLink>
+					<ice:commandLink id="pageUpdate" action="#{navigationBB.update}"
+						style="text-decoration: underline;"
+						rendered="#{navigationBB.exitWithoutSaveSalarie == false}">
+						<ice:outputText id="linkUpdate" value="Mettre à jour le logiciel" />
+					</ice:commandLink-->
+
+				</ice:panelGrid>
+			</ice:panelCollapsible>
+
+		</ice:panelGroup>
+	</ice:panelGroup>
+	<ice:outputText
+		value="Version #{navigationBB.version}"
+		style="font-size: 12px;color: #CCC;padding-left: 45px;" />
+	<!--  Date de la build 23: 09/01/2012 -->
+
+<!-- 	<ice:panelPopup id="modalPnlPopImportExportPreview" draggable="true"
+		modal="true" rendered="true"
+		visible="#{salariesList.modalImportExportPreviewRendered}"
+		styleClass="corePopup">
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeaderWrapper">
+				<ice:outputText value="Migration de la Base de données"
+					styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGroup styleClass="popupHeaderWrapper"
+				style="text-align:center;">
+
+				<ice:panelGrid columns="1">
+					<ice:outputText
+						value="La migration de la base de données est nécessaire." />
+				</ice:panelGrid>
+				<ice:panelGrid columns="1">
+					<ice:commandButton value="ok" action="#{salariesList.transfert}" />
+				</ice:panelGrid>
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup> -->
+
+	<!--ice:panelPopup id="modalPnlPopImportExport" draggable="true"
+	modal="true" rendered="true"
+	visible="#{salariesList.modalImportExportRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Migration de la Base de données" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGrid columns="1">
+			<ice:outputText
+				value="La base de données est en cours de migration, veuillez patienter..." />
+		</ice:panelGrid>
+	</f:facet>
+</ice:panelPopup-->
+
+
+	<ice:panelPopup id="modalPnlPopLastTransmission" draggable="true"
+		modal="true" rendered="true"
+		visible="#{loginBB.modalTransmissionRendered}"
+		styleClass="corePopup">
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeaderWrapper">
+				<ice:outputText value="Transmission des données anonymes"
+					styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGrid columns="1">
+				<ice:outputText
+					value="Vous n'avez pas remonté vos données anonymes vers la CCI depuis plus de 6 mois." />
+				<ice:panelGroup>
+					<ice:commandButton id="validLoginSuiviTabComp"
+						value="Transmettre les données"
+						style="margin-right: 2px;font-size:12px"
+						actionListener="#{salariesList.transmission}" />
+					<ice:commandButton id="annulLoginSuiviTabComp" value="Annuler"
+						style="margin-right: 2px;font-size:12px"
+						actionListener="#{loginBB.toggleModalTransmissionRendered}" />
+				</ice:panelGroup>
+			</ice:panelGrid>
+
+
+		</f:facet>
+	</ice:panelPopup>
+
+	<ice:panelPopup rendered="#{salariesList.echec}" draggable="false"
+		modal="true">
+
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeader">
+				<ice:outputText value="Erreur" styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGroup>
+				<ice:outputText
+					value="Une erreur s'est produite pendant le transfert du fichier à la CCI." />
+				<br />
+				<!-- <ice:outputText
+					value="Ce fichier a été enregistré sur le disque à l'emplacement suivant : " />
+				<br />
+				<ice:outputText value="#{salariesList.url}" /> -->
+				<br />
+				<ice:commandButton id="export" value="Ok"
+					action="#{salariesList.echecOk}" />
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+
+	<ice:panelPopup rendered="#{salariesList.reussite}" draggable="false"
+		modal="true">
+
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeader">
+				<ice:outputText value="Transfert réussi"
+					styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGroup>
+				<ice:outputText
+					value="Les données ont bien été envoyées sur le serveur !" />
+				<br />
+				<!-- <ice:outputText
+					value="Ce fichier a été enregistré sur le disque à l'emplacement suivant : " />
+				<br />
+				<ice:outputText value="#{salariesList.url}" /> -->
+				<br />
+				<ice:commandButton id="export" value="Ok"
+					action="#{salariesList.reussiteOk}" />
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+
+	<ice:panelPopup rendered="true"
+		visible="#{salarieFormBB.modalTransmissionAide}" draggable="false"
+		modal="true">
+
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeaderWrapper">
+				<ice:outputText value="Aide" styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ui:include
+				src="/gpec/FormsSalarie/SalarieFormAideTransmission.xhtml" />
+		</f:facet>
+	</ice:panelPopup>
+	
+
+	<div id="loadingTableauAnalyse" style="display: none"><br />
+	<ice:outputText styleClass="loading"
+		value="Chargement du tableau demandé en cours..." /><br />
+	<br />
+	<ice:outputText
+		value="En fonction du nombre de données saisies dans l'application, le temps de chargement des tableaux d'analyses peut prendre plusieurs minutes." />
+	</div>
+
+
+</ice:form>
+
+<!-- <ice:form id="idAccount">
+	<ice:panelPopup id="modalPnlPopUser" draggable="true" modal="true"
+		rendered="true" visible="#{adminFormBB.modalRenderedAccount}"
+		styleClass="corePopup">
+		<f:facet name="header">
+			<ice:panelGroup styleClass="popupHeaderWrapper">
+				<ice:outputText value="Compte utilisateur" styleClass="popupHeaderText" />
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGroup>
+				<h3>Mon compte</h3>
+
+				<h:panelGrid columns="2">
+			       	<ice:outputText value="Adresse mail"/>
+			       	<h:panelGroup>
+			        	<ice:inputText id="mail" 
+					        	value="#{adminFormBB.login}" 
+					        	partialSubmit="true"
+					        	onkeypress="return noSubmitOnEnter(event);" 
+					        	required="true" 
+					        	requiredMessage="#{msg.required}" 
+					        	style="width:150px;"
+					        	valueChangeListener="#{adminFormBB.checkLogin}" />
+					     <img alt="(?)" class="tipsy"
+							src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+							title="L'adresse mail de l'utilisateur sera son identifiant de connexion. Le mot de passe de son compte lui sera envoyé sur cette adresse."
+							width="20px" 
+							height="20px" 
+							align="center" /><br/>
+					     <h:message for="mail" errorStyle="color: red"></h:message>
+			       	</h:panelGroup>
+			       
+					<ice:outputText value="Nom"/>
+			       	<h:panelGroup>
+			        	<ice:inputText id="nom" 
+					        	value="#{adminFormBB.nomUser}" 
+					        	partialSubmit="true"
+					        	onkeypress="return noSubmitOnEnter(event);" 
+					        	required="true" 
+					        	requiredMessage="#{msg.required}" 
+					        	style="width:150px;" />
+					     <h:message for="nom" errorStyle="color: red"/>
+				     </h:panelGroup>
+				        	
+				    <ice:outputText value="Prenom"/>
+				    <h:panelGroup>
+			        	<ice:inputText id="prenom" 
+					        	value="#{adminFormBB.prenomUser}" 
+					        	partialSubmit="true"
+					        	onkeypress="return noSubmitOnEnter(event);" 
+					        	required="true" 
+					        	requiredMessage="#{msg.required}" 
+					        	style="width:150px;" />
+					     <h:message for="prenom" errorStyle="color: red"/>
+				     </h:panelGroup>
+					
+				
+					<ice:outputText value="Saisir un mot de passe"/>
+					<ice:panelGroup>
+				       	<h:inputSecret id="pwd" 
+					        	value="#{adminFormBB.password}" 
+					        	partialSubmit="true"
+					        	onkeypress="return noSubmitOnEnter(event);" 
+					        	style="width:150px;" />
+					   	<img alt="(?)" class="tipsy"
+							src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+							title="En modification, la saisie de ce champ entraine la mise à jour du mot de passe, sinon le mot de passe actuel est conservé. Le mot de passe doit être constitué de plus de 8 caractères dont au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
+							width="20px" 
+							height="20px" 
+							align="center" />
+					</ice:panelGroup>
+				</h:panelGrid>
+					
+			    <h:message for="pwd" errorStyle="color: red"></h:message>
+			    <br/>
+			          
+			    <ice:outputLabel value="Erreur lors de l'envoi de mail."
+						style="color: red;padding-left:20px;"
+						rendered="#{adminFormBB.displayEnvoiMailError}"/>
+			
+				<h:commandButton value="Valider" action="#{adminFormBB.saveOrUpdateUser}" />
+				<h:commandButton value="Annuler" actionListener="#{adminFormBB.toggleModalAccount}" immediate="true"/>	
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+</ice:form> -->
+
+</html>

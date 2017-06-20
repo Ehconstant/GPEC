@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ice:inputHidden value="#{salarieAbsencesFormBB.init}" />
+<h3>Absences / Congés du salarié</h3>
+<ice:commandButton id="toggleModalAbsence" value="Ajouter une absence"
+	style="margin-right: 2px;font-size:12px"
+	action="#{salarieAbsencesFormBB.initSalarieAbsenceForm}"
+	disabled="#{empty salarieAbsencesFormBB.typeAbsenceList}" />
+	
+		<br />
+	<br />
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDAb"
+				value="#{salarieFormBB.debutAb}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesAb}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFAb"
+				value="#{salarieFormBB.finAb}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesAb}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerAB}" />
+	</ice:panelGrid>
+</fieldset>
+	
+<ice:panelGrid columns="1">
+	<ice:outputText
+		value="Vous devez préalablement saisir les natures d'absences dans paramètres."
+		rendered="#{empty salarieAbsencesFormBB.typeAbsenceList}"
+		style="color: red" />
+</ice:panelGrid>
+<ice:dataTable value="#{salarieFormBB.absenceBeanListRefresh}" var="item"
+	rendered="#{not empty salarieFormBB.absenceBeanListRefresh}"
+	id="idDatatableAbsences" rows="12">
+
+	<!-- ice:column>
+		<f:facet name="header">
+			<ice:outputText value="ID" />
+		</f:facet>
+		<ice:outputText value="#{item.id}" />
+	</ice:column-->
+
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Nature de l'absence" />
+		</f:facet>
+		<ice:outputText value="#{item.nomTypeAbsence}" />
+	</ice:column>
+
+	<ice:column style="white-space: nowrap;">
+		<f:facet name="header">
+			<ice:outputText value="Début de l'absence" />
+		</f:facet>
+		<ice:outputText value="#{item.debutAbsence}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Fin de l'absence" />
+		</f:facet>
+		<ice:outputText value="#{item.finAbsence}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+
+	<ice:column style="white-space: nowrap;">
+		<f:facet name="header">
+			<ice:outputText value="Justificatif" />
+		</f:facet>
+		<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+			style="color: red" 
+			rendered="#{item.fileError}"/>
+		<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 			<a id="lien" href="#{salarieAbsencesFormBB.url}#{item.justif.name}" target="_blank">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</a> -->
+			<ice:commandLink actionListener="#{salarieAbsencesFormBB.download}"
+							 rendered="#{not item.fileError}" style="text-decoration: underline;">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</ice:commandLink>
+			<ice:commandLink 
+				actionListener="#{salarieAbsencesFormBB.removeUploadedFileAbsence}"
+				style="text-decoration: underline; color: red;"
+				panelConfirmation="deleteConfirmPanelFileAbsence"
+				rendered="#{!item.warning}" >
+				<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+				<ui:insert />
+			</ice:commandLink>
+		</ice:panelGrid>
+		<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+			<ice:outputText value="-" />
+		</ice:panelGrid>
+		
+	</ice:column>
+		
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Action" />
+		</f:facet>
+		
+			<ice:commandButton value="Visualiser"
+				actionListener="#{salarieAbsencesFormBB.modifAbsence}"
+				panelConfirmation="visualizeConfirmPanelAbsenceGenere"
+				rendered="#{item.warning}" >
+			</ice:commandButton>
+
+			<ice:commandButton value="Modifier"
+				actionListener="#{salarieAbsencesFormBB.modifAbsence}"
+				rendered="#{!item.warning}">
+				<f:setPropertyActionListener target="#{salarieAbsencesFormBB.id}"
+					value="#{item.id}" />
+			</ice:commandButton>
+			<ice:commandButton value="Supprimer"
+				actionListener="#{salarieAbsencesFormBB.deleteAbsence}"
+				panelConfirmation="deleteConfirmPanelAbsence"
+				rendered="#{!item.warning}">
+			</ice:commandButton>
+
+		
+		<!-- Panel de confirmation de suppression -->
+		<ice:panelConfirmation id="deleteConfirmPanelAbsence"
+			message="Êtes-vous sûr de vouloir supprimer cette absence ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="deleteConfirmPanelFileAbsence"
+			message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="deleteConfirmPanelAbsenceGenere"
+			message="Cette absence est probablement générée automatiquement par la saisie d'une formation ou d'un accident. Pensez à supprimer les données dans l'onglet correspondant. Suppression de l'absence ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="modifyConfirmPanelAbsenceGenere"
+			message="Cette absence est probablement générée automatiquement par la saisie d'une formation ou d'un accident. Pensez à modifier les données dans l'onglet correspondant. Modifier l'absence ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="visualizeConfirmPanelAbsenceGenere"
+			message="Cette absence est générée automatiquement à partir d’une formation ou d'un accident. Elle doit être modifiée ou supprimée dans l’onglet formation ou accident."
+			acceptLabel="Visualiser" cancelLabel="Quitter" title="Confirmer" />
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+<ice:dataPaginator id="dataScrollDatatableAbsences"
+	for="idDatatableAbsences" paginator="true" fastStep="3">
+	<f:facet name="first">
+		<ice:graphicImage url="../style/rime/css-images/arrow-first.gif"
+			style="border:none;" title="First Page" />
+	</f:facet>
+	<f:facet name="last">
+		<ice:graphicImage url="../style/rime/css-images/arrow-last.gif"
+			style="border:none;" title="Last Page" />
+	</f:facet>
+	<f:facet name="previous">
+		<ice:graphicImage url="../style/rime/css-images/arrow-previous.gif"
+			style="border:none;" title="Previous Page" />
+	</f:facet>
+	<f:facet name="next">
+		<ice:graphicImage url="../style/rime/css-images/arrow-next.gif"
+			style="border:none;" title="Next Page" />
+	</f:facet>
+	<f:facet name="fastforward">
+		<ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+			style="border:none;" title="Fast Forward" />
+	</f:facet>
+	<f:facet name="fastrewind">
+		<ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+			style="border:none;" title="Fast Backwards" />
+	</f:facet>
+</ice:dataPaginator>
+<!-- ice:dataTable width="350px" value="#{salarieAbsencesFormBB.fileListAbsence}"
+		var="file" rendered="#{not empty salarieAbsencesFormBB.fileListAbsence}">
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Nom du fichier" />
+			</f:facet>
+			<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+				style="color: red" 
+				rendered="#{salarieAbsencesFormBB.fileError}"/>
+
+			<a id="lien" href="#{file.accessPath}" target="_blank"><ice:outputText value="#{file.fileInfo.fileName}" /></a>
+		</ice:column>
+		
+		<ice:column>
+			<ice:outputText value="#{file.fileInfo.physicalPath}" />
+		</ice:column>
+
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Action" />
+			</f:facet>
+			<ice:commandLink value="Supprimez"
+				actionListener="#{salarieAbsencesFormBB.removeUploadedFileAbsence}"
+				style="text-decoration: underline; color: red;">
+				<f:param name="fileName" value="#{file.fileInfo.fileName}" />
+			</ice:commandLink>
+		</ice:column>
+	</ice:dataTable-->
+<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPopAbsence" draggable="true" modal="true"
+	rendered="true" visible="#{salarieAbsencesFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout absence" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieAbsencesFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieAbsencesForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

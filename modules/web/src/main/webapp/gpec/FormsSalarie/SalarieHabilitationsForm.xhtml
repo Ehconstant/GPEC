@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ice:inputHidden value="#{salarieHabilitationsFormBB.init}" />
+<h3>Formulaire de saisie d'une habilitation</h3>
+
+<ice:panelGrid columns="2">
+
+	<ice:outputLabel value="Type d'habilitation" />
+	<ice:panelGroup>
+		<ice:selectOneMenu id="typeHabilitationList"
+			value="#{salarieHabilitationsFormBB.idTypeHabilitationSelected}"
+			partialSubmit="true" style="overflow: auto;">
+			<f:selectItem  itemLabel="" itemValue="-1"/>
+			<f:selectItems
+				value="#{salarieHabilitationsFormBB.typeHabilitationList}" />
+		</ice:selectOneMenu>
+		<h:message for="typeHabilitationList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Valable du (jj/mm/aaaa)" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="dateDelivranceHabilitation"
+			value="#{salarieHabilitationsFormBB.delivrance}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			partialSubmit="true"
+			converterMessage="#{msg.dateTimeConverter}">
+			 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{dateSelect.timeZone}"/>
+			<f:converter converterId="dateConverter"
+							timeZone="#{dateSelect.timeZone}"/>
+		</ice:selectInputDate>
+		<h:message for="dateDelivranceHabilitation" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Valable au (jj/mm/aaaa)" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="dateExpirationHabilitation"
+			value="#{salarieHabilitationsFormBB.expiration}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			partialSubmit="true"
+			converterMessage="#{msg.dateTimeConverter}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/>
+			<f:converter converterId="dateConverter"
+							timeZone="#{dateSelect.timeZone}"/>
+		</ice:selectInputDate>
+		<h:message for="dateExpirationHabilitation" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Durée de validité restante (en jours)" />
+	
+		<ice:outputText value="#{salarieHabilitationsFormBB.dureeValidite}" 
+					partialSubmit="false"
+					id="idValiditeG"
+					style="font-weight:bold;"/>
+
+	
+	<ice:outputLabel value="Justificatif à  télécharger" />
+	<ice:panelGroup>
+		<ice:inputFile id="inputFileName" width="450" autoUpload="true"
+			progressListener="#{salarieHabilitationsFormBB.fileUploadProgress}"
+			actionListener="#{salarieHabilitationsFormBB.uploadFile}" 
+			disabled="#{not empty salarieHabilitationsFormBB.fileList}"
+			uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieHabilitationsFormBB.idSalarie}/habilitation/"/>
+		<ice:outputProgress value="#{salarieHabilitationsFormBB.fileProgress}"
+			styleClass="uploadProgressBar" />
+		<br/>
+		<h:message for="inputFileName" errorStyle="color: red"/>
+		<ice:dataTable width="350px"
+			value="#{salarieHabilitationsFormBB.fileList}" var="file"
+			rendered="#{not empty salarieHabilitationsFormBB.fileList}">
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Nom du fichier" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not file.fileError}">
+					<!-- <a id="lien" href="#{salarieHabilitationsFormBB.url}#{file.fileInfo.fileName}" target="_blank">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</a> -->
+					<ice:commandLink actionListener="#{salarieHabilitationsFormBB.download}"
+									 style="text-decoration: underline;" immediate="true">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</ice:commandLink>
+				</ice:panelGrid>
+				<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+					style="color: red" 
+					rendered="#{file.fileError}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+                    <ice:outputLabel
+                            value="Action"/>
+                </f:facet>
+				<ice:commandLink value="Supprimer"
+					onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+					actionListener="#{salarieHabilitationsFormBB.removeUploadedFileTemp}"
+					style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+</ice:panelGrid>
+
+<ice:outputLabel value="Commentaire "/>
+<ice:panelGrid style="width: 100%" colums="1" >
+	<ice:inputTextarea value="#{salarieHabilitationsFormBB.commentaire}" rows="3" style="width: 82%;resize: none;"></ice:inputTextarea>
+</ice:panelGrid>
+
+<ice:panelGrid columns="2">
+	<ice:commandButton id="idValider" value="Valider"
+				action="#{salarieHabilitationsFormBB.getRupture}" />
+	<ice:commandButton id="modalPnlCloseButton" type="submit"
+		value="Quitter"
+		actionListener="#{salarieHabilitationsFormBB.toggleModal}" 
+		immediate="true"/>
+</ice:panelGrid>
+
+<ice:panelPopup id="modalPnlPopAbs" draggable="true" rendered="true"
+	visible="#{salarieHabilitationsFormBB.modalRenderedAbs}"
+	style="width:450px;height:auto;">
+	<f:facet name="header">
+		<ice:outputText value="Rupture de poste" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Attention, il existe une rupture entre les postes pendant la période d'habilitation selectionnée. Voulez-vous continuer ?" />
+
+			<ice:commandButton id="validAbs" value="Continuer et valider"
+				action="#{salarieHabilitationsFormBB.saveOrUpdateSalarieHabilitation}" />
+			<ice:commandButton id="annulAbs" value="Annuler"
+				actionListener="#{salarieHabilitationsFormBB.toggleModalRupture}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+<ice:panelPopup id="modalDelFile" draggable="true" rendered="true"
+		visible="#{salarieHabilitationsFormBB.modalRenderedDelFile}"
+		style="width:285px;height:auto;top:-250px;left:200px;"
+		autoCentre="true"
+		positionOnLoadOnly="true" >
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+			<br />
+			<ice:commandButton id="delFile" value="oui"
+				actionListener="#{salarieHabilitationsFormBB.removeUploadedFileTemp}" />
+			<ice:commandButton id="cancelDelFile" value="non"
+				actionListener="#{salarieHabilitationsFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

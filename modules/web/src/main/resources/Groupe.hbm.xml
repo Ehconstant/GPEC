@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Groupe"
+		table="GROUPE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_GROUPE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomGroupe"
+			column="NOM_GROUPE"
+			type="text"
+			not-null="false"
+		/>
+		
+		<property
+			name="Deleted"
+			column="DELETED"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="FinPeriodeEssai"
+			column="FIN_PERIODE_ESSAI"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+	
+
+		<set name="ENTREPRISEs" inverse="true">
+			<key column="ID_GROUPE"/>
+			<one-to-many class="Entreprise"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

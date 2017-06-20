@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Service"
+		table="SERVICE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_SERVICE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomService"
+			column="NOM_SERVICE"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="Entreprise"
+			column="ID_ENTREPRISE"
+			class="Entreprise"
+			not-null="false"
+		>
+		</many-to-one>
+	
+
+		<set name="SALARIEs" inverse="true">
+			<key column="ID_SERVICE"/>
+			<one-to-many class="Salarie"/>
+		</set>
+
+		<set name="ENTRETIENs" inverse="true">
+			<key column="ID_SERVICE"/>
+			<one-to-many class="Entretien"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

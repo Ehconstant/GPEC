@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	<ui:define name="header">
+		<div style="height: 116px; padding-bottom: 10px; width: 1240px;">
+			<div style="padding-right: 25px; float: left;">
+				<ice:graphicImage id="iceGphImgPaysdauge" 
+								  value="/img/cci_paysdauge.jpg"
+								  alt="Logo CCI pays d'auge" title="Logo CCI"
+								  style="width: 171px;
+			           		  			 padding-right:10px;" /> 
+			    <ice:graphicImage id="iceGphImgHavre" 
+			    				  value="/img/cciLeHavreLogo.jpg" alt="Logo CCI"
+								  title="Logo CCI" style="padding-right:10px;" /> <ice:graphicImage
+								  id="iceGphImgFecamp-Bolbec" value="/img/cciFecamp-Bolbec-V.jpg"
+								  alt="Logo CCI Fecamp-Bolbec" title="Logo CCI" style="width: 135px;" />
+			</div>
+			<div style="text-align: center; margin-right: 260px; width: 500px; float: right;">
+				<h1>
+					<ice:outputText
+						value="Gestion Prévisionnelle des Emplois et des Compétences" />
+				</h1>
+			</div>
+		</div>
+	</ui:define>
+	
+	<ui:define name="navigation">
+	</ui:define>
+	
+	<ui:define name="content">
+			<div style="text-align: center;margin-top: 150px;color: red;" >
+				<h3>Vous venez de vous déconnecter.</h3> 
+				<h3>Vous pouvez maintenant fermer votre navigateur internet.</h3>
+				<ice:outputText value="#{exitBean.disconnect}" visible="false" />
+				<a href="../index.jsp">Retour à l'accueil</a>
+				
+			</div>
+	</ui:define>
+
+</ui:composition>

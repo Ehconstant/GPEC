@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Parcours"
+		table="PARCOURS"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_PARCOURS"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="DebutFonction"
+			column="DEBUT_FONCTION"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="FinFonction"
+			column="FIN_FONCTION"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<!-- property
+			name="DebutContrat"
+			column="DEBUT_CONTRAT"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="FinContrat"
+			column="FIN_CONTRAT"
+			type="date"
+			not-null="false"
+			length="10"
+		/-->
+		<property
+			name="EquivalenceTempsPlein"
+			column="EQUIVALENCE_TEMPS_PLEIN"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Coefficient"
+			column="COEFFICIENT"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Niveau"
+			column="NIVEAU"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Echelon"
+			column="ECHELON"
+			type="text"
+			not-null="false"
+		/>
+		<!-- property
+			name="natureContrat"
+			column="NATURE_CONTRAT"
+			type="text"
+			not-null="false"
+		/-->
+		<many-to-one
+			name="Metier"
+			column="ID_METIER"
+			class="Metier"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeContrat"
+			column="ID_TYPE_CONTRAT"
+			class="Typecontrat"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Statut"
+			column="ID_STATUT"
+			class="Statut"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeRecours"
+			column="ID_TYPE_RECOURS"
+			class="Typerecours"
+			not-null="false"
+		>
+		</many-to-one>
+		<!-- many-to-one
+			name="IdMotifRuptureContrat"
+			column="ID_MOTIF_RUPTURE_CONTRAT"
+			class="Motifrupturecontrat"
+			not-null="false"
+		>
+		</many-to-one-->
+
+	</class>	
+</hibernate-mapping>

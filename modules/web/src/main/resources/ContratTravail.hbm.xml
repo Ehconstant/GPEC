@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="ContratTravail"
+		table="CONTRAT_TRAVAIL"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_CONTRAT"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="DebutContrat"
+			column="DEBUT_CONTRAT"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="FinContrat"
+			column="FIN_CONTRAT"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="RenouvellementCDD"
+			column="RENOUVELLEMENT_CDD"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="natureContrat"
+			column="NATURE_CONTRAT"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="Metier"
+			column="ID_METIER"
+			class="Metier"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeContrat"
+			column="ID_TYPE_CONTRAT"
+			class="Typecontrat"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="MotifRuptureContrat"
+			column="ID_MOTIF_RUPTURE_CONTRAT"
+			class="Motifrupturecontrat"
+			not-null="false"
+		>
+		</many-to-one>
+
+	</class>	
+</hibernate-mapping>

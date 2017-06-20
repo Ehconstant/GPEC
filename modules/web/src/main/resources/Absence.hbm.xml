@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Absence"
+		table="ABSENCE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_ABSENCE"
+		>
+					<generator class="identity"/>
+		</id>
+
+		<property
+			name="DebutAbsence"
+			column="DEBUT_ABSENCE"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="FinAbsence"
+			column="FIN_ABSENCE"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="NombreJourOuvre"
+			column="NOMBRE_JOUR_OUVRE"
+			type="double"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="TypeAbsence"
+			column="ID_TYPE_ABSENCE"
+			class="Typeabsence"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+
+
+		</class>
+</hibernate-mapping>

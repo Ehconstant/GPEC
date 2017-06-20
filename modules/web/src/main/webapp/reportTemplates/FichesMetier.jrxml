@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichesMetier" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="fichesMetierList">
+		<field name="intituleFicheMetier" class="java.lang.String"/>
+		<field name="finaliteFicheMetier" class="java.lang.String"/>
+		<field name="activiteResponsabilite" class="java.lang.String"/>
+		<field name="savoir" class="java.lang.String"/>
+		<field name="savoirFaire" class="java.lang.String"/>
+		<field name="savoirEtre" class="java.lang.String"/>
+		<field name="niveauFormationRequis" class="java.lang.String"/>
+		<field name="particularite" class="java.lang.String"/>
+		<field name="csp" class="java.lang.String"/>
+		<field name="libelleEntreprise" class="java.lang.String"/>
+		<field name="idEntreprise" class="java.lang.Integer"/>
+		<field name="justificatif" class="java.lang.String"/>
+		<field name="url" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\projects\\gpec\\gpec\\modules\\web\\src\\main\\webapp\\reportTemplates\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="fichesMetierList" class="java.util.List"/>
+	<group name="lvl1"/>
+	<group name="lvl2"/>
+	<group name="lvl3"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="116" splitType="Immediate">
+			<subreport runToBottom="true">
+				<reportElement x="0" y="0" width="555" height="116"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{fichesMetierList})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "FichesMetier_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

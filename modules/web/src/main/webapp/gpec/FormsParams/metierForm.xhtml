@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:define name="content">
+<h3>Formulaire Métier</h3>
+	<h:form id="Formulaire">
+		<ice:panelGrid columns="2" columnClasses="verticalTop,verticalTop">
+			<h:outputText value="Nom du métier " for="nom"/>
+			<h:inputText id="nom" value="#{metierFormBB.nom}" onkeypress="return noSubmitOnEnter(event);" required="true" requiredMessage="#{msg.required}" style="width:300px;margin-left:2px;" />
+			<h:outputText value="" />
+			<ice:panelGroup>
+				<h:message for="nom" errorStyle="color: red"></h:message>
+				<br/><br/>
+			</ice:panelGroup>
+			
+			<h:outputText value="Rattachement à une famille de métier "/> 
+			<ice:panelGroup>
+				<ice:selectOneMenu id="select" value="#{metierFormBB.idFamilleMetier}" >
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems value="#{familleMetierList.selectItems}" />
+					<f:validator validatorId="selectOneMenuValidator"/>
+				 </ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<h:outputText value="" />
+			<ice:panelGroup>
+				<h:message for="select" errorStyle="color: red" ></h:message>
+				<br/><br/>
+			</ice:panelGroup>
+			
+			<h:outputText value="" />
+			<h:outputText value="" />
+			
+			<h:outputLabel value="Difficulté de recrutement "/>
+			<ice:panelGroup>
+				<ice:selectOneMenu id="difficulte" 
+						value="#{metierFormBB.idDifficulteSelected}"
+						valueChangeListener="#{metierFormBB.add}"
+						partialSubmit="true" >
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems value="#{metierFormBB.selectItemsDifficulte}" />
+				 </ice:selectOneMenu>
+			</ice:panelGroup>
+				<!-- ice:selectManyListbox id="difficulte" value="#{metierFormBB.idDifficulteSelected}" size="5">
+					<f:selectItems value="#{familleMetierList.selectItemsDifficulte}" />
+				</ice:selectManyListbox-->
+		<!-- style type="text/css">
+		.iceSelMnyLb option:nth-child(2) {
+			font-weight: bold;
+			color: black;
+		}
+		.iceSelMnyLb option:nth-child(9) {
+			font-weight: bold;
+			color: black;
+		}
+		.iceSelMnyLb option:nth-child(16) {
+			font-weight: bold;
+			color: black;
+		}
+		.verticalTop {
+		    vertical-align: top;
+		}
+		</style-->
+		<h:outputLabel value=""/>
+			<ice:panelGroup>
+				<ice:dataTable id="dataTable" value="#{metierFormBB.difficulteList}" var="item"
+				 		rendered="#{not empty metierFormBB.difficulteList}">
+			
+					<!-- Stock number -->
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Catégorie" />
+						</f:facet>
+						<ice:outputText value="#{item.categorie}" />
+					</ice:column>
+					
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Libellé" />
+						</f:facet>
+						<ice:outputText value="#{item.intitule}" />
+					</ice:column>
+					
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="Action" />
+						</f:facet>
+				
+						<ice:commandButton value="Supprimer" actionListener="#{metierFormBB.remove}">
+						</ice:commandButton>
+						
+					</ice:column>
+					
+				</ice:dataTable>
+			</ice:panelGroup>
+			<ice:panelGroup>
+				<br />
+		 
+				<h:commandButton value="Valider" action="#{metierFormBB.saveOrUpdateMetierFin}"/>
+				<h:commandButton value="Annuler" action="#{metierFormBB.annuler}" immediate="true"/>	
+			</ice:panelGroup>
+		</ice:panelGrid>
+	</h:form>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+
+
+	<h:form id="idForm">
+	<h3>Métiers</h3>
+	<ice:commandButton value="Ajouter un métier" 
+					   action="#{metierFormBB.init}">
+		     
+	</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;"/>
+	<ice:dataTable id="dataTable" value="#{metierList.metiersInventory}" var="item"
+	 rendered="#{not empty metierList.metiersInventory}">
+
+		<!-- Stock number -->
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Nom" />
+			</f:facet>
+			<ice:outputText value="#{item.nom}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Famille de métier" />
+			</f:facet>
+			<ice:outputText value="#{item.nomFamilleMetier}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Difficultés de recrutement" />
+			</f:facet>
+			<ice:outputText value="#{item.difficultesRencontrees}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Action" />
+			</f:facet>
+	
+			<ice:commandButton value="Modifier" actionListener="#{metierFormBB.modifier}" action="#{metierFormBB.formLink}" >
+					   		 
+			 <f:setPropertyActionListener target="#{metierFormBB.id}" value="#{item.id}" />
+ 			 <f:setPropertyActionListener target="#{metierFormBB.nom}" value="#{item.nom}" />
+			 <f:setPropertyActionListener target="#{metierFormBB.idFamilleMetier}" value="#{item.idFamilleMetier}" />
+			 <f:setPropertyActionListener target="#{metierFormBB.nomFamilleMetier}" value="#{item.nomFamilleMetier}" />
+			 <!-- f:setPropertyActionListener target="#{metierFormBB.initDifficulte}" value="" /-->
+			</ice:commandButton>
+			
+			<ice:commandButton id="idSupprimer" value="Supprimer" actionListener="#{metierFormBB.supprimerMetier}"
+								panelConfirmation="deleteConfirmPanelMetier">
+					   		 
+			 <f:setPropertyActionListener target="#{metierFormBB.id}" value="#{item.id}" />
+
+			</ice:commandButton>
+			<!-- Panel de confirmation de suppression -->
+			<ice:panelConfirmation id="deleteConfirmPanelMetier" 
+								   message="Êtes-vous sûr de vouloir supprimer ce métier ?"
+                    					   acceptLabel="Oui" 
+                    					   cancelLabel="Non"
+                    					   title="Confirmer"/>
+			
+		</ice:column>
+		
+	</ice:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+	<br/>
+	<b><h:outputText value="Votre logiciel est à jour!"/></b>
+	<br/><br/><br/><br/>
+	<h:outputText value="Version actuelle : #{updateBB.version}"/><br />
+	<b><h:outputText value="Les dernières évolutions "/></b><br />
+	<ice:inputTextarea id="changeLog" readonly="true" cols="90" rows="20" value="#{updateBB.changeLog}"></ice:inputTextarea>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Formulaire Entreprise</h3>
+		<h:form id="formulaire">
+			<table id="table">
+				<tr>
+					<td><h:outputText value="Nom de l'entreprise " for="nom" style="margin-left:2px;" /></td>
+					<td><h:inputText id="nom" value="#{entrepriseFormBB.nom}"
+						required="true" requiredMessage="#{msg.required}" /> <h:message
+						for="nom" errorStyle="color: red"
+						 onkeypress="return noSubmitOnEnter(event);"></h:message></td>
+				</tr>
+
+				<tr>
+					<td><h:outputText value="Numéro de Siret (14 chiffres)"
+						for="numSiret" /></td>
+					<td><h:inputText id="numSiret" label="numSiret"
+							value="#{entrepriseFormBB.numSiret}"
+							converterMessage="#{msg.integerConverterNumSiret}"
+							validatorMessage="Le numéro de Siret doit comprendre 14 chiffres"
+							required='true' requiredMessage="#{msg.required}"
+							onkeypress="return noSubmitOnEnter(event);"
+							style="margin-left:2px;" >
+						<f:validateLength maximum="14" minimum="14" />
+					</h:inputText> <h:message for="numSiret" errorStyle="color: red" /></td>
+				</tr>
+
+				<tr>
+					<td><h:outputText value="Code APE (5 caractères max) "
+						for="codeApe" /></td>
+					<td><h:inputText id="codeApe" label="codeApe"
+							value="#{entrepriseFormBB.codeApe}"
+							validatorMessage="Le code ape est trop long. Taille maximale : 5 "
+							required='true' requiredMessage="#{msg.required}"
+							onkeypress="return noSubmitOnEnter(event);"
+						 	style="margin-left:2px;" >
+						<f:validateLength maximum="5" minimum="1" />
+					</h:inputText> <h:message for="codeApe" errorStyle="color: red" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="CCI de rattachement"
+						for="codeApe" /></td>
+					<td><ice:selectOneMenu id="cciRattachement"
+						value="#{entrepriseFormBB.cciRattachement}" partialSubmit="false"
+						style="overflow: auto;" tabindex="2">
+						<f:selectItem itemLabel="CCI du Havre" itemValue="CCI du Havre" />
+						<f:selectItem itemLabel="CCI Fécamp-Bolbec" itemValue="CCI Fécamp-Bolbec" />
+						<f:selectItem itemLabel="CCI du Pays d'Auge" itemValue="CCI du Pays d'Auge" />
+						<f:selectItem itemLabel="Autres CCI" itemValue="Autres CCI" />
+					</ice:selectOneMenu>
+					<h:message for="cciRattachement" errorStyle="color: red"></h:message>
+				</td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Date de création"
+						for="codeApe" /></td>
+					<td>	<ice:selectInputDate id="dateCreation"
+								value="#{entrepriseFormBB.dateCreation}"
+								highlightClass="weekend: august:" renderMonthAsDropdown="true"
+								renderYearAsDropdown="true" immediate="true"
+								highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+								renderAsPopup="true" partialSubmit="true"
+								requiredMessage="#{msg.required}"
+								converterMessage="#{msg.dateTimeConverter}"
+								required="true">
+								<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate> <h:message for="dateCreation" errorStyle="color: red" /></td>
+				</tr>
+			</table>
+			<br />
+			<h:outputText value="Informations suivies avec ce logiciel"/>
+			<ice:panelGrid columns="2">
+				<ice:selectBooleanCheckbox value="#{entrepriseFormBB.suiviFormations}"
+                        				immediate="true" partialSubmit="true" style="margin-left: 10px;"
+                        				id="SFORM"></ice:selectBooleanCheckbox>
+                <ice:outputLabel value=" Formations " />
+                
+                <ice:selectBooleanCheckbox value="#{entrepriseFormBB.suiviAccidents}"
+                        				immediate="true" partialSubmit="true" style="margin-left: 10px;"
+                        				id="SACC"></ice:selectBooleanCheckbox>
+                <ice:outputLabel value=" Accidents " />
+                
+                <ice:selectBooleanCheckbox value="#{entrepriseFormBB.suiviAbsences}"
+                        				immediate="true" partialSubmit="true" style="margin-left: 10px;"
+                        				id="SABS"></ice:selectBooleanCheckbox>
+                <ice:outputLabel value=" Absences " />
+                
+                <ice:selectBooleanCheckbox value="#{entrepriseFormBB.suiviCompetences}"
+                        				immediate="true" partialSubmit="true" style="margin-left: 10px;"
+                        				id="SCOMP"></ice:selectBooleanCheckbox>
+                <ice:outputLabel value=" Compétences " />
+                
+                <ice:selectBooleanCheckbox value="#{entrepriseFormBB.suiviDIF}"
+                        				immediate="true" partialSubmit="true" style="margin-left: 10px;"
+                        				id="SDIF"></ice:selectBooleanCheckbox>
+                <ice:outputLabel value=" Gestion DIF " />
+            </ice:panelGrid>
+			<br />
+			
+			<h:outputText value="Seuil maximum du crédit DIF " />
+			<h:inputText id="maxDIF" value="#{entrepriseFormBB.DIFMax}"
+						style="width:30px;" />
+			<h:outputText value=" heures" />
+			<h:message for="maxDIF" errorStyle="color: red" />
+			
+			<br />
+			<br />
+			
+			<ice:outputLabel value="Un logo pourra être ajouté une fois l'entreprise créée." rendered="#{not (entrepriseFormBB.idEntreprise > 0)}"/>
+			
+			<ice:outputLabel value="Logo" rendered="#{entrepriseFormBB.idEntreprise > 0}"/>
+			<ice:panelGroup rendered="#{entrepriseFormBB.idEntreprise > 0}">
+				<ice:inputFile id="inputFileNameEntreprise" width="500" autoUpload="true"
+					progressListener="#{entrepriseFormBB.fileUploadProgressEntreprise}"
+					actionListener="#{entrepriseFormBB.uploadFileEntreprise}"
+					disabled="#{not empty entrepriseFormBB.fileListEntrepriseTemp}"
+					uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/logo_entreprise/#{entrepriseFormBB.idEntreprise}/" />
+				<ice:outputProgress value="#{entrepriseFormBB.fileProgressEntreprise}"
+					styleClass="uploadProgressBar" />
+				<br/>
+				<h:message for="inputFileNameEntreprise" errorStyle="color: red" />
+				<ice:dataTable width="350px" 
+					value="#{entrepriseFormBB.fileListEntrepriseTemp}" var="file"
+					rendered="#{not empty entrepriseFormBB.fileListEntrepriseTemp}">
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputLabel value="Nom du fichier" />
+						</f:facet>
+						<ice:panelGrid rendered="#{not file.fileError}">
+<!-- 							<a id="lien" href="#{entrepriseFormBB.url}#{entrepriseFormBB.id}/#{file.fileInfo.fileName}" target="_blank">
+								<ice:outputText value="#{file.fileInfo.fileName}" />
+							</a> -->
+							<ice:commandLink actionListener="#{entrepriseFormBB.downloadFromForm}"
+											 style="text-decoration: underline;" immediate="true">
+								<ice:outputText value="#{file.fileInfo.fileName}" />
+							</ice:commandLink>
+						</ice:panelGrid>
+						<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+							style="color: red" 
+							rendered="#{file.fileError}"/>
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputLabel value="Action" />
+						</f:facet>
+						<ice:commandLink value="Supprimer"
+							actionListener="#{entrepriseFormBB.removeUploadedFileEntrepriseTemp}"
+							style="text-decoration: underline; color: red;"
+							onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };">
+						</ice:commandLink>
+						<ice:panelConfirmation id="deleteConfirmPanelFileEntreprise"
+							message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+							acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+			
+			<br />
+			<h:commandButton id="Valider" value="Valider"
+				action="#{entrepriseFormBB.saveOrUpdateEntrepriseFin}" />
+			<h:commandButton value="Annuler" action="#{entrepriseFormBB.annuler}"
+				immediate="true" />
+				
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Salarie"
+		table="SALARIE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_SALARIE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Civilite"
+			column="CIVILITE"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="Nom"
+			column="NOM"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="Prenom"
+			column="PRENOM"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="Adresse"
+			column="ADRESSE"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="DateNaissance"
+			column="DATE_NAISSANCE"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="LieuNaissance"
+			column="LIEU_NAISSANCE"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="Telephone"
+			column="TELEPHONE"
+			type="string"
+			not-null="false"
+			length="15"
+		/>
+		<property
+			name="CreditDif"
+			column="CREDIT_DIF"
+			type="double"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="IdLienSubordination"
+			column="ID_LIEN_SUBORDINATION"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="NivFormationInit"
+			column="NIV_FORMATION_INIT"
+			type="string"
+			not-null="false"
+			length="11"
+		/>
+		<property
+			name="NivFormationAtteint"
+			column="NIV_FORMATION_ATTEINT"
+			type="string"
+			not-null="false"
+			length="11"
+		/>
+		<property
+			name="Cv"
+			column="CV"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		
+		<property
+			name="Present"
+			column="PRESENT"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Impression"
+			column="IMPRESSION"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="PossedePermisConduire"
+			column="POSSEDE_PERMIS_CONDUIRE"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="DateLastSaisieDif"
+			column="DATE_LAST_SAISIE_DIF"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="TelephonePortable"
+			column="TELEPHONE_PORTABLE"
+			type="string"
+			not-null="false"
+			length="15"
+		/>
+		<property
+			name="SituationFamiliale"
+			column="SITUATION_FAMILIALE"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="PersonneAPrevenirNom"
+			column="PERSONNE_A_PREVENIR_NOM"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="PersonneAPrevenirPrenom"
+			column="PERSONNE_A_PREVENIR_PRENOM"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="PersonneAPrevenirAdresse"
+			column="PERSONNE_A_PREVENIR_ADRESSE"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="PersonneAPrevenirTelephone"
+			column="PERSONNE_A_PREVENIR_TELEPHONE"
+			type="string"
+			not-null="false"
+			length="15"
+		/>
+		<property
+			name="PersonneAPrevenirLienParente"
+			column="PERSONNE_A_PREVENIR_LIEN_PARENTE"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="Commentaire"
+			column="COMMENTAIRE"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="Entreprise"
+			column="ID_ENTREPRISE"
+			class="Entreprise"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Service"
+			column="ID_SERVICE"
+			class="Service"
+			not-null="false"
+		>
+		</many-to-one>
+	
+		<set name="CONTRATSTRAVAILs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="ContratTravail"/>
+		</set>
+
+		<set name="FORMATIONs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Formation"/>
+		</set>
+
+		<set name="PARCOURSs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Parcours"/>
+		</set>
+
+		<set name="ABSENCEs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Absence"/>
+		</set>
+
+		<set name="ENTRETIENs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Entretien"/>
+		</set>
+
+		<set name="ACCIDENTs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Accident"/>
+		</set>
+
+		<set name="HABILITATIONs" inverse="true" cascade="all">
+			<key column="ID_SALARIE"/>
+			<one-to-many class="Habilitation"/>
+		</set>
+		
+		<set name="FICHEDEPOSTEs" inverse="true" >
+			<key column="ID_SALARIE"/>
+			<one-to-many class="FicheDePoste"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

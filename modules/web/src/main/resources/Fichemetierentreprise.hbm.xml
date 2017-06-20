@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="FicheMetierEntreprise" table="FICHEMETIERENTREPRISE">
+		<composite-id>
+			<key-many-to-one
+				class="FicheMetier"
+				column="ID_FICHE_METIER"
+				name="FicheMetier"
+			 />
+			<key-many-to-one
+				class="Entreprise"
+				column="ID_ENTREPRISE"
+				name="Entreprise"
+			 />
+		</composite-id>
+	</class>
+</hibernate-mapping>

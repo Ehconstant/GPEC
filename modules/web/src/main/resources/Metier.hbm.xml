@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Metier"
+		table="METIER"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_METIER"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomMetier"
+			column="NOM_METIER"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Difficultes"
+			column="DIFFICULTES"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="FamilleMetier"
+			column="ID_FAMILLE_METIER"
+			class="Famillemetier"
+			not-null="false"
+		>
+		</many-to-one>
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+	
+
+		<set name="PARCOURSs" inverse="true">
+			<key column="ID_METIER"/>
+			<one-to-many class="Parcours"/>
+		</set>
+
+		<set name="ENTRETIENs" inverse="true">
+			<key column="ID_METIER"/>
+			<one-to-many class="Entretien"/>
+		</set>
+	
+		<!-- <set
+			name="PLANNINGEMBAUCHEs"
+			table="METIERPLANNINGEMBAUCHE"
+			cascade="all"
+		>
+			<key column="ID_METIER"/>
+			<many-to-many column="ID_PLANNING_EMBAUCHE" class="Planningembauche"/>
+		</set> -->
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	<ui:define name="content">
+		<h3>Pyramide de l'ancienneté</h3>
+		<ice:form>
+			<ice:panelGrid columns="2">
+				<ice:outputLabel for="entrepriseListPyramideA" value="Entreprise " />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListPyramideA"
+						value="#{pyramideAncienneteFormBB.idEntrepriseSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{pyramideAncienneteFormBB.recalculePyramide}" 
+						partialSubmit="true">
+						<f:selectItems value="#{pyramideAncienneteFormBB.entrepriseList}" />
+					</ice:selectOneMenu>
+					
+						
+				</ice:panelGroup>
+				<ice:outputLabel for="idServiceListPyramideA" value="Service " rendered="#{not empty pyramideAncienneteFormBB.servicesList}"/>
+				<ice:panelGroup rendered="#{not empty pyramideAncienneteFormBB.servicesList}">
+						<ice:selectOneMenu id="idServiceListPyramideA"
+							 partialSubmit="true"
+							 style="overflow: auto;"
+							 valueChangeListener="#{pyramideAncienneteFormBB.recalculePyramide}"
+							 value="#{pyramideAncienneteFormBB.idServiceSelected}">
+							 <f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{pyramideAncienneteFormBB.servicesList}" />
+						</ice:selectOneMenu>
+					</ice:panelGroup>
+				<ice:outputLabel value="Métier "  rendered="#{not empty pyramideAncienneteFormBB.metierList}"/>
+				<ice:panelGroup rendered="#{not empty pyramideAncienneteFormBB.metierList}">
+					<ice:selectOneMenu id="metierListPyramideA"
+						value="#{pyramideAncienneteFormBB.idMetierSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{pyramideAncienneteFormBB.recalculePyramide}"
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{pyramideAncienneteFormBB.metierList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>				
+			</ice:panelGrid>
+			<br />
+			<br />
+			 <ice:outputResource id="imageResource"
+	                    resource="#{pyramideAncienneteFormBB.imagen}" mimeType="image/jpeg"
+	                    fileName="pyramideAnciennete.jpeg" 
+	                    shared="false"
+	                    label="Exporter la pyramide d'ancienneté"
+	                    type="button"/>	
+	        <br />
+			<br />
+		</ice:form>
+		<ice:panelGroup>              
+		<ice:graphicImage id="iceGphPyramideA" value="#{pyramideAncienneteFormBB.imagen}"
+		           alt="Pyramide" title="Pyramide"/> 
+		</ice:panelGroup>
+		
+	</ui:define>
+
+</ui:composition>

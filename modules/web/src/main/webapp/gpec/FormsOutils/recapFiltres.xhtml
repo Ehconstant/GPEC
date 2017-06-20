@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+		<ice:outputText rendered="#{empty filtreMultiBB.filtres}" value="Aucun filtre n'a été selectionné"/>
+		<ice:dataTable rendered="#{not empty filtreMultiBB.filtres}" value="#{filtreMultiBB.filtres}" var="item" id="idDatatableFiltreRecap">
+			<f:facet name="header">
+		        <ice:columnGroup>
+		            <ice:headerRow>
+		            	<ice:column>
+				        	<ice:outputText value="Filtres utilisés"/>
+				        </ice:column>
+				        <ice:column>
+				        	<ice:outputText value="Valeurs sélectionnées"/>
+				        </ice:column>
+				    </ice:headerRow>    
+	           </ice:columnGroup>
+	        </f:facet> 
+			<ice:column>
+					<ice:outputText value="#{item.filtre}" />
+			</ice:column>
+			<ice:column>
+					<ice:outputText value="#{item.value}" />
+			</ice:column>
+		</ice:dataTable>
+		<br/>
+		
+		<ice:commandButton id="closeRecap" action="#{filtreMultiBB.closeRecap}" value="Fermer" />
+	
+</html>

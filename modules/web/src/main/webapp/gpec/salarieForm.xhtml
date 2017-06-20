@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<ui:define name="content">
+		<h3>Formulaire de saisie d'un salarié</h3>
+		<head>
+		<link href="../style/overrideTab/override.css" rel="stylesheet"
+			type="text/css" />
+		<link href="../style/tipsy/tipsy.css" rel="stylesheet"
+			type="text/css" />
+		</head>
+		<h:form id="idSalarieForm" enctype="multipart/form-data">
+			<ice:commandButton
+				value="Revenir à la liste des salariés" style="font-size:12px"
+				action="#{salarieFormBB.retour}" immediate="true" />
+				
+			<ice:commandButton
+				value="Retour à la recherche" style="font-size:12px"
+				action="#{filtreMultiBB.retourRecherche}" immediate="true" 
+				rendered="#{filtreMultiBB.retourSession}" />
+			<br />
+			<br />
+			<ice:outputText value="Fiche individuelle de "
+				rendered="#{not empty salarieFormBB.nom}" />
+			<ice:outputText style="font-weight:bold"
+				value="#{salarieFormBB.nom} " />
+			<ice:outputText style="font-weight:bold"
+				value=" #{salarieFormBB.prenom}  " />
+			<br />
+			<ice:outputText value="Entreprise "
+				rendered="#{(filtreMultiBB.retourSession or salariesList.idEntrepriseSelected == -1) and not salarieFormBB.newSalarieTab}" />
+			<ice:outputText style="font-weight:bold"
+				value="#{salarieFormBB.entreprise} "
+				rendered="#{(filtreMultiBB.retourSession or salariesList.idEntrepriseSelected == -1) and not salarieFormBB.newSalarieTab}"  />	
+			
+			<!--   <ice:selectBooleanCheckbox
+             value="#{salarieFormBB.present}"
+             valueChangeListener="#{salarieFormBB.changePresent}"
+             id="presenceSalarie"
+         	/>-->
+			<br />
+			<br />
+			
+				<ice:panelGrid columns="2">
+					<ice:outputLabel value=" Sorti(e) de l'entreprise ?"
+						for="presenceSalarie" />
+					<ice:selectOneRadio id="presenceSalarie"
+						value="#{salarieFormBB.present}">
+						<f:selectItem itemLabel="Oui" itemValue="false" />
+						<f:selectItem itemLabel="non" itemValue="true" />
+					</ice:selectOneRadio>
+				</ice:panelGrid>
+				
+				<br />
+				<br />
+	
+				<ice:panelTabSet immediate="false" partialSubmit="false"
+					id="idSalarieTabSet"
+					tabChangeListener="#{salarieFormBB.processTabChange}" >
+					<ice:panelTab label="Coordonnées" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+	
+					<ice:panelGrid columns="2" style="width: 990px;">
+						<ice:panelGrid columns="2" style="width: 492px;">
+							<ice:panelGroup>
+								<ice:commandButton id="enregistrer1" value="Enregistrer"
+									action="#{salarieFormBB.saveOrUpdateSalarie}" />
+
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							
+							<ice:outputText for="idEntrepriseList" value="Entreprise" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<ice:selectOneMenu id="idEntrepriseList" 
+									tabindex="0" 
+									style="overflow: auto;"
+									value="#{salarieFormBB.idEntrepriseSelected}"
+									valueChangeListener="#{salarieFormBB.entrepriseChanged}"
+									partialSubmit="true">
+									<f:selectItem itemLabel="" itemValue="-1" />
+<!-- 									<f:selectItems value="#{salariesList.entrepriseList}" /> -->
+									<f:selectItems value="#{salarieFormBB.entrepriseList}" />
+								</ice:selectOneMenu>
+	
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idEntrepriseList" errorStyle="color: red"></h:message>
+	
+							<ice:outputText for="idServiceListS" value="Service" />
+							<ice:panelGroup>
+								<ice:selectOneMenu id="idServiceListS" 
+									tabindex="1" 
+									style="overflow: auto;" 
+									value="#{salarieFormBB.idServiceSelected}">
+									<f:selectItem itemLabel="" itemValue="-1" />
+									<f:selectItems value="#{salarieFormBB.servicesList}" />
+								</ice:selectOneMenu>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idServiceListS" errorStyle="color: red"></h:message>
+	
+							<ice:outputText value="Civilité" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<ice:selectOneMenu id="civiliteList"
+									value="#{salarieFormBB.civilite}" 
+									tabindex="2" 
+									style="overflow: auto;" 
+									>
+									<f:selectItem id="c_1" itemLabel="Madame" itemValue="Madame" />
+									<f:selectItem id="c_3" itemLabel="Monsieur" itemValue="Monsieur" />
+								</ice:selectOneMenu>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="civiliteList" errorStyle="color: red"></h:message>
+	
+							<ice:outputText value="Nom" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.nom}" 
+									id="idNom" 
+									tabindex="3"
+									immediate="true"
+									valueChangeListener="#{salarieFormBB.effectChangeListener}"
+									partialSubmit="true" 
+									style="width:189px;margin-bottom:4px;margin-top:2px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);"/>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idNom" errorStyle="color: red"></h:message>
+	
+							<ice:outputText value="Prénom" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.prenom}" 
+									id="idPrenom"
+									tabindex="4" 
+									immediate="true"
+									valueChangeListener="#{salarieFormBB.effectChangeListener}"
+									partialSubmit="true" 
+									style="width:189px;margin-bottom:4px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);"/>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idPrenom" errorStyle="color: red"></h:message>
+	
+							<ice:outputText id="popupSelectedDateTxt"
+								value="Date de naissance (jj/mm/aaaa)" />
+							<ice:panelGroup>
+								<style type="text/css">
+	.iceSelInpDateOpenPopup {
+		display: none;
+	}
+	.iceSelInpDateInput {
+		width : 189px;
+		margin-bottom: 4px;
+	}
+	</style>
+								<!-- Calendar Component -->
+								<ice:selectInputDate id="date1"
+									value="#{salarieFormBB.dateNaissance}"
+									valueChangeListener="#{dateSelect.effectChangeListener}"
+									highlightClass="weekend: august:" 
+									renderMonthAsDropdown="true"
+									immediate="true" 
+									tabindex="6" 
+									renderYearAsDropdown="true"
+									highlightUnit="DAY_OF_WEEK: MONTH" 
+									highlightValue="1,7: 8"
+									renderAsPopup="true" 
+									converterMessage="#{msg.dateTimeConverter}"
+									>
+									<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}"/> -->
+									<f:converter converterId="dateConverter"
+										timeZone="#{dateSelect.timeZone}" />
+								</ice:selectInputDate>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="date1" errorStyle="color: red"></h:message>
+							
+							<ice:outputText value="Lieu de naissance" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.lieuNaissance}"
+									tabindex="7" 
+									id="idLieuNaissance"
+									partialSubmit="true" 
+									style="width:189px;margin-bottom:4px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);"/>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idLieuNaissance" errorStyle="color: red"></h:message>
+							
+							<ice:outputText value="Adresse" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.adresse}" 
+									id="idAdresse"
+									tabindex="5" 
+									partialSubmit="false" 
+									style="width:189px;margin-bottom:4px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);"/>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idAdresse" errorStyle="color: red"></h:message>
+	
+							<ice:outputText value="Téléphone fixe" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.telephone}" 
+									id="idTel" 
+									tabindex="8"
+									partialSubmit="true" 
+									immediate="true"
+									style="width:189px;margin-bottom:4px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);">
+								</h:inputText>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idTel" errorStyle="color: red"></h:message>
+							
+							<ice:outputText value="Téléphone portable" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.telephonePortable}" 
+									id="idTelP" 
+									tabindex="8" 
+									partialSubmit="true" 
+									immediate="true"
+									style="width:189px;margin-bottom:4px;margin-left:2px;" 
+									onkeypress="return noSubmitOnEnter(event);">
+								</h:inputText>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="idTelP" errorStyle="color: red"></h:message>
+							
+							<ice:outputText value=" Permis de conduire "/>
+							<ice:panelGrid columns="2">
+								<ice:selectOneRadio id="permisConduire"
+									value="#{salarieFormBB.possedePermisConduire}">
+									<f:selectItem itemLabel="Oui" itemValue="true" />
+									<f:selectItem itemLabel="non" itemValue="false" />
+								</ice:selectOneRadio>
+							</ice:panelGrid>
+	
+							<ice:outputText value="Niveau de formation initial" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<ice:selectOneMenu id="nivFormationInitList"
+									value="#{salarieFormBB.nivFormationInit}" 
+									style="overflow: auto;"
+									valueChangeListener="#{salarieFormBB.niveauInitChanged}">
+									<f:selectItems value="#{salarieFormBB.nivFormationInitList}" />
+								</ice:selectOneMenu>
+								<ice:commandButton id="modalPnlCloseBtn"
+									actionListener="#{salarieFormBB.toggleModalTest}"
+									partialSubmit="true" 
+									value="Aide" 
+									alt="Close" 
+									immediate="true" />
+	
+								<ice:panelGroup>
+									<ice:panelPopup rendered="true"
+										visible="#{salarieFormBB.modalRenderedTest}" 
+										draggable="false"
+										modal="true">
+	
+										<f:facet name="header">
+											<ice:panelGroup styleClass="popupHeaderWrapper">
+												<ice:outputText value="Aide" styleClass="popupHeaderText" />
+											</ice:panelGroup>
+										</f:facet>
+										<f:facet name="body">
+											<ui:include src="/gpec/FormsSalarie/SalarieFormAide.xhtml" />
+										</f:facet>
+									</ice:panelPopup>
+	
+								</ice:panelGroup>
+	
+							</ice:panelGroup>
+	
+							<!-- 
+							<ice:outputLabel value="N° de sécurité sociale(sans espaces)" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<h:inputText value="#{salarieFormBB.numSecu}" 
+											 required="true"
+											 id="NumSecu" 
+											 requiredMessage="#{msg.required}"
+											 validatorMessage="#{msg.secuValid}"
+											 partialSubmit="true">
+									<f:validateLength maximum="15" minimum="1" />
+								</h:inputText>
+								<h:message for="NumSecu" errorStyle="color: red"></h:message>
+							</ice:panelGroup>
+							-->
+	
+							<ice:outputText value="Responsable hiérarchique" />
+							<ice:panelGroup styleClass="selectionListBoxGroup">
+								<ice:selectOneMenu id="sepCnty" 
+									style="overflow: auto;width:275px;" 
+									tabindex="9"
+									value="#{salarieFormBB.idLienSubordination}">
+									<f:selectItem itemLabel="" itemValue="-2" />
+									<f:selectItem itemLabel="Directeur de l'entreprise"
+										itemValue="0" />
+									<f:selectItems value="#{salarieFormBB.salariesList}" />
+								</ice:selectOneMenu>
+							</ice:panelGroup>
+							<ice:outputLabel value="" />
+							<h:message for="sepCnty" errorStyle="color: red"></h:message>
+							
+					</ice:panelGrid>
+					
+					<ice:panelGroup>
+						<fieldset style="border: 1px solid;width: 492px;">
+							<legend style="font-weight:bold;">Personne à prévenir en cas d'urgence</legend>
+							<ice:panelGrid columns="2">
+								<ice:outputText value="Nom " />
+								<ice:panelGroup styleClass="selectionListBoxGroup">
+									<h:inputText value="#{salarieFormBB.personneAPrevenirNom}" 
+											id="idPAPNom" 
+											onkeypress="return noSubmitOnEnter(event);"
+											valueChangeListener="#{salarieFormBB.effectChangeListener}"
+											partialSubmit="true" 
+											immediate="true"
+											style="margin-bottom:4px;"/>
+								</ice:panelGroup>
+								<ice:outputLabel value="" />
+								<h:message for="idPAPNom" errorStyle="color: red"></h:message>
+								
+								<ice:outputText value="Prénom " />
+								<ice:panelGroup styleClass="selectionListBoxGroup">
+									<h:inputText value="#{salarieFormBB.personneAPrevenirPrenom}" 
+											id="idPAPPrenom" 
+											onkeypress="return noSubmitOnEnter(event);"
+											valueChangeListener="#{salarieFormBB.effectChangeListener}"
+											partialSubmit="true" 
+											immediate="true"
+											style="margin-bottom:4px;"/>
+								</ice:panelGroup>
+								<ice:outputLabel value="" />
+								<h:message for="idPAPPrenom" errorStyle="color: red"></h:message>
+								
+								<ice:outputText value="Adresse " />
+								<ice:panelGroup styleClass="selectionListBoxGroup">
+									<h:inputText value="#{salarieFormBB.personneAPrevenirAdresse}" 
+											id="idPAPAd" 
+											onkeypress="return noSubmitOnEnter(event);"
+											valueChangeListener="#{salarieFormBB.effectChangeListener}"
+											partialSubmit="true" 
+											immediate="true"
+											style="margin-bottom:4px;"/>
+								</ice:panelGroup>
+								<ice:outputLabel value="" />
+								<h:message for="idPAPAd" errorStyle="color: red"></h:message>
+								
+								<ice:outputText value="Téléphone " />
+								<ice:panelGroup styleClass="selectionListBoxGroup">
+									<h:inputText value="#{salarieFormBB.personneAPrevenirTelephone}" 
+											id="idPAPTel" 
+											onkeypress="return noSubmitOnEnter(event);"
+											valueChangeListener="#{salarieFormBB.effectChangeListener}"
+											partialSubmit="true" 
+											immediate="true"
+											style="margin-bottom:4px;"/>
+								</ice:panelGroup>
+								<ice:outputLabel value="" />
+								<h:message for="idPAPTel" errorStyle="color: red"></h:message>
+								
+								<ice:outputText value="Lien de parenté " />
+								<ice:panelGroup styleClass="selectionListBoxGroup">
+									<h:inputText value="#{salarieFormBB.personneAPrevenirLienParente}" 
+											id="idPAPLien" 
+											onkeypress="return noSubmitOnEnter(event);"
+											valueChangeListener="#{salarieFormBB.effectChangeListener}"
+											partialSubmit="true" 
+											immediate="true"/>
+								</ice:panelGroup>
+								<ice:outputLabel value="" />
+								<h:message for="idPAPLien" errorStyle="color: red"></h:message>
+								
+							</ice:panelGrid>
+						</fieldset>
+						<br />
+						<br />
+						<fieldset style="border: 1px solid;width: 492px;">
+							<legend style="font-weight:bold;">Pièces justificatives fournies</legend>
+							<ice:panelGrid columns="2">
+								<ice:selectBooleanCheckbox value="#{salarieFormBB.carteIdentite}"
+                        				style="margin-left: 10px;"
+                        				id="CI">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Carte d'identité " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.attestationSecu}"
+                        				style="margin-left: 10px;"
+                        				id="ASS">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Attestation de sécurité sociale " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.permisConduire}"
+                        				style="margin-left: 10px;"
+                        				id="PC">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Permis de conduire " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.rib}"
+                        				style="margin-left: 10px;"
+                        				id="RIB">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" RIB " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.diplomes}"
+                        				style="margin-left: 10px;"
+                        				id="D">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Diplômes " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.certificatTravail}"
+                        				style="margin-left: 10px;"
+                        				id="CT">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Certificat(s) de travail " />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.attestationVisiteMedicale}"
+                        				style="margin-left: 10px;"
+                        				id="AVM">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value="Attestation dernière visite médicale (lors de l'embauche)" />
+                        		
+                        		<ice:selectBooleanCheckbox value="#{salarieFormBB.habilitations}"
+                        				style="margin-left: 10px;"
+                        				id="H">
+                        		</ice:selectBooleanCheckbox>
+                        		<ice:outputText value=" Habilitations " />
+                        	</ice:panelGrid>
+			
+						</fieldset>
+					
+					</ice:panelGroup>
+				</ice:panelGrid>
+				<br />
+				<br />	
+				<ice:panelGroup>
+					<fieldset style="border: 1px solid;width: 990px;">
+						<legend style="font-weight:bold;">Situation familiale</legend>
+						
+						<ice:outputText value="Statut" />
+						<ice:selectOneRadio id="SituFam"
+								value="#{salarieFormBB.situationFamiliale}" partialSubmit="true">
+							<f:selectItem itemLabel="Célibataire&#160;&#160;&#160;&#160;" itemValue="Célibataire" />
+							<f:selectItem itemLabel="Marié (e)&#160;&#160;&#160;&#160;" itemValue="Marié (e)" />
+							<f:selectItem itemLabel="Divorcé (e)&#160;&#160;&#160;&#160;" itemValue="Divorcé (e)" />
+							<f:selectItem itemLabel="Veuf (ve)&#160;&#160;&#160;&#160;" itemValue="Veuf (ve)" />
+							<f:selectItem itemLabel="Pacsé (e)&#160;&#160;&#160;&#160;" itemValue="Pacsé (e)" />
+							<f:selectItem itemLabel="Séparé (e)&#160;&#160;&#160;&#160;" itemValue="Séparé (e)" />
+						</ice:selectOneRadio>
+						
+						<br />
+							
+						<ice:outputText value=" Personnes à charge "/>
+						<ice:dataTable value="#{salarieFormBB.personneAChargeBeanList}" 
+							var="item"
+							rendered="#{not empty salarieFormBB.personneAChargeBeanList}"
+							id="idDatatablePersonneAChargeNonEditable" 
+							columnWidths="190px,190px,198px,190px,160px">
+						
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Nom" />
+								</f:facet>
+								<ice:outputText value="#{item.nom}" />
+							</ice:column>
+						
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Prenom" />
+								</f:facet>
+								<ice:outputText value="#{item.prenom}" />
+							</ice:column>
+						
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Date de naissance" />
+								</f:facet>
+								<ice:outputText value="#{item.dateNaissance}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="#{dateSelect.timeZone}" />
+								</ice:outputText>
+							</ice:column>
+												
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Lien de parenté" />
+								</f:facet>
+								<ice:outputText value="#{item.lienParente}" />
+							</ice:column>
+							
+							<ice:column>
+								<ice:commandButton id ="idModifier" 
+												   value="Modifier" 
+												   actionListener="#{salarieFormBB.modifierPersonneACharge}"
+												   disabled="#{salarieFormBB.displayButton}">
+								</ice:commandButton>
+								<ice:commandButton id ="idSupprimer" 
+												   value="Supprimer" 
+												   actionListener="#{salarieFormBB.removePersonneACharge}"
+												   disabled="#{salarieFormBB.displayButton}">
+								</ice:commandButton>
+							</ice:column>
+							
+						</ice:dataTable>
+						
+						<ice:dataTable value="#{salarieFormBB.personneAChargeBeanListTemp}" 
+							var="item"
+							rendered="#{not empty salarieFormBB.personneAChargeBeanListTemp}"
+							id="idDatatablePersonneAChargeEditable" 
+							columnWidths="190px,190px,190px,190px,160px">
+						
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Nom" rendered="#{empty salarieFormBB.personneAChargeBeanList}"/>
+								</f:facet>
+								<ice:inputText style="width: 90%;" value="#{item.nom}" />
+							</ice:column>
+							
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Prenom" rendered="#{empty salarieFormBB.personneAChargeBeanList}"/>
+								</f:facet>
+								<ice:inputText style="width: 90%;" value="#{item.prenom}" />
+							</ice:column>
+						
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Date de naissance" rendered="#{empty salarieFormBB.personneAChargeBeanList}"/>
+								</f:facet>
+								<ice:selectInputDate id="dateNaissance"
+									value="#{item.dateNaissance}"
+									valueChangeListener="#{dateSelect.effectChangeListener}"
+									highlightClass="weekend: august:" 
+									renderMonthAsDropdown="true"
+									immediate="true" 
+									renderYearAsDropdown="true"
+									highlightUnit="DAY_OF_WEEK: MONTH" 
+									highlightValue="1,7: 8"
+									renderAsPopup="true" 
+									converterMessage="#{msg.dateTimeConverter}"
+									style="width: 90%;">
+									<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}"/> -->
+									<f:converter converterId="dateConverter"
+										timeZone="#{dateSelect.timeZone}" />
+								</ice:selectInputDate>
+								<h:message for="dateNaissance" errorStyle="color: red"></h:message>
+							</ice:column>
+												
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="Lien de parenté" rendered="#{empty salarieFormBB.personneAChargeBeanList}"/>
+								</f:facet>
+								<ice:inputText style="width: 90%;" value="#{item.lienParente}" />
+							</ice:column>
+							
+							<ice:column>
+								<ice:commandButton id ="idAjouter" 
+												   value="Enregistrer" 
+												   actionListener="#{salarieFormBB.addPersonneACharge}">
+								</ice:commandButton>
+								<ice:commandButton id ="idAnnuler" 
+												   value="Annuler" 
+												   actionListener="#{salarieFormBB.cancelPersonneACharge}">
+								</ice:commandButton>
+							</ice:column>
+							
+						</ice:dataTable>		
+					</fieldset>			
+
+					<br />
+
+					<fieldset style="border: 1px solid;width: 990px;">
+						<legend style="font-weight:bold;">Commentaires</legend>
+
+						<ice:panelGrid style="width: 100%" colums="1" >
+							<ice:inputTextarea value="#{salarieFormBB.commentaire}" 
+									maxlength="8000" 
+									rows="5" 
+									style="width: 98%;resize: none;">
+							</ice:inputTextarea>
+						</ice:panelGrid>
+
+						<ice:panelGrid columns="2">
+							<ice:outputText value=" Impression du commentaire "/>
+							<ice:selectOneRadio id="impression"
+								value="#{salarieFormBB.impression}" >
+								<f:selectItem itemLabel="Oui" itemValue="true" />
+								<f:selectItem itemLabel="non" itemValue="false" />
+							</ice:selectOneRadio>
+						</ice:panelGrid>
+					</fieldset>
+
+					<br />
+					
+					<fieldset style="border: 1px solid;width: 990px;">
+						<legend style="font-weight:bold;">Justificatif</legend>
+						<ice:panelGrid columns="2">
+							<ice:panelGroup>
+								<ice:inputFile id="inputFileNameCV" width="500"
+									autoUpload="true"
+									progressListener="#{salarieFormBB.fileUploadProgress}"
+									actionListener="#{salarieFormBB.uploadFile}"
+									uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieFormBB.id}/"
+									disabled="#{not empty salarieFormBB.fileList}" />
+								<ice:outputProgress value="#{salarieFormBB.fileProgress}"
+									styleClass="uploadProgressBar" />
+								<br/>
+								<h:message for="inputFileNameCV" errorStyle="color: red"/>
+							</ice:panelGroup>
+							<ice:panelGroup>
+								<ice:dataTable width="350px" value="#{salarieFormBB.fileList}"
+									var="file" rendered="#{not empty salarieFormBB.fileList}">
+									<ice:column>
+									<f:facet name="header">
+											<ice:outputLabel value="Nom du fichier" />
+										</f:facet>
+										<ice:panelGrid rendered="#{not salarieFormBB.fileError}">
+<!-- 											<a id="lien" href="#{salarieFormBB.url}#{file.fileInfo.fileName}" target="_blank">
+												<ice:outputText value="#{file.fileInfo.fileName}" />
+											</a> -->
+											<ice:commandLink actionListener="#{salarieFormBB.download}"
+															style="text-decoration: underline;">
+												<ice:outputText value="#{file.fileInfo.fileName}" />
+											</ice:commandLink>
+										</ice:panelGrid>
+										<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+											style="color: red" 
+											rendered="#{salarieFormBB.fileError}"/>
+									</ice:column>
+									<ice:column>
+										<f:facet name="header">
+											<ice:outputLabel value="Action" />
+										</f:facet>
+										<ice:commandLink value="Supprimer"
+											actionListener="#{salarieFormBB.removeUploadedFile}"
+											style="text-decoration: underline; color: red;"
+											onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };">
+										</ice:commandLink>
+										<ice:panelConfirmation id="deleteConfirmPanelFile"
+												message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+												acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+									</ice:column>
+								</ice:dataTable>
+							</ice:panelGroup>
+						</ice:panelGrid>
+					</fieldset>
+
+					<br />
+					<br />
+					
+					<fieldset style="border: 1px solid;width: 990px;">
+						<legend style="font-weight:bold;">Edition de la fiche salarié</legend>
+						<ice:panelGrid columns="5">
+
+							<ice:outputText value="Filtre des données Du "/>
+							<ice:panelGroup>
+								<ice:selectInputDate id="dateDebutExtractionCV"
+									value="#{salarieFormBB.debutExtraction}"
+									highlightClass="weekend: august:" 
+									renderMonthAsDropdown="true"
+									renderYearAsDropdown="true" 
+									immediate="true"
+									highlightUnit="DAY_OF_WEEK: MONTH" 
+									highlightValue="1,7: 8"
+									renderAsPopup="true" 
+									converterMessage="#{msg.dateTimeConverter}"
+									valueChangeListener="#{salarieFormBB.updateDate}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="#{dateSelect.timeZone}"/>
+									<!-- f:converter converterId="dateConverter"
+										timeZone="#{dateSelect.timeZone}" /-->
+								</ice:selectInputDate>
+								<h:message for="dateDebutExtractionCV" errorStyle="color: red"></h:message>
+							</ice:panelGroup>
+
+							<ice:outputText value="  au  "/>
+
+							<ice:panelGroup>
+								<ice:selectInputDate id="dateFinExtractionCV"
+									value="#{salarieFormBB.finExtraction}"
+									highlightClass="weekend: august:" 
+									renderMonthAsDropdown="true"
+									renderYearAsDropdown="true" 
+									highlightUnit="DAY_OF_WEEK: MONTH"
+									highlightValue="1,7: 8" 
+									renderAsPopup="true" 
+									immediate="true" 
+									converterMessage="#{msg.dateTimeConverter}"
+									valueChangeListener="#{salarieFormBB.updateDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="#{dateSelect.timeZone}"/>
+									<!-- f:converter converterId="dateConverter"
+										timeZone="#{dateSelect.timeZone}" /-->
+								</ice:selectInputDate>
+								<h:message for="dateFinExtractionCV" errorStyle="color: red"></h:message>
+							</ice:panelGroup>
+
+							<ice:commandButton value="Imprimer"
+								actionListener="#{salarieFormBB.printFicheIndivSalarie}"
+								rendered="#{salarieFormBB.id >0}" />
+
+						</ice:panelGrid>
+						<br />	
+							
+					</fieldset>
+					<br />
+					<ice:commandButton id="enregistrer2" value="Enregistrer"
+						action="#{salarieFormBB.saveOrUpdateSalarie}" />
+
+						
+					<ice:panelConfirmation id="exitWithoutSave"
+						message="Avez-vous enregistré votre dernière saisie ?"
+						acceptLabel="Oui" 
+						cancelLabel="Non" 
+						rendered="true"
+						title="Confirmer" />
+				</ice:panelGroup>
+					
+				</ice:panelTab>
+						
+				<ice:panelTab label="Evènements" 
+					rendered="#{!salarieFormBB.newSalarieTab and loginBB.evenement}" 
+					style="width:27px;height:15px;"
+					immediate="false" 
+					partialSubmit="false" 
+					id="idTabEvenements">
+					<ui:include src="/gpec/FormsSalarie/SalarieEvenements.xhtml" />
+				</ice:panelTab>
+				
+				<ice:panelTab label="Contrat de travail" 
+					rendered="#{!salarieFormBB.newSalarieTab and loginBB.contratTravail}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="false">
+					<ui:include src="/gpec/FormsSalarie/SalarieContratTravail.xhtml" />
+				</ice:panelTab>
+				
+				<ice:panelTab label="Parcours professionnel" 
+					rendered="#{!salarieFormBB.newSalarieTab}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="false">
+					<ui:include src="/gpec/FormsSalarie/SalarieParcours.xhtml" />
+				</ice:panelTab>
+<!-- 1.9 -->
+				<ice:panelTab label="Rémunérations" 
+					rendered="#{!salarieFormBB.newSalarieTab and loginBB.remuneration}"
+					style="width:30px;height:15px;"
+					immediate="false"
+					partialSubmit="false" 
+					id="idTabRemuneration">
+					<!-- renderedOnUserRole="ROLE_USER2" -->
+					<!-- ice:panelGroup styleClass="popupHeaderWrapper"
+						visible="#{salarieFormBB.loggedRendered}"-->
+						<ui:include src="/gpec/FormsSalarie/SalarieRemuneration.xhtml" />
+					<!-- /ice:panelGroup-->
+				</ice:panelTab>
+
+<!-- 1.9 --> 
+				<ice:panelTab label="Habilitations" 
+					rendered="#{!salarieFormBB.newSalarieTab}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="false">
+					<ui:include src="/gpec/FormsSalarie/SalarieHabilitations.xhtml" />
+				</ice:panelTab>
+
+				<ice:panelTab label="Formations" 
+					rendered="#{!salarieFormBB.newSalarieTab}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="true" 
+					id="idTabFormations">
+					
+					<h3>Gestion du DIF</h3>
+					
+					<ice:panelGrid columns="5">
+						<ice:outputLabel value="Crédit DIF annuel" />
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+							<h:inputText value="#{salarieFormBB.creditDifAnnuel}"
+								converterMessage="#{msg.doubleConverter}" 
+								id="idCreditAnnuel" 
+								onkeypress="return noSubmitOnEnter(event);" />
+						</ice:panelGroup>
+						<ice:commandButton value="Valider"
+							action="#{salarieFormBB.addDIF}"
+							panelConfirmation="idValidationDifAnnuel" />
+						<!-- ice:commandButton value="Annuler la dernière saisie"
+							action="#{salarieFormBB.undoLastDIF}" /-->						
+						<ice:outputLabel value="Crédit DIF cumulé" />
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+							<h:inputText value="#{salarieFormBB.creditDifTmpDisplay}" 
+								id="idCredit"
+								disabled="true" 
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idCredit" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+					</ice:panelGrid>
+					<ice:panelGrid columns="2">
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+							<ice:outputText value="Date de dernière saisie"
+								style="color: green;" />
+							<ice:outputText value="#{salarieFormBB.dateLastSaisieDif}"
+								style="color: green;">
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="#{dateSelect.timeZone}" />
+							</ice:outputText>
+						</ice:panelGroup>
+						<h:message for="idCreditAnnuel" errorStyle="color: red;"></h:message>
+					</ice:panelGrid>
+					<!-- ice:commandButton value="Enregistrer la dernière saisie"
+							action="#{salarieFormBB.saveDIF}" /-->
+					<ice:panelConfirmation id="idValidationDifAnnuel"
+						message="Êtes-vous sûr de vouloir valider cette donnée ? "
+						acceptLabel="Oui" 
+						cancelLabel="Non" 
+						rendered="true"
+						title="Confirmer" />
+					<br />
+					<h3>Formations du salarié</h3>
+					<ui:include src="/gpec/FormsSalarie/SalarieFormations.xhtml" />
+
+				</ice:panelTab>
+
+				<ice:panelTab label="Absences / Congés" 
+					rendered="#{!salarieFormBB.newSalarieTab}"
+					style="width:30px;height:15px;" 
+					immediate="false"
+					partialSubmit="false">
+					<ui:include src="/gpec/FormsSalarie/SalarieAbsences.xhtml" />
+				</ice:panelTab>
+
+				<ice:panelTab label="Accidents" 
+					rendered="#{!salarieFormBB.newSalarieTab}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="false">
+					<ui:include src="/gpec/FormsSalarie/SalarieAccidents.xhtml" />
+				</ice:panelTab>
+
+
+				<ice:panelTab label="Fiche de poste" 
+					style="width:30px;height:15px;"
+					rendered="#{!salarieFormBB.newSalarieTab and loginBB.ficheDePoste}"
+					immediate="false" 
+					partialSubmit="false" 
+					id="idTabPoste">
+					<!-- renderedOnUserRole="ROLE_USER1, ROLE_USER2"-->
+					<!-- ice:panelGroup styleClass="popupHeaderWrapper"
+						visible="#{salarieFormBB.loggedRendered}"-->
+						<ui:include src="/gpec/FormsSalarie/SalariePoste.xhtml" />
+					<!-- /ice:panelGroup-->
+				</ice:panelTab>
+
+
+				<!-- <ice:panelTab label="Poste" style="width:30px;height:15px;"
+					immediate="false" partialSubmit="true" rendered="#{salarieFormBB.id == 0}" disabled="true" styleClass="tabdisabled" title="Pour activer cette onglet vous devez d'abord enregistrer une première fois ce salarié." id="idTabPoste">
+					<ui:include src="/gpec/FormsSalarie/SalariePoste.xhtml" />
+				</ice:panelTab> -->
+
+				<ice:panelTab label="Entretiens" 
+					rendered="#{!salarieFormBB.newSalarieTab and loginBB.entretien}" 
+					style="width:30px;height:15px;"
+					immediate="false" 
+					partialSubmit="false" 
+					id="idTabEntetiens">
+					<!-- renderedOnUserRole="ROLE_USER1, ROLE_USER2" -->
+					<!-- ice:panelGroup styleClass="popupHeaderWrapper"
+						visible="#{salarieFormBB.loggedRendered}"-->
+						<ui:include src="/gpec/FormsSalarie/SalarieEntretiens.xhtml" />
+					<!-- /ice:panelGroup-->
+				</ice:panelTab>
+
+			</ice:panelTabSet>
+
+
+
+			<!-- Modal Panel Popup Login-->
+<!-- 			<ice:panelPopup id="modalPnlPopLogEntretien" 
+				draggable="true"
+				modal="true" 
+				rendered="true"
+				visible="#{salarieFormBB.modalLoginRendered}" 
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Identification"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="2">
+						<ice:outputText value="Mot de passe " />
+						<ice:panelGroup styleClass="popupHeaderWrapper">
+							<ice:inputSecret value="#{salarieFormBB.password}" id="TxtPw" />
+							<ice:message id="pwMsg" 
+								for="TxtPw"
+								style="color:red; 
+							 		line-height:200%;
+							 		padding-left:15px;" />
+						</ice:panelGroup>
+						<ice:commandButton id="validLogin" value="Valider"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salarieFormBB.log}" />
+						<ice:commandButton id="annulLogin" value="Annuler"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salarieFormBB.toggleModalLoginRendered}" />
+					</ice:panelGrid>
+				</f:facet>
+			</ice:panelPopup>
+			
+			<ice:panelPopup id="modalPnlPopLogRemuneration" 
+				draggable="true"
+				modal="true" 
+				rendered="true"
+				visible="#{salarieFormBB.modalLoginRenderedRemu}" 
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Identification Rémunération"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGrid columns="2">
+						<ice:outputText value="Mot de passe " />
+						<ice:panelGroup styleClass="popupHeaderWrapper">
+							<ice:inputSecret value="#{salarieFormBB.passwordRemu}" id="TxtPwRemu" />
+							<ice:message id="pwMsgRemu" 
+								for="TxtPwRemu"
+								style="color:red; 
+							 		line-height:200%;
+							 		padding-left:15px;" />
+						</ice:panelGroup>
+						<ice:commandButton id="validLoginRemu" 
+							value="Valider"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salarieFormBB.logRemu}" />
+						<ice:commandButton id="annulLoginRemu" 
+							value="Annuler"
+							style="margin-right: 2px;font-size:12px"
+							actionListener="#{salarieFormBB.toggleModalLoginRenderedRemu}" />
+					</ice:panelGrid>
+				</f:facet>
+			</ice:panelPopup> -->
+
+			<br />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

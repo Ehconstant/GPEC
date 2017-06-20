@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	
+<h3>Evènements du salarié</h3>
+<ice:commandButton id="toggleModalEvenement"
+	value="Ajouter un évènement" style="margin-right: 2px;font-size:12px"
+	action="#{salarieEvenementsFormBB.initSalarieEvenementForm}"/> 
+	
+<br />
+<br />
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDEv"
+				value="#{salarieFormBB.debutEv}"
+				partialSubmit="true" 
+				style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesEv}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFEv"
+				value="#{salarieFormBB.finEv}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesEv}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerEV}" />
+	</ice:panelGrid>
+</fieldset>
+
+<ice:dataTable value="#{salarieFormBB.evenementBeanList}" var="item"
+			   rendered="#{not empty salarieFormBB.evenementBeanList}"
+			   id="idDatatableEvenements" width="100%"
+			   rows="12">
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Date de l'évènement" />
+		</f:facet>
+		<ice:outputText value="#{item.dateEvenement}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Nom de l'interlocuteur" />
+		</f:facet>
+		<ice:outputText value="#{item.interlocuteur}" />
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Nature de l'évènement" />
+		</f:facet>
+		<ice:outputText value="#{item.cutNature}" />
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Décision" />
+		</f:facet>
+		<ice:outputText value="#{item.hasDecision}" />
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Justificatif" />
+		</f:facet>
+		<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+			style="color: red" 
+			rendered="#{item.fileError}"/>
+		<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 			<a id="lien" href="#{salarieEvenementsFormBB.url}#{item.justif.name}" target="_blank">
+				<ice:outputText value="#{item.justif.name}" />
+			</a> -->
+			<ice:commandLink actionListener="#{salarieEvenementsFormBB.download}"
+							 rendered="#{not item.fileError}" style="text-decoration: underline;">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</ice:commandLink>
+			<ice:commandLink 
+				actionListener="#{salarieEvenementsFormBB.removeUploadedFileEvenement}"
+				style="text-decoration: underline; color: red;"
+				panelConfirmation="deleteConfirmPanelFileEvenement">
+				<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+				<ui:insert />
+			</ice:commandLink>
+		</ice:panelGrid>
+		<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+			<ice:outputText value="-" />
+		</ice:panelGrid>
+		
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Action" />
+		</f:facet>
+		<ice:commandButton value="Modifier"
+			actionListener="#{salarieEvenementsFormBB.modifEvenement}">
+
+		</ice:commandButton>
+		<ice:commandButton value="Supprimer"
+			actionListener="#{salarieEvenementsFormBB.deleteEvenement}"
+			panelConfirmation="deleteConfirmPanelEvenement">
+		</ice:commandButton>
+		<ice:commandButton value="Imprimer"
+			actionListener="#{salarieEvenementsFormBB.printEvenementIndividuelSalarie}"	>
+		</ice:commandButton>
+		<!-- Panel de confirmation de suppression -->
+		<ice:panelConfirmation id="deleteConfirmPanelEvenement" 
+							   message="Êtes-vous sûr de vouloir supprimer cet evenement ?"
+                   					   acceptLabel="Oui" 
+                   					   cancelLabel="Non"
+                   					   title="Confirmer"/>
+        <ice:panelConfirmation id="deleteConfirmPanelFileEvenement"
+			message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+<ice:dataPaginator id="dataScrollDatatableEvenements"
+                   for="idDatatableEvenements"
+                   paginator="true"
+                   fastStep="3">
+    <f:facet name="first">
+        <ice:graphicImage
+            url="../style/rime/css-images/arrow-first.gif"
+            style="border:none;"
+            title="First Page"/>
+    </f:facet>
+    <f:facet name="last">
+        <ice:graphicImage
+            url="../style/rime/css-images/arrow-last.gif"
+            style="border:none;"
+            title="Last Page"/>
+    </f:facet>
+    <f:facet name="previous">
+        <ice:graphicImage
+            url="../style/rime/css-images/arrow-previous.gif"
+            style="border:none;"
+            title="Previous Page"/>
+    </f:facet>
+    <f:facet name="next">
+        <ice:graphicImage
+            url="../style/rime/css-images/arrow-next.gif"
+            style="border:none;"
+            title="Next Page"/>
+    </f:facet>
+    <f:facet name="fastforward">
+        <ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+                          style="border:none;"
+                          title="Fast Forward"/>
+    </f:facet>
+    <f:facet name="fastrewind">
+        <ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+                          style="border:none;"
+                          title="Fast Backwards"/>
+    </f:facet>
+</ice:dataPaginator>
+
+	
+	<br />
+	<fieldset style="border: 1px solid;width: 990px;">
+		<legend>Export</legend>
+		<ice:panelGrid columns="5">
+
+			<ice:outputText value="Début de l'extraction "/>
+
+			<ice:panelGroup>
+				<ice:selectInputDate id="dateDebutExtractionCV"
+					value="#{salarieEvenementsFormBB.debutExtraction}"
+					highlightClass="weekend: august:" renderMonthAsDropdown="true"
+					renderYearAsDropdown="true" immediate="true"
+					highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+					renderAsPopup="true" partialSubmit="true"
+					converterMessage="#{msg.dateTimeConverter}">
+					<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="#{dateSelect.timeZone}"/> -->
+					<f:converter converterId="dateConverter"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:selectInputDate>
+				<h:message for="dateDebutExtractionCV" errorStyle="color: red"></h:message>
+			</ice:panelGroup>
+
+			<ice:outputText value="Fin de l'extraction "/>
+
+			<ice:panelGroup>
+				<ice:selectInputDate id="dateFinExtractionCV"
+					value="#{salarieEvenementsFormBB.finExtraction}"
+					highlightClass="weekend: august:" renderMonthAsDropdown="true"
+					renderYearAsDropdown="true" highlightUnit="DAY_OF_WEEK: MONTH"
+					highlightValue="1,7: 8" renderAsPopup="true" partialSubmit="true"
+					immediate="true" converterMessage="#{msg.dateTimeConverter}">
+					<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}"/> -->
+					<f:converter converterId="dateConverter"
+						timeZone="#{dateSelect.timeZone}" />
+				</ice:selectInputDate>
+				<h:message for="dateFinExtractionCV" errorStyle="color: red"></h:message>
+			</ice:panelGroup>
+
+			<ice:commandButton value="Impression PDF des évènements"
+				actionListener="#{salarieEvenementsFormBB.printEvenementsSalarie}" />
+
+		</ice:panelGrid>
+		<br />	
+			
+	</fieldset>
+	<br />
+	
+<!-- Modal Panel Popup -->
+<ice:panelPopup style="top: 15px;" id="modalPnlPopEvenement" modal="true"
+	rendered="true" visible="#{salarieEvenementsFormBB.modalRendered}"
+	styleClass="corePopup" autoPosition="true" positionOnLoadOnly="true" autoCentre="true">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout évènement" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieEvenementsFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieEvenementsForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Accident"
+		table="ACCIDENT"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_ACCIDENT"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Initial"
+			column="INITIAL"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="Aggravation"
+			column="AGGRAVATION"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="DateAccident"
+			column="DATE_ACCIDENT"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="DateRechute"
+			column="DATE_RECHUTE"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="NombreJourArret"
+			column="NOMBRE_JOUR_ARRET"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="NombreJourArretRechute"
+			column="NOMBRE_JOUR_ARRET_RECHUTE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<property
+			name="Commentaire"
+			column="COMMENTAIRE"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one
+			name="TypeLesion"
+			column="ID_TYPE_LESION"
+			class="Typelesion"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeLesionRechute"
+			column="ID_TYPE_LESION_RECHUTE"
+			class="Typelesion"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeCauseAccident"
+			column="ID_TYPE_CAUSE_ACCIDENT"
+			class="Typecauseaccident"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="TypeAccident"
+			column="ID_TYPE_ACCIDENT"
+			class="Typeaccident"
+			not-null="false"
+		>
+		</many-to-one>
+		<many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+		
+		<many-to-one
+			class="Absence"
+			name="Absence"
+			not-null="false"
+			column="ID_ABSENCE"
+		>
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

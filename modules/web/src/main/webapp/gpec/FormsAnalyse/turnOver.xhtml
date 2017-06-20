@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<head>
+		<link href="../../style/panelGrid.css" rel="stylesheet" type="text/css" />
+		</head>
+		<body>
+	
+		<h3>Turn over</h3>
+		<ice:form>
+			<ice:panelGrid columns="2" >
+				<ice:outputText rendered="#{empty turnOverFormBB.entrepriseList}" value="Il n'existe pas encore d'entreprise." />
+				<ice:outputLabel rendered="#{not empty turnOverFormBB.entrepriseList}" for="entrepriseList" value="Entreprise " />
+				<ice:panelGroup rendered="#{not empty turnOverFormBB.entrepriseList}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseList"
+						value="#{turnOverFormBB.idEntrepriseSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{turnOverFormBB.recalculeDataTableTurnOver}"
+						partialSubmit="true">
+						<f:selectItems value="#{turnOverFormBB.entrepriseList}" />
+					</ice:selectOneMenu>
+
+				</ice:panelGroup>
+				<ice:outputLabel for="idServiceList" value="Service "
+					rendered="#{not empty turnOverFormBB.servicesList}" />
+				<ice:panelGroup rendered="#{not empty turnOverFormBB.servicesList}">
+					<ice:selectOneMenu id="ServiceList" partialSubmit="true"
+						style="overflow: auto;"
+						valueChangeListener="#{turnOverFormBB.recalculeDataTableTurnOver}"
+						value="#{turnOverFormBB.idServiceSelected}">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{turnOverFormBB.servicesList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+			</ice:panelGrid>
+			<br />
+			<br />
+
+			<ice:commandButton
+				rendered="#{not empty turnOverFormBB.turnOverBeanList}"
+				value="Exporter au format Excel"
+				actionListener="#{turnOverFormBB.download}" />
+		</ice:form>
+		<ice:outputText rendered="#{empty turnOverFormBB.turnOverBeanList}"
+			value="Aucun résultat associé." />
+		<ice:dataTable value="#{turnOverFormBB.turnOverBeanList}" var="item"
+			rendered="#{not empty turnOverFormBB.turnOverBeanList}">
+			<f:facet name="header">
+				<ice:columnGroup>
+					<ice:headerRow>
+						<ice:column colspan="7">
+							<ice:outputText value="Entrées - sorties / année" />
+							<br />
+							<ice:outputText value="Taux de turn Over" />
+						</ice:column>
+					</ice:headerRow>
+
+					<ice:headerRow>
+						<ice:column rowspan="2">
+							<ice:outputText style="width:200px" value="Entreprise / service / métier" />
+						</ice:column>
+
+						<ice:column colspan="2">
+							<ice:outputText value="#{turnOverFormBB.twoYearAgo}" />
+						</ice:column>
+						<ice:column colspan="2">
+							<ice:outputText value="#{turnOverFormBB.oneYearAgo}" />
+						</ice:column>
+						<ice:column colspan="2">
+							<ice:outputText value="#{turnOverFormBB.curYear}" />
+						</ice:column>
+					</ice:headerRow>
+
+					<ice:headerRow>
+						<ice:column>
+							<ice:outputText value="Entrées" />
+						</ice:column>
+						<ice:column>
+							<ice:outputText value="Sorties" />
+						</ice:column>
+						<ice:column>
+							<ice:outputText value="Entrées" />
+						</ice:column>
+						<ice:column>
+							<ice:outputText value="Sorties" />
+						</ice:column>
+						<ice:column>
+							<ice:outputText value="Entrées" />
+						</ice:column>
+						<ice:column>
+							<ice:outputText value="Sorties" />
+						</ice:column>
+					</ice:headerRow>
+
+				</ice:columnGroup>
+
+			</f:facet>
+
+			<ice:column rendered="#{item.taux == false}">
+				<ice:outputText style="#{item.style}" value="#{item.libelle}"/>
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.entreesN2}"/></div>
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.sortiesN2}"/></div>
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.entreesN1}"/></div>
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.sortiesN1}"/></div>
+			</ice:column>
+			
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.entreesN}"/></div>
+			</ice:column>
+			
+			<ice:column rendered="#{item.taux == false }">
+				<div align="center"><ice:outputText style="#{item.style}" value="#{item.sortiesN}"/></div>
+			</ice:column>
+			
+			<ice:column rendered="#{item.taux == true}">
+				<ice:outputText id="libelle" style="font-weight:bold;font-size:9pt" value="#{item.libelle}"/>
+			</ice:column>
+
+			<ice:column style="border-right:0px" rendered="#{item.taux == true }">
+				<!-- <ice:outputText style="#{item.styleTauxN2}" value="#{item.tauxN2}"/> -->
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == true }">
+			</ice:column>
+
+			<ice:column style="border-right:0px" rendered="#{item.taux == true }">
+				<ice:outputText style="#{item.styleTauxN1}" value="#{item.tauxN1}"/>
+			</ice:column>
+
+			<ice:column rendered="#{item.taux == true }">
+			</ice:column>
+			
+			<ice:column style="border-right:0px;" rendered="#{item.taux == true }">
+				<ice:outputText style="#{item.styleTauxN}" value="#{item.tauxN}"/>
+			</ice:column>
+			
+			<ice:column rendered="#{item.taux == true }">
+			</ice:column>
+			
+		</ice:dataTable>
+		
+		<br />
+		<ice:panelGroup rendered="#{turnOverFormBB.afficheErreur}">
+			<ice:outputText value="Indéfini* :"/>
+				<ul>
+					<li>
+						<ice:outputText value="soit aucune entreprise n'a été sélectionnée"/>
+					</li>
+					<li>
+						<ice:outputText value="soit l'effectif au 31.12 n'est pas spécifié dans les paramètres généraux." />
+					</li>
+				</ul>
+		</ice:panelGroup>
+		
+		<br />
+		<br />
+		<ice:outputText value="Mémo : " />
+			<ul>
+				<li>
+					<ice:outputText value=" Mode de calcul du taux de turn over : " />
+					<br />
+					<ice:outputText value="(((Nbr de départs de l’année N + Nbr d’entrées de l’année N) &#247; 2) &#247; (effectif physique annuel moyen au 31.12 de l'année N-1) ) x 100" />
+				</li>
+			</ul>
+
+		</body>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+ 	<head>
+		<link href="../../style/panelGrid.css" rel="stylesheet" type="text/css" />
+	</head>
+		<h3>Négociation salariale - Suivi de la rémunération</h3>
+	<br/>
+	<ice:outputText rendered="#{empty negociationSalarialeBB.entreprisesListItem}" value="Il n'existe pas encore d'entreprise."/>
+	<ice:form id="idForm" rendered="#{not empty negociationSalarialeBB.entreprisesListItem}">
+		<ice:panelGrid columns="2">
+			<ice:outputLabel rendered="#{not empty negociationSalarialeBB.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+			<ice:panelGroup rendered="#{not empty negociationSalarialeBB.entreprisesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectEntreprise"
+					 partialSubmit="true"
+					 style="overflow: auto;"
+					 value="#{negociationSalarialeBB.idEntreprise}"
+					 valueChangeListener="#{negociationSalarialeBB.change}">
+					 
+					<f:selectItems value="#{negociationSalarialeBB.entreprisesListItem}" />	
+				</ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<ice:outputLabel rendered="#{not empty negociationSalarialeBB.servicesListItem}" value="Service " for="idSelectService"/>
+			<ice:panelGroup rendered="#{not empty negociationSalarialeBB.servicesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="idSelectService"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 value="#{negociationSalarialeBB.idService}"
+						 valueChangeListener="#{negociationSalarialeBB.change}">
+						 
+						<f:selectItem itemLabel="" itemValue="-1"/>
+						<f:selectItems value="#{negociationSalarialeBB.servicesListItem}" />	
+					</ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<ice:outputLabel rendered="#{not empty negociationSalarialeBB.anneesListItem}" value="Année " for="idSelectAnnee"/>
+			<ice:panelGroup rendered="#{not empty negociationSalarialeBB.anneesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="idSelectAnnee"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 value="#{negociationSalarialeBB.annee}"
+						 valueChangeListener="#{negociationSalarialeBB.change}">
+						 
+						<f:selectItems value="#{negociationSalarialeBB.anneesListItem}" />	
+					</ice:selectOneMenu>
+			</ice:panelGroup>
+			
+			<ice:outputLabel value="Affichage par " for="idSelectCSP"/>
+			<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectCSP"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 value="#{negociationSalarialeBB.idCSP}"
+						 valueChangeListener="#{negociationSalarialeBB.change}">
+						 
+						<f:selectItems value="#{negociationSalarialeBB.cspListItem}" />	
+					</ice:selectOneMenu>
+			</ice:panelGroup>
+		</ice:panelGrid>
+			<br/>
+			<br />
+			<ice:commandButton rendered="#{negociationSalarialeBB.afficheTable1 or negociationSalarialeBB.afficheTable2}" 
+							   actionListener="#{negociationSalarialeBB.download}" 
+							   value="Exporter au format Excel"/>
+			<ice:outputText rendered="#{(not negociationSalarialeBB.afficheTable1) and (not negociationSalarialeBB.afficheTable2)}" 
+							value="Aucun résultat pour les critères sélectionnés."/>	
+							
+			<ice:dataTable id="dataTable" 
+						   rendered="#{negociationSalarialeBB.afficheTable1}"
+						   value="#{negociationSalarialeBB.rowList}" 
+						   var="item">
+				
+				<f:facet name="header">
+				        <ice:columnGroup >
+				            <ice:headerRow>
+				            	<ice:column colspan="10" rendered="#{negociationSalarialeBB.idCSP == 2}" >
+						        	<ice:outputText value="Coût de la rémunération - Moyennes par métiers  (données annuelles exprimées en €)"/>
+						        </ice:column>
+						        <ice:column colspan="10" rendered="#{negociationSalarialeBB.idCSP == 1}" >
+						        	<ice:outputText value="Coût de la rémunération - Moyennes par CSP (données annuelles exprimées en €)"/>
+						        </ice:column>
+						    </ice:headerRow>
+						    
+						    <ice:headerRow>
+						     	<ice:column colspan="10" >
+						        	<ice:outputText value="#{negociationSalarialeBB.annee}"/>
+						        </ice:column>
+						    </ice:headerRow>
+			                   
+			                <ice:headerRow>
+			             		<ice:column style="width: 200px;">
+									<ice:outputText style="width: 200px;" value="#{(negociationSalarialeBB.idCSP == 1 or negociationSalarialeBB.idCSP == 3) ? 'CSP' : 'Métier'}" />
+					            </ice:column>
+					            
+				            	<ice:column >
+						        	<ice:outputText value="Effectif"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Salaires de base bruts annuels"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Rémunération globale brute annuelle"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Heures supplémentaires annuelles "/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Avantages non assujettis annuels "/>
+						        </ice:column>
+						        
+						        <ice:column >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        						        
+						    </ice:headerRow>
+			                 
+			           </ice:columnGroup>
+			           
+			        </f:facet> 
+				
+				<ice:column style="width: 250px;" styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='center' >
+						<ice:outputText value="#{item.libelle}" style="width: 250px;" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.effectif}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.salaireDeBaseBrutAnnuel}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.salaireDeBaseBrutAnnuelMoy}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.remuGlobaleBruteAnnuelle}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.remuGlobaleBruteAnnuelleMoy}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.heureSupAnnuelles}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.heureSupAnnuellesMoy}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.avantagesNonAssujettisAnnuels}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.avantagesNonAssujettisAnnuelsMoy}" />
+					</div>
+				</ice:column>
+							
+				
+			</ice:dataTable> 
+			
+			
+			
+			
+			<ice:dataTable id="dataTable2" 
+						   rendered="#{negociationSalarialeBB.afficheTable2}"
+						   value="#{negociationSalarialeBB.rowList}" 
+						   var="item">
+				
+				<f:facet name="header" >
+			           
+			           <ice:columnGroup >
+				            <ice:headerRow>
+				            	<ice:column colspan="39" rendered="#{negociationSalarialeBB.idCSP == 3}" >
+						        	<ice:outputText value="Coût de la rémunération par CSP - Moyennes par sexe (données annuelles exprimées en €)"/>
+						        </ice:column>
+						       	<ice:column colspan="39" rendered="#{negociationSalarialeBB.idCSP == 4}" >
+						        	<ice:outputText value="Coût de la rémunération par métiers - Moyennes par sexe (données annuelles exprimées en €)"/>
+						        </ice:column>
+						    </ice:headerRow>
+						    
+						    <ice:headerRow>
+						     	<ice:column colspan="39" >
+						        	<ice:outputText value="#{negociationSalarialeBB.annee}"/>
+						        </ice:column>
+						    </ice:headerRow>
+			                   
+			                <ice:headerRow>
+			             		<ice:column rowspan="2" style="width: 200px;">
+									<ice:outputText style="width: 200px;" value="#{(negociationSalarialeBB.idCSP == 1 or negociationSalarialeBB.idCSP == 3) ? 'CSP' : 'Métier'}" />
+					            </ice:column>
+					            
+						        <ice:column colspan="2" >
+						        	<ice:outputText value="Effectif"/>
+						        </ice:column>
+			
+						        <ice:column rowspan="2" >
+						        	<ice:outputText value="Salaires bruts annuels"/>
+						        </ice:column>
+						        
+						        <ice:column colspan="2" >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2" >
+						        	<ice:outputText value="Rémunération globale brute annuelle"/>
+						        </ice:column>
+						        
+						        <ice:column colspan="2" >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2" >
+						        	<ice:outputText value="Heures supplémentaires annuelles "/>
+						        </ice:column>
+						        
+						        <ice:column colspan="2" >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						        <ice:column rowspan="2" >
+						        	<ice:outputText value="Avantages non assujettis annuels "/>
+						        </ice:column>
+						        
+						        <ice:column colspan="2" >
+						        	<ice:outputText value="Moyenne"/>
+						        </ice:column>
+						        
+						    </ice:headerRow>
+						    
+						  	<ice:headerRow>
+			             		<ice:column style="width:60px;" >
+									<ice:outputText value="H" />
+					            </ice:column>
+						        <ice:column style="width:60px;" >
+						        	<ice:outputText value="F"/>
+						        </ice:column>
+			
+			                 	<ice:column style="width:60px;" >
+					                <ice:outputText value="H"/>
+					            </ice:column>
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="F" />
+					            </ice:column>
+					            
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="H"/>
+					            </ice:column>
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="F" />
+					            </ice:column>
+					            
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="H"/>
+					            </ice:column>
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="F" />
+					            </ice:column>
+					            
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="H"/>
+					            </ice:column>
+					            <ice:column style="width:60px;" >
+					                <ice:outputText value="F" />
+					            </ice:column>
+					            
+			                 </ice:headerRow>
+			                 
+			           </ice:columnGroup>
+			           
+			        </f:facet> 
+				
+				<ice:column style="width: 250px;" styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='center' >
+						<ice:outputText value="#{item.libelle}" style="width: 250px;" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.effectifH}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.effectifF}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.salaireDeBaseBrutAnnuel}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.salaireDeBaseBrutAnnuelMoyH}" />
+					</div>
+				</ice:column>
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.salaireDeBaseBrutAnnuelMoyF}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.remuGlobaleBruteAnnuelle}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.remuGlobaleBruteAnnuelleMoyH}" />
+					</div>
+				</ice:column>
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.remuGlobaleBruteAnnuelleMoyF}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.heureSupAnnuelles}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.heureSupAnnuellesMoyH}" />
+					</div>
+				</ice:column>
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.heureSupAnnuellesMoyF}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.avantagesNonAssujettisAnnuels}" />
+					</div>
+				</ice:column>
+				
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.avantagesNonAssujettisAnnuelsMoyH}" />
+					</div>
+				</ice:column>
+				<ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+					<div align='right'>
+						<ice:outputText value="#{item.avantagesNonAssujettisAnnuelsMoyF}" />
+					</div>
+				</ice:column>
+							
+				
+			</ice:dataTable> 
+			
+	<br/>
+	</ice:form>
+	</ui:define>
+</ui:composition>

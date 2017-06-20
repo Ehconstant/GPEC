@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="RevenuComplementaire" table="REF_REVENU_COMPLEMENTAIRE">
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			column="ID_REVENU_COMPLEMENTAIRE"
+			name="Id"
+			type="integer"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			column="LIBELLE_REVENU_COMPLEMENTAIRE"
+			name="Libelle"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="TYPE_REVENU_COMPLEMENTAIRE"
+			name="Type"
+			not-null="false"
+			type="text"
+		 />
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+		
+		 <set inverse="true" name="LienRemunerationRevenuComplementaireSet">
+			<key column="ID_REVENU_COMPLEMENTAIRE" />
+			<one-to-many class="LienRemunerationRevenuComplementaire" />
+		</set>
+	</class>
+</hibernate-mapping>

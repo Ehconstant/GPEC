@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="content">
+
+
+		<h3>Liste des Salariés</h3>
+		<head>
+
+		<link href="../style/overrideTab/overrideSalarie.css" rel="stylesheet"
+			type="text/css" />
+		</head>
+		<ice:form id="idForm">
+
+			<ice:outputText rendered="#{empty salariesList.entrepriseList}"
+				value="Les paramètres entreprise n'ont pas été saisis." />
+
+			<ice:panelGrid columns="5">
+				<ice:outputLabel rendered="#{not empty salariesList.entrepriseList2}"
+					for="entrepriseListSalarie" value="Entreprise " />
+				<ice:panelGroup rendered="#{not empty salariesList.entrepriseList2}"
+					styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListSalarie"
+						value="#{salariesList.idEntrepriseSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{salariesList.filtre}" partialSubmit="true">
+						<f:selectItems value="#{salariesList.entrepriseList2}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				<!--<ice:outputLabel rendered="#{not empty salariesList.alphabetList}" for="alphabetisation" value="Trier par :"/>
+				<ice:panelGroup rendered="#{not empty salariesList.alphabetList}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="alphabetisation"
+						value="#{salariesList.alphabetSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{salariesList.filtre}"   
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="" />
+						<f:selectItems value="#{salariesList.alphabetList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>   -->
+				<ice:outputLabel value="Effectif "/>
+				<img alt="(?)" 
+						class="tipsy" 
+						src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Effectif physique hors intérimaires et stagiaires"
+						width="12px" 
+						height="12px"
+						align="top" 
+						style="padding:1px;"
+						id="tipsy"/>
+				<ice:outputLabel value=": #{salariesList.libelleNbSalarie}"/>
+			</ice:panelGrid>
+			
+			<br />
+			
+			<ice:panelGrid>
+				<ice:commandButton value="Ajouter un salarié"
+					action="#{salarieFormBB.init}" style="width:130px;height:30px;"/>
+					
+			</ice:panelGrid>
+
+			<br />
+			
+			<fieldset style="border: 1px solid;width: 487px;">
+				<legend>Filtre d'affichage et d'édition</legend>
+				<ice:panelGrid columns="2">
+					<ice:panelGroup>
+						<ice:panelGrid columns="3" style="padding-left:20px;" >
+							<ice:commandButton id="tousSalarie"
+								value="Tous"
+								actionListener="#{salariesList.changeTousSalarie}" />
+							<ice:commandButton id="presentSalarie"
+								value="Présents"
+								actionListener="#{salariesList.changePresentSalarie}" />
+							<ice:commandButton id="sortiSalarie"
+								value="Sortis" actionListener="#{salariesList.changeSortieSalarie}" />
+						</ice:panelGrid>
+						<ice:outputText
+							value="#{salariesList.filtreChoisi}" />
+					</ice:panelGroup> 
+						
+					<ice:commandButton value="Editer la liste du personnel affichée"
+						rendered="#{not empty salariesList.salariesInventory}"
+						action="#{salariesList.download}" id="idExporter" />
+				</ice:panelGrid>
+			</fieldset>
+			
+			<br />
+
+			<ice:outputText
+				rendered="#{not empty salariesList.salariesInventory2}"
+				value="Les valeurs en rouge représentent les salariés ayant quitté l'entreprise." />
+			<ice:dataTable value="#{salariesList.salariesInventory2}" var="item"
+				rendered="#{not empty salariesList.salariesInventory2}"
+				id="idDatatableSalarie" rows="10">
+				<!-- evolution : 20 salariés par pages  rows="20">  -->
+				<!-- Stock number -->
+				<ice:column>
+					<ice:rowSelector toggleOnClick="false" />
+					<f:facet name="header">
+						<ice:outputText value="Nom" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;" value="#{item.nom}" />
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.nom}" />
+				</ice:column>
+
+				<!-- Model number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Prénom" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;" value="#{item.prenom}" />
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.prenom}" />
+				</ice:column>
+
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Date de naissance" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;width:76px;"
+						value="#{item.dateNaissanceExport}" />
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;width:76px;" value="#{item.dateNaissanceExport}" />
+				</ice:column>
+
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Age" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;" value="#{item.age}" />
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.age}" />
+				</ice:column>
+
+				<!-- 
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Sexe" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}" style="color:#CB5D5D;font-weight:bold;" value="#{item.sexe}" />
+					<ice:outputText rendered="#{not item.changeCouleur}" style="color:black;" value="#{item.sexe}" />
+					
+				</ice:column>
+				 -->
+				 
+				 <ice:column rendered="#{salariesList.idEntrepriseSelected == -1}" >
+					<f:facet name="header">
+						<ice:outputText value="Entreprise" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;" value="#{item.nomEntreprise}">
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.nomEntreprise}">
+					</ice:outputText>
+				</ice:column>
+				 
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date d'entrée dans l'entreprise" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;width:76px;" value="#{item.dateEntree}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;width:76px;" value="#{item.dateEntree}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de sortie de l'entreprise" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;width:76px;" value="#{item.dateSortie}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;width:76px;" value="#{item.dateSortie}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+
+				</ice:column>
+
+				<ice:column style="width: 80px;">
+					<f:facet name="header">
+						<ice:outputText value="Service" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;" value="#{item.service}">
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.service}">
+					</ice:outputText>
+
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Poste occupé" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;"
+						value="#{item.posteOccupe}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.posteOccupe}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date d'entrée dans le poste" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;width:76px;" value="#{item.depuis}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;width:76px;" value="#{item.depuis}">
+						<f:convertDateTime pattern="dd/MM/yy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+
+				</ice:column>
+				<!-- 
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Solde DIF" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}" style="color:#CB5D5D;font-weight:bold;" value="#{item.creditDif}" />
+					<ice:outputText rendered="#{not item.changeCouleur}" style="color:black;" value="#{item.creditDif}" />
+				</ice:column>
+				 -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Contrat" />
+					</f:facet>
+
+					<ice:outputText rendered="#{item.changeCouleur}"
+						style="color:#CB5D5D;font-weight:bold;"
+						value="#{item.typeContrat}" />
+					<ice:outputText rendered="#{not item.changeCouleur}"
+						style="color:black;" value="#{item.typeContrat}" />
+				</ice:column>
+				<!-- 
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="CSP" />
+					</f:facet>
+					<ice:outputText rendered="#{item.changeCouleur}" style="color:#CB5D5D;font-weight:bold;" value="#{item.ccp}" />
+					<ice:outputText rendered="#{not item.changeCouleur}" style="color:black;" value="#{item.ccp}" />
+				</ice:column>
+				 -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Action" />
+					</f:facet>
+
+					<ice:commandButton value="Détails"
+						action="#{salarieFormBB.initSalarieForm}">
+						<f:setPropertyActionListener target="#{salarieFormBB.id}"
+							value="#{item.id}" />
+						<f:setPropertyActionListener
+							target="#{salarieAbsencesFormBB.idSalarie}" value="#{item.id}" />
+					</ice:commandButton>
+					
+					<ice:commandButton value="Supprimer"
+						actionListener="#{salariesList.deleteSalarie}"
+						rendered="#{item.canDeleteSalarie}"
+						action="#{salarieFormBB.annuler}">
+						<f:setPropertyActionListener target="#{salarieFormBB.id}"
+							value="#{item.id}" />
+					</ice:commandButton>
+					
+				</ice:column>
+			</ice:dataTable>
+			<!-- Paginator with page controls -->
+			<ice:dataPaginator id="dataScroll_3" for="idDatatableSalarie"
+				paginator="true" fastStep="3"
+				paginatorMaxPages="4"
+				rendered="#{not empty salariesList.salariesInventory2}">
+				<f:facet name="first">
+					<ice:graphicImage url="../style/rime/css-images/arrow-first.gif"
+						style="border:none;" title="First Page" />
+				</f:facet>
+				<f:facet name="last">
+					<ice:graphicImage url="../style/rime/css-images/arrow-last.gif"
+						style="border:none;" title="Last Page" />
+				</f:facet>
+				<f:facet name="previous">
+					<ice:graphicImage url="../style/rime/css-images/arrow-previous.gif"
+						style="border:none;" title="Previous Page" />
+				</f:facet>
+				<f:facet name="next">
+					<ice:graphicImage url="../style/rime/css-images/arrow-next.gif"
+						style="border:none;" title="Next Page" />
+				</f:facet>
+				<f:facet name="fastforward">
+					<ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+						style="border:none;" title="Fast Forward" />
+				</f:facet>
+				<f:facet name="fastrewind">
+					<ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+						style="border:none;" title="Fast Backwards" />
+				</f:facet>
+			</ice:dataPaginator>
+			<br />
+			<ice:outputText
+				value="Aucun salarié n'a été saisi ou le filtre appliqué ne retourne aucun resultat."
+				rendered="#{empty salariesList.salariesInventory2 and salariesList.idEntrepriseSelected != -1}" />
+			<br />
+			<ice:panelTabSet immediate="false" partialSubmit="false"
+				id="alphabetSalarieTabSet"
+				tabChangeListener="#{salariesList.processTabChange}">
+				<ice:panelTab label="Tous" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="Tous">
+				</ice:panelTab>
+				<ice:panelTab label="A" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="A">
+				</ice:panelTab>
+				<ice:panelTab label="B" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="B">
+				</ice:panelTab>
+				<ice:panelTab label="C" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="C">
+				</ice:panelTab>
+				<ice:panelTab label="D" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="D">
+				</ice:panelTab>
+				<ice:panelTab label="E" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="E">
+				</ice:panelTab>
+				<ice:panelTab label="F" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="F">
+				</ice:panelTab>
+				<ice:panelTab label="G" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="G">
+				</ice:panelTab>
+				<ice:panelTab label="H" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="H">
+				</ice:panelTab>
+				<ice:panelTab label="I" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="I">
+				</ice:panelTab>
+				<ice:panelTab label="J" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="J">
+				</ice:panelTab>
+				<ice:panelTab label="K" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="K">
+				</ice:panelTab>
+				<ice:panelTab label="L" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="L">
+				</ice:panelTab>
+				<ice:panelTab label="M" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="M">
+				</ice:panelTab>
+				<ice:panelTab label="N" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="N">
+				</ice:panelTab>
+				<ice:panelTab label="O" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="O">
+				</ice:panelTab>
+				<ice:panelTab label="P" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="P">
+				</ice:panelTab>
+				<ice:panelTab label="Q" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="Q">
+				</ice:panelTab>
+				<ice:panelTab label="R" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="R">
+				</ice:panelTab>
+				<ice:panelTab label="S" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="S">
+				</ice:panelTab>
+				<ice:panelTab label="T" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="T">
+				</ice:panelTab>
+				<ice:panelTab label="U" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="U">
+				</ice:panelTab>
+				<ice:panelTab label="V" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="V">
+				</ice:panelTab>
+				<ice:panelTab label="W" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="W">
+				</ice:panelTab>
+				<ice:panelTab label="X" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="X">
+				</ice:panelTab>
+				<ice:panelTab label="Y" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="Y">
+				</ice:panelTab>
+				<ice:panelTab label="Z" immediate="true"
+					style="widht:10px;height:15px;" partialSubmit="true" id="Z">
+				</ice:panelTab>
+			</ice:panelTabSet>
+
+			<br />
+			
+			
+		</ice:form>
+	</ui:define>
+
+</ui:composition>

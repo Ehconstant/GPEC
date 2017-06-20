@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ice:inputHidden value="#{salarieHabilitationsFormBB.init}" />
+<h3>Habilitations du salarié</h3>
+<ice:commandButton id="toggleModal" value="Ajouter une habilitation"
+	style="margin-right: 2px;font-size:12px"
+	action="#{salarieHabilitationsFormBB.initHabilitationForm}" 
+	disabled="#{empty salarieHabilitationsFormBB.typeHabilitationList}"/>
+
+<br />
+<br />
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDHa"
+				value="#{salarieFormBB.debutHa}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesHa}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFHa"
+				value="#{salarieFormBB.finHa}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesHa}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerHA}" />
+	</ice:panelGrid>
+</fieldset>
+
+<ice:panelGrid columns="1">
+	<ice:outputText value="Vous devez préalablement saisir les natures d'habilitation dans paramètres." 
+					rendered="#{empty salarieHabilitationsFormBB.typeHabilitationList}" 
+					style="color: red" />
+</ice:panelGrid>
+
+<ice:dataTable value="#{salarieFormBB.habilitationBeanList}" 
+			   var="item"
+			   rendered="#{not empty salarieFormBB.habilitationBeanList}"
+			   id="idDatatableHabilitations"
+			   rows="12">
+
+	<!-- Stock number -->
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Habilitation" />
+		</f:facet>
+		<ice:outputText value="#{item.nomTypeHabilitation}" />
+	</ice:column>
+
+	<!-- Model number -->
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Valable du " />
+		</f:facet>
+		<ice:outputText value="#{item.delivrance}" >
+			<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Valable au " />
+		</f:facet>
+		<ice:outputText value="#{item.expiration}" >
+			<f:convertDateTime pattern="dd/MM/yyyy"
+					timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Durée de validité restante (en jours) " />
+		</f:facet>
+		<ice:outputText value="#{item.dureeValidite}" 
+					style="color: green;font-weight:bold;"
+					rendered="#{item.dureeValidite >= 0}"/>
+		<ice:outputText value="Validité dépassée" 
+					style="color: red;font-weight:bold;"
+					rendered="#{0 > item.dureeValidite}"/>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Commentaire" />
+		</f:facet>
+		<ice:outputText value="#{item.commentaire}" />
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Justificatif" />
+		</f:facet>
+		<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+			style="color: red" 
+			rendered="#{item.fileError}"/>
+		<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 			<a id="lien" href="#{salarieHabilitationsFormBB.url}#{item.justif.name}" target="_blank">
+				<ice:outputText value="#{item.justif.name}" />
+			</a> -->
+			<ice:commandLink actionListener="#{salarieHabilitationsFormBB.download}"
+							 rendered="#{not item.fileError}" style="text-decoration: underline;">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</ice:commandLink>
+			<ice:commandLink 
+				actionListener="#{salarieHabilitationsFormBB.removeUploadedFile}"
+				style="text-decoration: underline; color: red;"
+				panelConfirmation="deleteConfirmPanelFileHabilitation">
+				<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+				<ui:insert />
+			</ice:commandLink>
+		</ice:panelGrid>
+		<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+			<ice:outputText value="-" />
+		</ice:panelGrid>
+		
+	</ice:column>
+
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Action" />
+		</f:facet>
+		<ice:commandButton value="Modifier"
+						   actionListener="#{salarieHabilitationsFormBB.modifHabilitation}">
+
+		</ice:commandButton>
+		<ice:commandButton value="Supprimer"
+						   actionListener="#{salarieHabilitationsFormBB.deleteHabilitation}"
+						   panelConfirmation="deleteConfirmPanelHabilitation">
+		</ice:commandButton>
+		<!-- Panel de confirmation de suppression -->
+		<ice:panelConfirmation id="deleteConfirmPanelHabilitation" 
+							   message="Êtes-vous sûr de vouloir supprimer cette habilitation ?"
+                   					   acceptLabel="Oui" 
+                   					   cancelLabel="Non"
+                   					   title="Confirmer"/>
+		<ice:panelConfirmation id="deleteConfirmPanelFileHabilitation"
+				message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+				acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+                <ice:dataPaginator id="dataScrollDatatableHabilitations"
+                                   for="idDatatableHabilitations"
+                                   paginator="true"
+                                   fastStep="3">
+                    <f:facet name="first">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-first.gif"
+                            style="border:none;"
+                            title="First Page"/>
+                    </f:facet>
+                    <f:facet name="last">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-last.gif"
+                            style="border:none;"
+                            title="Last Page"/>
+                    </f:facet>
+                    <f:facet name="previous">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-previous.gif"
+                            style="border:none;"
+                            title="Previous Page"/>
+                    </f:facet>
+                    <f:facet name="next">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-next.gif"
+                            style="border:none;"
+                            title="Next Page"/>
+                    </f:facet>
+                    <f:facet name="fastforward">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+                                          style="border:none;"
+                                          title="Fast Forward"/>
+                    </f:facet>
+                    <f:facet name="fastrewind">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+                                          style="border:none;"
+                                          title="Fast Backwards"/>
+                    </f:facet>
+                </ice:dataPaginator>
+<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPop" draggable="true" modal="true"
+	rendered="true" visible="#{salarieHabilitationsFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout habilitation"
+				styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieHabilitationsFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieHabilitationsForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+</html>

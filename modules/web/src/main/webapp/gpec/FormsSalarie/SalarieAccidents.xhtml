@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<ice:inputHidden value="#{salarieAccidentsFormBB.init}" />
+<h3>Accidents du salarié</h3>
+<ice:commandButton id="toggleModalAccident" value="Ajouter un accident"
+	style="margin-right: 2px;font-size:12px"
+	action="#{salarieAccidentsFormBB.initSalarieAccidentForm}"
+	disabled="#{empty salarieAccidentsFormBB.typeAccidentList ||empty salarieAccidentsFormBB.typeLesionList || empty salarieAccidentsFormBB.typeCauseAccidentList}" />
+
+		<br />
+	<br />
+<fieldset style="border: 1px solid;width: 310px;">
+	<legend>Affichage des données par année</legend>
+	<ice:panelGrid columns="5" >
+		<ice:outputText value="Année de" style="margin-right:10px;" />
+		<ice:selectOneMenu id="anneeDAc"
+				value="#{salarieFormBB.debutAc}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesAc}" />
+		</ice:selectOneMenu>
+		<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+		<ice:selectOneMenu id="anneeFAc"
+				value="#{salarieFormBB.finAc}"
+				partialSubmit="true" style="overflow: auto;"
+				immediate="true"
+				valueChangeListener="#{salarieFormBB.datesFiltre}" >
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{salarieFormBB.anneesAc}" />
+		</ice:selectOneMenu>
+		<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerAC}" />
+	</ice:panelGrid>
+</fieldset>
+
+<ice:panelGrid columns="1">
+	<ice:outputText
+		value="Vous devez préalablement saisir les natures d'accident dans paramètres."
+		rendered="#{empty salarieAccidentsFormBB.typeAccidentList}"
+		style="color: red" />
+
+	<ice:outputText
+		value="Vous devez préalablement saisir les natures de lésion dans paramètres."
+		rendered="#{empty salarieAccidentsFormBB.typeLesionList}"
+		style="color: red" />
+	<ice:outputText
+		value="Vous devez préalablement saisir les causes d'accident dans paramètres."
+		rendered="#{empty salarieAccidentsFormBB.typeCauseAccidentList}"
+		style="color: red" />
+</ice:panelGrid>
+
+<ice:dataTable value="#{salarieFormBB.accidentBeanList}" var="item"
+	rendered="#{not empty salarieFormBB.accidentBeanList}"
+	id="idDatatableAccidents" rows="12">
+
+		<f:facet name="header">
+    	<ice:columnGroup>
+			<ice:headerRow>
+				<ice:column rowspan="2">
+					<ice:outputText value="Type d'accident"/>
+				</ice:column>
+				<ice:column colspan="2">
+					<ice:outputText value="Date de l'accident"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Nombre de jours d'arrêt"/>
+				</ice:column>
+				<ice:column colspan="2">
+					<ice:outputText value="Siège de la lésion"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Cause de l'accident"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Justificatif"/>
+				</ice:column>
+				<ice:column rowspan="2">
+					<ice:outputText value="Actions"/>
+				</ice:column>
+			</ice:headerRow>
+			
+			<ice:headerRow>
+				<ice:column>
+					<ice:outputText value="Initial"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="Rechute"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="Initial"/>
+				</ice:column>
+				<ice:column>
+					<ice:outputText value="Rechute"/>
+				</ice:column>
+			</ice:headerRow>
+
+
+		</ice:columnGroup>
+	</f:facet>
+
+	<!-- Stock number -->
+	<ice:column>
+		<ice:outputText value="#{item.nomTypeAccident}" />
+	</ice:column>
+
+	<!-- Model number -->
+	<ice:column>
+		<ice:outputText value="#{item.dateAccident}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.dateRechute}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:outputText>
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="#{item.nombreJourArret}" rendered="#{item.initial}" />
+		<ice:outputText value="#{item.nombreJourArretRechute}" rendered="#{!item.initial}" />
+	</ice:column>
+	<ice:column>
+		<ice:outputText value="#{item.nomTypeLesion}" />
+	</ice:column>
+	<ice:column>
+		<ice:outputText value="#{item.nomTypeLesionRechute}" />
+	</ice:column>
+	<ice:column>
+		<ice:outputText value="#{item.nomTypeCauseAccident}" />
+	</ice:column>
+	
+	<ice:column>
+		<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+			style="color: red" 
+			rendered="#{item.fileError}"/>
+		<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 			<a id="lien" href="#{salarieAccidentsFormBB.url}#{item.justif.name}" target="_blank">
+				<ice:outputText value="#{item.justif.name}" />
+			</a> -->
+			<ice:commandLink actionListener="#{salarieAccidentsFormBB.download}"
+							 rendered="#{not item.fileError}" style="text-decoration: underline;">
+				<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+			</ice:commandLink>
+			<ice:commandLink 
+				actionListener="#{salarieAccidentsFormBB.removeUploadedFileAccident}"
+				style="text-decoration: underline; color: red;"
+				panelConfirmation="deleteConfirmPanelFileAccident">
+				<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+				<ui:insert />
+			</ice:commandLink>
+		</ice:panelGrid>
+		<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+			<ice:outputText value="-" />
+		</ice:panelGrid>
+		
+	</ice:column>	
+	
+	<ice:column>
+		<ice:commandButton value="Modifier"
+			actionListener="#{salarieAccidentsFormBB.modifAccident}">
+
+		</ice:commandButton>
+		<ice:commandButton value="Supprimer"
+			actionListener="#{salarieAccidentsFormBB.deleteAccident}"
+			panelConfirmation="deleteConfirmPanelAccident" >
+		</ice:commandButton>
+
+		<!-- Panel de confirmation de suppression -->
+ 		<ice:panelConfirmation id="deleteConfirmPanelAccident" 
+			message="Êtes-vous sûr de vouloir supprimer cet accident ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+		<ice:panelConfirmation id="deleteConfirmPanelFileAccident"
+			message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+			acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+
+	</ice:column>
+</ice:dataTable>
+<!-- Paginator with page controls -->
+<ice:dataPaginator id="dataScrollDatatableAccidents"
+	for="idDatatableAccidents" paginator="true" fastStep="3">
+	<f:facet name="first">
+		<ice:graphicImage url="../style/rime/css-images/arrow-first.gif"
+			style="border:none;" title="First Page" />
+	</f:facet>
+	<f:facet name="last">
+		<ice:graphicImage url="../style/rime/css-images/arrow-last.gif"
+			style="border:none;" title="Last Page" />
+	</f:facet>
+	<f:facet name="previous">
+		<ice:graphicImage url="../style/rime/css-images/arrow-previous.gif"
+			style="border:none;" title="Previous Page" />
+	</f:facet>
+	<f:facet name="next">
+		<ice:graphicImage url="../style/rime/css-images/arrow-next.gif"
+			style="border:none;" title="Next Page" />
+	</f:facet>
+	<f:facet name="fastforward">
+		<ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+			style="border:none;" title="Fast Forward" />
+	</f:facet>
+	<f:facet name="fastrewind">
+		<ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+			style="border:none;" title="Fast Backwards" />
+	</f:facet>
+</ice:dataPaginator>
+<!-- ice:dataTable width="350px" value="#{salarieAccidentsFormBB.fileListAccident}"
+		var="file" rendered="#{not empty salarieAccidentsFormBB.fileListAccident}">
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Nom du fichier" />
+			</f:facet>
+			<ice:outputResource 
+				rendered="#{not salarieAccidentsFormBB.fileError}"
+				id="pdfResource1"
+				resource="#{file.byteArrayResource}"
+				fileName="#{file.fileInfo.fileName}" shared="false"
+				style="text-decoration: underline; color: red;" />
+			<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+				style="color: red" 
+				rendered="#{salarieAccidentsFormBB.fileError}"/>
+		</ice:column>
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Action" />
+			</f:facet>
+			<ice:commandLink value="Supprimez"
+				actionListener="#{salarieAccidentsFormBB.removeUploadedFileAccident}"
+				style="text-decoration: underline; color: red;">
+				<f:param name="fileName" value="#{file.fileInfo.fileName}" />
+			</ice:commandLink>
+		</ice:column>
+	</ice:dataTable-->
+<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPopAccident" draggable="true" modal="true"
+	rendered="true" visible="#{salarieAccidentsFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout accident" styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieAccidentsFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieAccidentsForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+
+<ice:panelPopup id="modalPnlPopAccidentNoDelete"
+		draggable="true" 
+		modal="true" 
+		rendered="true"
+		visible="#{salarieAccidentsFormBB.delete}"
+		styleClass="corePopup" >
+	<f:facet name="header">
+		<ice:outputText value="Suppression impossible" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="La rechute liée à cet évènement doit être supprimée avant toute autre suppression" />
+			<br />
+			<ice:commandButton id="cancelDelAcc" value="Ok"
+				action="#{salarieAccidentsFormBB.closePopup}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+</html>

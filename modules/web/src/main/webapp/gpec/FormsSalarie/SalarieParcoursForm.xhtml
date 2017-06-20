@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+<h3>Formulaire de saisie d'un poste occupé</h3>
+<ice:panelGrid columns="2" id="idPanelGridFormParcours">
+	<!-- <ice:outputLabel value="Entreprise" />
+			<ice:selectOneMenu id="entrepriseParcoursList"
+				value="#{salarieParcoursFormBB.idServiceSelected}" partialSubmit="true"
+				style="overflow: auto;">
+				<f:selectItems value="#{salarieParcoursFormBB.serviceList}" />
+			</ice:selectOneMenu>
+			
+			<ice:outputLabel value="Service" />
+			<ice:selectOneMenu id="serviceParcoursList"
+				value="#{salarieParcoursFormBB.idServiceSelected}" partialSubmit="true"
+				style="overflow: auto;">
+				<f:selectItems value="#{salarieParcoursFormBB.serviceList}" />
+			</ice:selectOneMenu>
+			 -->
+	<ice:outputLabel value="Métier" />
+	<ice:panelGroup id="idPanelGroupMetier">
+		<ice:selectOneMenu id="metierParcoursList"
+			value="#{salarieParcoursFormBB.idMetierSelected}"
+			style="overflow: auto;" 
+			immediate="true">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieParcoursFormBB.metierList}" />
+		</ice:selectOneMenu>
+		<h:message for="metierParcoursList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Catégorie socio-professionnelle" />
+	<ice:panelGroup>
+		<ice:selectOneMenu id="statutParcoursList"
+			value="#{salarieParcoursFormBB.idTypeStatutSelected}"
+			immediate="true"
+			style="overflow: auto;">
+
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieParcoursFormBB.typeStatutList}" />
+		</ice:selectOneMenu>
+		<h:message for="statutParcoursList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Type de contrat" />
+	<ice:panelGroup>
+		<ice:selectOneMenu id="contratParcoursList"
+			value="#{salarieParcoursFormBB.idTypeContratSelected}"
+			partialSubmit="true" 
+			style="overflow: auto;" 
+			valueChangeListener="#{salarieParcoursFormBB.displayRecoursInterim}">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieParcoursFormBB.typeContratList}" />
+		</ice:selectOneMenu>
+		<h:message for="contratParcoursList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Recours à la mission d’intérim"
+		rendered="#{salarieParcoursFormBB.displayRecoursList}" />
+	<ice:panelGroup rendered="#{salarieParcoursFormBB.displayRecoursList}">
+		<ice:selectOneMenu id="recoursParcoursList"
+			value="#{salarieParcoursFormBB.idRecoursSelected}"
+			partialSubmit="true" 
+			style="overflow: auto;">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieParcoursFormBB.typeRecoursList}" />
+		</ice:selectOneMenu>
+		<h:message for="recoursParcoursList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Equivalence temps plein" />
+	<ice:panelGroup>
+		<ice:inputText value="#{salarieParcoursFormBB.equivalenceTempsPlein}"
+			converterMessage="#{msg.integerConverter}"
+			validatorMessage="Cette valeur doit etre comprise entre 0 et 100"
+			partialSubmit="false" 
+			id="idEqui">
+			<f:validateDoubleRange maximum="100" minimum="0" />
+		</ice:inputText>
+		<ice:outputText value="%" />
+		<h:message for="idEqui" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Echelon" />
+	<ice:panelGroup>
+		<ice:inputText value="#{salarieParcoursFormBB.echelon}"
+			partialSubmit="false" id="idEchelon">
+		</ice:inputText>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Niveau" />
+	<ice:panelGroup>
+		<ice:inputText value="#{salarieParcoursFormBB.niveau}"
+			partialSubmit="false" id="idNiveau">
+		</ice:inputText>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Coefficient" />
+	<ice:panelGroup>
+		<ice:inputText value="#{salarieParcoursFormBB.coefficient}"
+			partialSubmit="false" id="idCoef">
+		</ice:inputText>
+	</ice:panelGroup>
+
+
+	<ice:outputLabel value="Début de prise de fonction" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="debutFonction"
+			value="#{salarieParcoursFormBB.debutFonction}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			converterMessage="#{msg.dateTimeConverter}" 
+			partialSubmit="true"
+			valueChangeListener="#{salarieParcoursFormBB.refreshDate}">
+			<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="debutFonction" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Fin de prise de fonction" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="finFonction"
+			value="#{salarieParcoursFormBB.finFonction}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			converterMessage="#{msg.dateTimeConverter}"
+			partialSubmit="true"
+			valueChangeListener="#{salarieParcoursFormBB.refreshDate}">
+			<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="finFonction" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Justificatif" />
+	<ice:panelGroup>
+		<ice:inputFile id="inputFileNameParcours" width="500"
+			autoUpload="true"
+			progressListener="#{salarieParcoursFormBB.fileUploadProgressParcours}"
+			actionListener="#{salarieParcoursFormBB.uploadFileParcours}"
+			disabled="#{not empty salarieParcoursFormBB.fileListParcoursTemp}"
+			uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieParcoursFormBB.idSalarie}/parcours/" />
+		<ice:outputProgress
+			value="#{salarieParcoursFormBB.fileProgressParcours}"
+			styleClass="uploadProgressBar" />
+		<br/>
+		<h:message for="inputFileNameParcours" errorStyle="color: red"/>
+		<ice:dataTable width="350px"
+			value="#{salarieParcoursFormBB.fileListParcoursTemp}" var="file"
+			rendered="#{not empty salarieParcoursFormBB.fileListParcoursTemp}">
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Nom du fichier" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not file.fileError}">
+<!-- 					<a id="lien"
+						href="#{salarieParcoursFormBB.url}#{file.fileInfo.fileName}"
+						target="_blank"> <ice:outputText
+						value="#{file.fileInfo.fileName}" /> </a> -->
+					<ice:commandLink actionListener="#{salarieParcoursFormBB.download}"
+									 style="text-decoration: underline;" immediate="true">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</ice:commandLink>
+				</ice:panelGrid>
+				<ice:outputLabel
+					value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible."
+					style="color: red" rendered="#{file.fileError}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Action" />
+				</f:facet>
+				<ice:commandLink value="Supprimer"
+					onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+					actionListener="#{salarieParcoursFormBB.removeUploadedFileParcoursTemp}"
+					style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+
+	<ice:commandButton id="modalPnlValiderParcours" type="submit"
+		value="Valider"
+		actionListener="#{salarieParcoursFormBB.saveOrUpdateSalarieParcours}" />
+
+	<ice:commandButton id="modalPnlCloseParcours" type="submit"
+		value="Quitter" actionListener="#{salarieParcoursFormBB.toggleModal}"
+		immediate="true" />
+</ice:panelGrid>
+
+<ice:panelPopup id="modalDelFile" 
+		draggable="true" 
+		rendered="true"
+		visible="#{salarieParcoursFormBB.modalRenderedDelFile}"
+		style="width:285px;height:auto;top:-250px;left:200px;"
+		autoCentre="true" 
+		positionOnLoadOnly="true">
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+			<br />
+			<ice:commandButton id="delFile" value="oui"
+				actionListener="#{salarieParcoursFormBB.removeUploadedFileParcoursTemp}" />
+			<ice:commandButton id="cancelDelFile" value="non"
+				actionListener="#{salarieParcoursFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

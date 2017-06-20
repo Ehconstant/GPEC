@@ -1,0 +1,20 @@
+.iceDatTblFtr {
+	padding-bottom:0;
+	padding-left:0;
+	padding-right:0;
+	padding-top:0;
+	background-color:#F7F7F7;
+}
+
+.val {
+	margin-top:5px;
+}
+
+.footerDataTable{
+	background: url("./rime/css-images/table_col_header.gif") repeat-x scroll left bottom #FFFFFF;
+	font-weight:bold;
+}
+
+.table{
+	border-left: 0px;
+}

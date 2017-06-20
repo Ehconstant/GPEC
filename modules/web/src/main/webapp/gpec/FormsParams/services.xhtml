@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+	<h:form id="idForm">
+	<h3>Services</h3>
+	<ice:commandButton value="Ajouter un service" 
+					   action="#{serviceFormBB.init}">
+		     
+	</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;"/>
+	
+	<ice:dataTable id="dataTable" value="#{serviceList.servicesInventory}" 
+								  var="item" 
+								  rendered="#{not empty serviceList.servicesInventory}">
+
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Nom" />
+			</f:facet>
+			<ice:outputText value="#{item.nom}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Entreprise" />
+			</f:facet>
+			<ice:outputText value="#{item.nomEntreprise}" />
+		</ice:column>
+		 
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Action" />
+			</f:facet>
+	
+			<ice:commandButton value="Modifier" action="#{serviceFormBB.modificationService}">
+					   		 
+			 	<f:setPropertyActionListener target="#{serviceFormBB.id}" value="#{item.id}" />
+			 	<f:setPropertyActionListener target="#{serviceFormBB.nom}" value="#{item.nom}" />
+			    <f:setPropertyActionListener target="#{serviceFormBB.idEntreprise}" value="#{item.idEntreprise}" />
+			    <f:setPropertyActionListener target="#{serviceFormBB.nomEntreprise}" value="#{item.nomEntreprise}" />
+			</ice:commandButton>
+			
+			<ice:commandButton id ="idSupprimer" 
+							   value="Supprimer" 
+							   actionListener="#{serviceFormBB.supprimerService}"
+					   		   panelConfirmation="deleteConfirmPanelService">
+				<f:setPropertyActionListener target="#{serviceFormBB.id}" value="#{item.id}" />
+			</ice:commandButton>
+			<!-- Panel de confirmation de suppression -->
+			<ice:panelConfirmation id="deleteConfirmPanelService" 
+								   message="Êtes-vous sûr de vouloir supprimer ce service ?"
+                    			   acceptLabel="Oui" 
+                    			   cancelLabel="Non"
+                    			   title="Confirmer"/>
+			
+		</ice:column>
+		
+	</ice:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>

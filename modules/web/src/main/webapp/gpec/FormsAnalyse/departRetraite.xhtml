@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+	<br/>
+	<h3>Planning prévisionnel des départs en retraite</h3>
+	<br/>
+	<ice:form id="idForm"> 
+	<br/>
+	<ice:panelGrid columns="2">
+				<ice:outputLabel value="Projection " for="selectProjection"/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectProjection"
+						  partialSubmit="true"
+						  style="overflow: auto;"
+						  value="#{tableBeanRetraite.idProjection}"
+						  valueChangeListener="#{tableBeanRetraite.change}">
+						 
+						<f:selectItem itemLabel="2 ans" itemValue="0"/>
+						<f:selectItem itemLabel="5 ans" itemValue="3"/>
+
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				<ice:outputText rendered="#{empty tableBeanRetraite.entreprisesListItem}"
+					value="Il n'existe pas encore d'entreprise." />
+				<ice:outputLabel rendered="#{not empty tableBeanRetraite.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+				<ice:panelGroup rendered="#{not empty tableBeanRetraite.entreprisesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectEntreprise"
+						  partialSubmit="true"
+						  style="overflow: auto;"
+						  value="#{tableBeanRetraite.idEntreprise}"
+						  valueChangeListener="#{tableBeanRetraite.change}">
+						 
+						<f:selectItems value="#{tableBeanRetraite.entreprisesListItem}" />	
+					</ice:selectOneMenu>
+					<h:message for="idDataEntreprise1" />
+				</ice:panelGroup>
+				
+				<ice:outputLabel rendered="#{not empty tableBeanRetraite.servicesListItem}" value="Service " for="selectService"/>
+				<ice:panelGroup rendered="#{not empty tableBeanRetraite.servicesListItem}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="selectService"
+						  partialSubmit="true"
+						  style="overflow: auto;"
+						  value="#{tableBeanRetraite.idService}"
+						  valueChangeListener="#{tableBeanRetraite.change}">
+						 
+						<f:selectItem itemLabel="" itemValue="-1"/>
+						<f:selectItems value="#{tableBeanRetraite.servicesListItem}" />	
+					</ice:selectOneMenu>
+					<h:message for="idDataService1" />
+				</ice:panelGroup>
+			</ice:panelGrid>
+			<br/>
+			<br/>
+			<ice:outputText rendered="#{empty tableBeanRetraite.metiersRetraiteInventory}" 
+							value="Aucun résultat pour les critères sélectionnés."/>
+			<ice:commandButton rendered="#{not empty tableBeanRetraite.metiersRetraiteInventory}" 
+							   actionListener="#{tableBeanRetraite.download}" 
+							   value="Exporter au format Excel"/>
+	
+			<ice:dataTable id="dataTable" rendered="#{not empty tableBeanRetraite.metiersRetraiteInventory}" value="#{tableBeanRetraite.metiersRetraiteInventory}" var="item">
+				<f:facet name="header">
+					<ice:columnGroup>
+			            <ice:headerRow>
+			            	<ice:column rendered="#{!tableBeanRetraite.is5year}" colspan="4">
+					        	<ice:outputText value="Planning prévisionnel des départs / année"/>
+					        </ice:column>
+					    </ice:headerRow>
+					    <ice:headerRow>
+			            	<ice:column rendered="#{tableBeanRetraite.is5year}" colspan="7">
+					        	<ice:outputText value="Planning prévisionnel des départs / année"/>
+					        </ice:column>
+					    </ice:headerRow>
+		                   
+		                <ice:headerRow>
+		                   	 <ice:column>
+								<ice:outputText value="Métiers" /> 
+				             </ice:column>
+		
+		                 	<ice:column>
+				                <ice:outputText value="#{tableBeanRetraite.year1}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+				            <ice:column>
+				                <ice:outputText value="#{tableBeanRetraite.year2}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+				            <ice:column>
+				                <ice:outputText value="#{tableBeanRetraite.year3}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+				            
+				        	<ice:column rendered="#{tableBeanRetraite.is5year}">
+				                <ice:outputText value="#{tableBeanRetraite.year4}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+				            <ice:column rendered="#{tableBeanRetraite.is5year}">
+				                <ice:outputText value="#{tableBeanRetraite.year5}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+				            <ice:column rendered="#{tableBeanRetraite.is5year}">
+				                <ice:outputText value="#{tableBeanRetraite.year6}" 
+				                				style="width: 100px;"/>
+				            </ice:column>
+		                 </ice:headerRow>
+		                 
+		           </ice:columnGroup>
+		           
+		        </f:facet> 
+			
+				<ice:column>
+					<ice:outputText value="#{item.nom}" />
+					<f:facet name="footer">
+						<ice:outputText value="Total des départs" />
+					</f:facet>
+				</ice:column>
+				
+				<ice:column>
+					<div align="center"><ice:outputText id="test" value="#{item.departYear1}"/></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear1}" />
+					</f:facet> 
+				</ice:column>
+			 
+				<ice:column>
+					<div align="center"><ice:outputText value="#{item.departYear2}"/></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear2}" />
+					</f:facet>
+				</ice:column>
+				
+				<ice:column>
+					<div align="center"><ice:outputText value="#{item.departYear3}" /></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear3}" />
+					</f:facet>
+				</ice:column>
+				
+				<ice:column rendered="#{tableBeanRetraite.is5year}">
+					<div align="center"><ice:outputText value="#{item.departYear4}" /></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear4}" />
+					</f:facet>
+				</ice:column>
+				
+				<ice:column rendered="#{tableBeanRetraite.is5year}">
+					<div align="center"><ice:outputText value="#{item.departYear5}" /></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear5}" />
+					</f:facet>
+				</ice:column>
+				
+				<ice:column rendered="#{tableBeanRetraite.is5year}">
+					<div align="center"><ice:outputText value="#{item.departYear6}" /></div>
+					<f:facet name="footer">
+						<ice:outputText value="#{tableBeanRetraite.totalYear6}" />
+					</f:facet>
+				</ice:column>
+					
+			</ice:dataTable>
+		</ice:form>
+	</ui:define>
+</ui:composition>

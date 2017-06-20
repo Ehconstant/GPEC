@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Motifrupturecontrat"
+		table="MOTIFRUPTURECONTRAT"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_MOTIF_RUPTURE_CONTRAT"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomMotifRuptureContrat"
+			column="NOM_MOTIF_RUPTURE_CONTRAT"
+			type="text"
+			not-null="false"
+		/>
+		
+		<property
+			name="OrdreAffichage"
+			column="ORDRE_AFFICHAGE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+	
+
+		<set name="PARCOURSs" inverse="true">
+			<key column="ID_MOTIF_RUPTURE_CONTRAT"/>
+			<one-to-many class="Parcours"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

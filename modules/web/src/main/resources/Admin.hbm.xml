@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="Admin" table="ADMIN">
+	<meta attribute="sync-DAO">false</meta>
+		<id
+			column="ID_ADMIN"
+			name="Id"
+			type="integer"
+		>
+			<generator class="identity" />
+		</id>
+		<property
+			column="MIGRATION" 
+			name="Migration"
+			length="11"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="LOGO"
+			name="Logo"
+			not-null="false"
+			type="text"
+		 />
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

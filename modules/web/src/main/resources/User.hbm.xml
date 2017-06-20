@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="User"
+		table="GPEC_USER"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_USER"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Login"
+			column="LOGIN"
+			type="string"
+			not-null="false"
+		/>
+		
+		<property
+			name="Password"
+			column="PASSWORD"
+			type="string"
+			not-null="false"
+		/>
+		
+		<property
+			name="Profile"
+			column="PROFILE"
+			type="string"
+			not-null="false"
+		/>
+	
+		<property
+			name="Evenement"
+			column="EVENEMENT"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="Remuneration"
+			column="REMUNERATION"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="FicheDePoste" 
+			column="FICHEDEPOSTE"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="Entretien"
+			column="ENTRETIEN"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="ContratTravail"
+			column="CONTRAT_TRAVAIL"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="Admin"
+			column="ADMIN"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="SuperAdmin"
+			column="SUPER_ADMIN"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+		
+		<property
+			name="Nom"
+			column="NOM"
+			type="string"
+			not-null="false"
+		/>
+		
+		<property
+			name="Prenom"
+			column="PRENOM"
+			type="string"
+			not-null="false"
+		/>
+		
+		<property
+			name="Telephone"
+			column="TELEPHONE"
+			type="string"
+			not-null="false"
+		/>
+		
+		<property
+			name="DateDemandeVersionEssai"
+			column="DATE_DEMANDE_VERSION_ESSAI"
+			type="date"
+			not-null="false"
+		/>
+		
+		<property
+			name="NomEntreprise"
+			column="NOM_ENTREPRISE"
+			type="string"
+			not-null="false"
+		/>
+		
+		<many-to-one
+			name="Groupe"
+			column="ID_GROUPE"
+			class="Groupe"
+			not-null="false"
+		>
+		</many-to-one>
+		
+	</class>	
+</hibernate-mapping>

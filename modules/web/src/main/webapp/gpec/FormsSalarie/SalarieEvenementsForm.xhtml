@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid style="width: 900px">
+	<h3>Formulaire de saisie d'un évènement</h3>
+	
+	<ice:panelGrid style="width: 45%" columns="2">
+	
+		<ice:outputLabel value="Date de l'évènement (jj/mm/aaaa)" />
+		<ice:panelGroup>
+			<ice:selectInputDate id="dateEvenement"
+				requiredMessage="Champ obligatoire"
+				value="#{salarieEvenementsFormBB.dateEvenement}"
+				highlightClass="weekend: august:" renderMonthAsDropdown="true"
+				renderYearAsDropdown="true" highlightUnit="DAY_OF_WEEK: MONTH"
+				highlightValue="1,7: 8" renderAsPopup="true" immediate="true"
+				partialSubmit="true" required="true" tabindex="0"
+				valueChangeListener="#{salarieFormBB.checkPresenceEvenement}"
+				converterMessage="#{msg.dateTimeConverter}">
+				<f:converter converterId="dateConverter"
+					timeZone="#{dateSelect.timeZone}" />
+			</ice:selectInputDate>
+			<h:message for="dateEvenement" errorStyle="color: red"></h:message>
+		</ice:panelGroup>
+		
+		<ice:outputLabel value="Nom de l'interlocuteur" />
+		<h:inputText value="#{salarieEvenementsFormBB.interlocuteur}" style="width:150px;"
+			partialSubmit="false" id="interlocuteur" onkeypress="return noSubmitOnEnter(event);" />
+		
+	</ice:panelGrid>
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>Nature de l'évènement</b></legend> 
+				<h:inputTextarea rows="5" style="width: 98%"
+					value="#{salarieEvenementsFormBB.nature}"
+					id="idNature" tabindex="8" partialSubmit="true"  />
+		</fieldset>
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>Commentaires</b></legend> 
+				<h:inputTextarea rows="5" style="width: 98%"
+					value="#{salarieEvenementsFormBB.commentaire}"
+					id="idCommentaire" tabindex="8" partialSubmit="true"  />
+		</fieldset>
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>Décision</b></legend> 
+				<h:inputTextarea rows="5" style="width: 98%"
+					value="#{salarieEvenementsFormBB.decision}"
+					id="idDecision" tabindex="8" partialSubmit="true"  />
+		</fieldset>
+
+		<ice:panelGrid style="width: 100%" colums="2">
+			<ice:outputLabel value="Justificatif" />
+			<ice:panelGroup>
+				<ice:inputFile id="inputFileNameEvenement" width="500"
+					autoUpload="true"
+					progressListener="#{salarieEvenementsFormBB.fileUploadProgressEvenement}"
+					actionListener="#{salarieEvenementsFormBB.uploadFileEvenement}"
+					uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieEvenementsFormBB.idSalarie}/evenement/" />
+				<ice:outputProgress value="#{salarieEvenementsFormBB.fileProgressEvenement}"
+					styleClass="uploadProgressBar" />
+				<br/>
+				<h:message for="inputFileNameEvenement" errorStyle="color: red"/>
+				<ice:dataTable width="350px"
+					value="#{salarieEvenementsFormBB.fileListEvenementTemp}" var="file"
+					rendered="#{not empty salarieEvenementsFormBB.fileListEvenementTemp}">
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputLabel value="Nom du fichier" />
+						</f:facet>
+						<ice:panelGrid rendered="#{not file.fileError}">
+<!-- 							<a id="lien" href="#{salarieEvenementsFormBB.url}#{file.fileInfo.fileName}" target="_blank">
+								<ice:outputText value="#{file.fileInfo.fileName}" />
+							</a> -->
+							<ice:commandLink actionListener="#{salarieEvenementsFormBB.download}"
+											 style="text-decoration: underline;" immediate="true">
+								<ice:outputText value="#{file.fileInfo.fileName}" />
+							</ice:commandLink>
+						</ice:panelGrid>
+						<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+							style="color: red" 
+							rendered="#{file.fileError}"/>
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputLabel value="Action" />
+						</f:facet>
+						<ice:commandLink value="Supprimer"
+							onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+							actionListener="#{salarieEvenementsFormBB.removeUploadedFileEvenementTemp}"
+							style="text-decoration: underline; color: red;">
+						</ice:commandLink>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+			<ice:panelGroup>
+				<ice:commandButton id="modalPnlValiderEvenement" type="submit"
+					value="Valider"
+					actionListener="#{salarieEvenementsFormBB.saveOrUpdateSalarieEvenement}" />
+				<ice:commandButton id="modalPnlCloseEvenement" type="submit"
+					value="Quitter"
+					actionListener="#{salarieEvenementsFormBB.toggleModal}"
+					immediate="true" />
+			</ice:panelGroup>
+		</ice:panelGrid>
+	</ice:panelGrid>
+</ice:panelGrid>
+
+<ice:panelPopup id="modalDelFileEv" draggable="true" rendered="true"
+		visible="#{salarieEvenementsFormBB.modalRenderedDelFile}"
+		style="position:absolute;width:285px;height:auto;top:450px;left:350px;" 
+		autoCentre="true"
+		positionOnLoadOnly="true" >
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+
+			<br />
+			<ice:commandButton id="delFileEv" value="oui"
+				actionListener="#{salarieEvenementsFormBB.removeUploadedFileEvenementTemp}" />
+			<ice:commandButton id="cancelDelFileEv" value="non"
+				actionListener="#{salarieEvenementsFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+
+</html>

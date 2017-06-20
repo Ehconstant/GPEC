@@ -1,0 +1,1425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	
+<ice:panelGrid id="annee" rendered="#{!salarieRemunerationsFormBB.anneeOk}" >
+	<ice:outputLabel value="Année de référence de la rémunération " styleClass="lblFieldset" style="width: 110px;"/>
+	<ice:inputText id="annee" value="#{salarieRemunerationsFormBB.annee}"/>
+	
+	<ice:panelGrid column="2">
+	<ice:commandButton id ="idValider" 
+					   value="Valider"                 
+					   action="#{salarieRemunerationsFormBB.validerAnnee}"
+					   style="margin-right: 2px;font-size:12px"
+					   />
+	<ice:commandButton id ="idAnnuler" 
+					   value="Annuler" 
+					   actionListener="#{salarieRemunerationsFormBB.toggleModal}"
+					   style="margin-right: 2px;font-size:12px"/>
+	</ice:panelGrid>
+	
+	<ice:panelGrid>
+		<h:message for="annee" style="color:red;"/>
+	</ice:panelGrid>
+</ice:panelGrid>
+
+
+<ice:panelGrid id="pg" style="width: 900px" rendered="#{salarieRemunerationsFormBB.anneeOk}">
+	<h3>Formulaire de saisie d'une rémunération</h3>
+		
+	<ice:panelGrid columns="3">
+			<ice:commandButton id="modalPnlValiderEntretien2" type="submit"
+				value="Valider"
+				actionListener="#{salarieRemunerationsFormBB.saveOrUpdateSalarieRemuneration}" />
+			<ice:commandButton id="modalPnlCloseRemuneration2" type="submit"
+				value="Quitter"
+				actionListener="#{salarieRemunerationsFormBB.toggleModal}"
+				immediate="true" />
+			
+	</ice:panelGrid>
+
+	<br />
+
+	<ice:panelGrid style="width: 98%" columns="2" columnClasses="tdRemunerationCollaborateur">
+		
+			
+		<fieldset style="border: 1px solid; height: 180px; width: 100%;">
+			<legend><b>Collaborateur</b></legend> 
+			
+			
+			<ice:panelGrid style="width: 100%" columns="4" columnClasses="tdRemunerationCollaborateur">
+				<ice:outputLabel value="Salarié"  style="width: 110px;"/>
+				<ice:outputText value="#{salarieFormBB.nom} #{salarieFormBB.prenom}" />
+					
+				
+				<ice:outputLabel value="Année de référence"  style="width: 110px;"/>
+				<ice:outputLabel value="#{salarieRemunerationsFormBB.annee}"  style="width: 110px;"/>
+				<!-- h:inputText id="annee" immediate="true" onchange="this.form.submit()" value="#{salarieRemunerationsFormBB.annee}" valueChangeListener="#{salarieRemunerationsFormBB.validerAnnee}"/-->
+				                                                                                         
+				<ice:outputLabel value="Fonction/Métier"  style="width: 110px;"/>
+				<!-- ice:selectOneMenu id="idMetier" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.metierSelected}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.metiersList}" />
+				</ice:selectOneMenu-->
+				<ice:outputText value="#{salarieRemunerationsFormBB.metier}" />
+
+				<ice:outputLabel value="" style="width: 110px;" />
+				<ice:outputLabel value="" />
+				
+				<ice:outputLabel value="Catégorie socio-professionnelle"  style="width: 110px;"/>
+				<!-- ice:selectOneMenu id="idCategorie" tabindex="15"
+					partialSubmit="true"
+					value="#{ficheMetierFormBB.cspReference}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieParcoursFormBB.typeStatutList}" />
+				</ice:selectOneMenu-->
+				<ice:outputText value="#{salarieRemunerationsFormBB.csp}" />
+
+				<ice:outputLabel value="Horaire mensuel travaillé" id="horaire" style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.horaire}" onkeypress="return noSubmitOnEnter(event);" style="text-align: right;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+
+				<ice:outputLabel value="Echelon"  style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.echelon}" onkeypress="return noSubmitOnEnter(event);" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()"/>
+				
+				<ice:outputLabel value="Taux horaire brut"  style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.taux}" onkeypress="return noSubmitOnEnter(event);" style="text-align: right;" onclick="$montantTxHoraire=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantTxHoraire;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+
+				<ice:outputLabel value="Niveau"  style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.niveau}" onkeypress="return noSubmitOnEnter(event);" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()"/>
+				
+				<ice:outputLabel value="Salaire mensuel brut en €"  style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.salaireBrut}" onkeypress="return noSubmitOnEnter(event);" style="text-align: right;" onclick="$montantSalMens=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantSalMens;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+
+				<ice:outputLabel value="Coefficient"  style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.coefficient}" onkeypress="return noSubmitOnEnter(event);" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+
+				<ice:outputLabel value="Salaire mensuel conventionnel brut en €" style="width: 110px;text-align:right;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.salaireConvBrut}" onkeypress="return noSubmitOnEnter(event);" style="text-align: right;" onclick="$montantSalMensConv=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantSalMensConv;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+<!-- 				
+				<ice:outputLabel value="Horaire travaillé" styleClass="lblFieldset" style="width: 110px;"/>
+				<h:inputText value="#{salarieRemunerationsFormBB.horaire}" />
+ -->
+				
+			</ice:panelGrid>
+			<h:message for="horaire" errorStyle="color: red"></h:message>
+		</fieldset>
+		
+	</ice:panelGrid>
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<ice:panelGrid width="100%" columns="6" rowClasses="fondGris" columnClasses="thRemunerationBaseBruteAnnuelle1,thRemunerationBaseBruteAnnuelle2,thRemunerationBaseBruteAnnuelle3,thRemunerationBaseBruteAnnuelle4,thRemunerationBaseBruteAnnuelle5,thRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Base brute annuelle en €" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Montant année N-1 en €" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Montant année N " />
+					<ice:outputLabel value=" en €"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Actualisation en numéraire en €" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Evolution en % N/N-1" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;font-size: 14px;" columns="1">
+					<ice:outputLabel value="Commentaires" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+
+			<ice:panelGrid style="width: 100%" columns="6" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:outputLabel value="Salaire minimum conventionnel" />
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.salaireConventionelMinimumAnneePrecedente }" />		
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="salaireConventionelMinimum" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.salaireConventionelMinimum }" onclick="$montantSalConvMin=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantSalConvMin;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.salaireConventionelMinimumReact }" onclick="$actuSalConvMin=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuSalConvMin;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.salaireConventionelMinimumEvol}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.salaireConventionelMinimumComm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+				
+				<ice:outputLabel value="Salaire de base" />	
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.salaireDeBaseAnneePrecedente }" />	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="salaireDeBase" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.salaireDeBase }" onclick="$montantSalDeBase=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantSalDeBase;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.salaireDeBaseReact }" onclick="$actuSalDeBase=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuSalDeBase;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.salaireDeBaseEvol}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.salaireDeBaseComm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+
+
+				<ice:outputLabel value="Augmentation collective" />
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.augmentationCollectiveAnneePrecedente }" />		
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="augmentationCollective" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.augmentationCollective }" onclick="$montantAugmC=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAugmC;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.augmentationCollectiveReact }" onclick="$actuAugmC=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuAugmC;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.augmentationCollectiveEvol}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.augmentationCollectiveComm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+				
+				<ice:outputLabel value="Augmentation individuelle"/>
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.augmentationIndividuelleAnneePrecedente }" />		
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="augmentationIndividuelle" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.augmentationIndividuelle }" onclick="$montantAugmI=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAugmI;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.augmentationIndividuelleReact }" onclick="$actuAugmI=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuAugmI;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.augmentationIndividuelleEvol}"  />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.augmentationIndividuelleComm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+				
+				<ice:outputLabel value="Heures supplémentaires à 25%"/>
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.heuresSup25AnneePrecedente }" />		
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="heuresSup25" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.heuresSup25 }" onclick="$montantHS25=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantHS25;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.heuresSup25React }" onclick="$actuHS25=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuHS25;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.heuresSup25Evol}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.heuresSup25Comm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+				
+				<ice:outputLabel value="Heures supplémentaires à 50%" />
+				<ice:panelGrid style="width:90%;font-size:14px;text-align:right;" columns="1">
+					<h:outputText value="#{salarieRemunerationsFormBB.heuresSup50AnneePrecedente }" />		
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText id="heuresSup50" style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.heuresSup50 }" onclick="$montantHS50=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantHS50;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;text-align:right;" onkeypress="return noSubmitOnEnter(event);" value="#{salarieRemunerationsFormBB.heuresSup50React }" onclick="$actuHS50=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuHS50;" immediate="true" onfocus="focus=this;focus.focus()" onchange="this.form.submit()" valueChangeListener="#{salarieRemunerationsFormBB.majtotal}"/>
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;font-size:14px;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.heuresSup50Evol}" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<h:inputText style="width:98%;" value="#{salarieRemunerationsFormBB.heuresSup50Comm}" onkeypress="return noSubmitOnEnter(event);"  />
+				</ice:panelGrid>
+			</ice:panelGrid>
+			
+			<ice:panelGrid>
+				<h:messages id="errorMessage" errorStyle="color: red" globalOnly="true"/>
+			</ice:panelGrid>
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total - Base brute annuelle" styleClass=" gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:90%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalBrutAnnuelAnneePrecedente}" styleClass=" gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalBrutAnnuel}" styleClass=" gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalBrutAnnuelReact}" styleClass=" gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:80%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalBrutAnnuelEvol}" styleClass=" gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="gras"/>
+				</ice:panelGrid>
+				
+				<!-- ice:commandButton id="boutonCalculTotal" value="Calculer"
+					actionListener="#{salarieRemunerationsFormBB.majTotal}" /-->
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+	
+	
+	<!-- ********************************************************************** -->
+	<!-- ****************************COMMISSIONS******************************* -->
+	
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>COMMISSIONS BRUTES ANNUELLES - €</b></legend>
+		
+				<ice:outputLabel value="Commission à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+				
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les commissions : il s’agit de sommes versées en contrepartie d’un chiffre d’affaire réalisé. Ces sommes sont assimilées au salaire et assujetties aux charges sociales."
+						width="20px" height="20px" align="middle" id="tipsy"/>
+				
+				<ice:selectOneMenu id="idCom" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idCommissionSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majCom}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.commissionList}" />
+				</ice:selectOneMenu>
+				
+				<h:message for="idCom" errorStyle="color: red" />
+				<br />
+			
+			
+			<ice:dataTable id="dataTableC" value="#{salarieRemunerationsFormBB.commissionInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.commissionInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,100px,190px,200px">	
+				  <!-- columnWidths="130px,80px,80px,80px,200px,140px"-->
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText style="" value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.actualisation}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierC" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierCommission}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerC" 
+									   value="Supprimer"
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerCommission}"
+							   		   panelConfirmation="deleteConfirmPanelC"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditableC" value="#{salarieRemunerationsFormBB.commissionInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.commissionInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.commissionInventoryLien}" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" rendered="#{empty salarieRemunerationsFormBB.commissionInventoryLien}" escape="false"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" rendered="#{empty salarieRemunerationsFormBB.commissionInventoryLien}" escape="false"/>
+					</f:facet>
+					<ice:inputText id="idAddCom" style="width: 90%;text-align:right;" value="#{item.montant}" onclick="$montantCom=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantCom;"/>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" rendered="#{empty salarieRemunerationsFormBB.commissionInventoryLien}" escape="false" />
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.actualisation}" onclick="$actuCom=this.value;this.value='';" onblur="if (this.value == '')this.value=$actuCom;"/>
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.commissionInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterC" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addCommission2}"
+									   action="#{salarieRemunerationsFormBB.refreshCom}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNCommission}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecCommission}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idCommissionSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comCommission}" value="#{item.commentaire}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.actuCommission}" value="#{item.actualisation}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerC" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelCommission}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			<br />
+			<h:message for="dataTableEditableC" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total commissions" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrecCommission}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNCommission}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalActuCommission}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+		
+		</fieldset>
+		
+	</ice:panelGrid>
+	
+			
+	
+	<!-- ********************************************************************** -->
+	<!-- ***************************PRIMES FIXES******************************* -->
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>PRIMES FIXES BRUTES ANNUELLES - €</b></legend>
+		
+				<ice:outputLabel value="Prime fixe à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les primes : elles ont la nature juridique du salaire. Il n'en existe pas de liste exhaustive. Elles entrent dans le calcul du salaire brut et sont soumises à cotisations sociales."
+						width="20px" height="20px" align="middle" id="tipsy"/>
+
+				<ice:selectOneMenu id="idPrimeFixe" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idPrimeFixeSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majPf}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.primeFixeList}" />
+				</ice:selectOneMenu>
+
+				<h:message for="idPrimeFixe" errorStyle="color: red" />
+				<br />
+					
+
+			<ice:dataTable id="dataTablePf" value="#{salarieRemunerationsFormBB.primeFixeInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.primeFixeInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.actualisation}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierPf" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierPrimeFixe}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerPf" 
+									   value="Supprimer" 
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerPrimeFixe}"
+							   		   panelConfirmation="deleteConfirmPanelP"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditablePf" value="#{salarieRemunerationsFormBB.primeFixeInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.primeFixeInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.primeFixeInventoryLien}"/>
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeFixeInventoryLien}"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeFixeInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.montant}"  onclick="$montantPf=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantPf;"/>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeFixeInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.actualisation}"  onclick="$montantPf=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantPf;"/>
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.primeFixeInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterPf" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addPrimeFixe}"
+									   action="#{salarieRemunerationsFormBB.refreshPf}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrimeFixe}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecPrimeFixe}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idPrimeFixeSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comPrimeFixe}" value="#{item.commentaire}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.actuPrimeFixe}" value="#{item.actualisation}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerPf" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelPrimeFixe}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>					
+					
+			<br />
+			<h:message for="dataTableEditablePf" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total primes fixes" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrecPrimeFixe}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrimeFixe}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalActuPrimeFixe}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+					
+			</ice:panelGrid>
+
+		</fieldset>
+	</ice:panelGrid>
+	
+	
+	
+	<!-- ********************************************************************** -->
+	<!-- ***************************PRIMES VARIABLES*************************** -->
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>PRIMES VARIABLES BRUTES ANNUELLES - €</b></legend>
+		
+				
+				<ice:outputLabel value="Prime variable à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les primes : elles ont la nature juridique du salaire. Il n'en existe pas de liste exhaustive. Elles entrent dans le calcul du salaire brut et sont soumises à cotisations sociales."
+						width="20px" height="20px" align="center" />
+				<ice:selectOneMenu id="idPrimeVariable" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idPrimeVariableSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majPv}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.primeVariableList}" />
+				</ice:selectOneMenu>
+				
+				<h:message for="idPrimeVariable" errorStyle="color: red" />
+				<br />
+					
+
+			<ice:dataTable id="dataTablePv" value="#{salarieRemunerationsFormBB.primeVariableInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.primeVariableInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.actualisation}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierPv" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierPrimeVariable}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerPv" 
+									   value="Supprimer" 
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerPrimeVariable}"
+							   		   panelConfirmation="deleteConfirmPanelP"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditablePv" value="#{salarieRemunerationsFormBB.primeVariableInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.primeVariableInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.primeVariableInventoryLien}"/>
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeVariableInventoryLien}"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeVariableInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.montant}"  onclick="$montantPv=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantPv;"/>
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.primeVariableInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.actualisation}"  onclick="$montantPv=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantPv;"/>
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.primeVariableInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterPv" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addPrimeVariable}"
+									   action="#{salarieRemunerationsFormBB.refreshPv}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrimeVariable}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecPrimeVariable}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idPrimeVariableSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comPrimeVariable}" value="#{item.commentaire}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.actuPrimeVariable}" value="#{item.actualisation}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerPv" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelPrimeVariable}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<br />
+			<h:message for="dataTableEditablePv" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total primes variables" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrecPrimeVariable}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrimeVariable}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalActuPrimeVariable}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+					
+			</ice:panelGrid>
+			
+		</fieldset>
+	</ice:panelGrid>
+
+	
+	<!-- ********************************************************************** -->
+	<!-- ***************************AVANTAGES ASSUJETTIS*************************** -->
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>AVANTAGES ASSUJETTIS BRUTS ANNUELS - €</b></legend>
+		
+				<ice:outputLabel value="Avantage assujetti à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les avantages assujettis : il s’agit de la prise en charge totale ou partielle par l’employeur de frais personnels de son salarié. Ils représentent une économie pour le salarié dont la valeur est soumise à cotisation sociale."
+						width="20px" height="20px" align="center" />
+				<ice:selectOneMenu id="idAvantageAssujetti" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idAvantageAssujettiSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majAa}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.avantageAssujettiList}" />
+				</ice:selectOneMenu>
+				
+				<h:message for="idAvantageAssujetti" errorStyle="color: red" />
+				<br />
+					
+
+			<ice:dataTable id="dataTableAa" value="#{salarieRemunerationsFormBB.avantageAssujettiInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.actualisation}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierAa" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierAvantageAssujetti}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerAa" 
+									   value="Supprimer" 
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerAvantageAssujetti}"
+							   		   panelConfirmation="deleteConfirmPanelA"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditableAa" value="#{salarieRemunerationsFormBB.avantageAssujettiInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.avantageAssujettiInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.montant}" onclick="$montantAa=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAa;" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.actualisation}" onclick="$montantAa=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAa;" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.avantageAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterAa" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addAvantageAssujetti}"
+									   action="#{salarieRemunerationsFormBB.refreshAa}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNAvantageAssujetti}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecAvantageAssujetti}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idAvantageAssujettiSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comAvantageAssujetti}" value="#{item.commentaire}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.actuAvantageAssujetti}" value="#{item.actualisation}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerAa" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelAvantageAssujetti}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<br />
+			<h:message for="dataTableEditableAa" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total avantages assujettis" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrecAvantageAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNAvantageAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalActuAvantageAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+			
+		</fieldset>
+		
+	</ice:panelGrid>
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<!-- ice:panelGrid style="width: 100%" columns="2" rowClasses="fondGris gras">
+				<ice:outputLabel value="REMUNERATION BRUTE ANNUELLE - €" styleClass="lblFieldset"/>	
+				<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationBruteAnnuelle}" styleClass="lblFieldset gras textRight" />
+			</ice:panelGrid-->
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="REMUNERATION BRUTE ANNUELLE - €" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationBruteAnnuelleNPrec}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationBruteAnnuelle}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationBruteAnnuelleActu}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationBruteAnnuelleEvol}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+	
+	<!-- ********************************************************************** -->
+	<!-- ***********************AVANTAGES NON ASSUJETTIS*********************** -->
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>AVANTAGES NON ASSUJETTIS - €</b></legend>
+		
+				
+				<ice:outputLabel value="Avantage non assujetti à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les avantages non assujettis : il s'agit d'une mise à disposition du salarié de certaines prestations utiles à l'exercice de son activité professionnelle(voiture de fonction, logement ...)."
+						width="20px" height="20px" align="center" />
+				<ice:selectOneMenu id="idAvantageNonAssujetti" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idAvantageNonAssujettiSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majAna}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.avantageNonAssujettiList}" />
+				</ice:selectOneMenu>
+				
+				<h:message for="idAvantageNonAssujetti" errorStyle="color: red" />
+				<br />
+					
+
+			<ice:dataTable id="dataTableAna" value="#{salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.actualisation}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierAna" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierAvantageNonAssujetti}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerAna" 
+									   value="Supprimer" 
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerAvantageNonAssujetti}"
+							   		   panelConfirmation="deleteConfirmPanelA"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditableAna" value="#{salarieRemunerationsFormBB.avantageNonAssujettiInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,100px,190px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.montant}" onclick="$montantAna=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAna;" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.actuString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.actualisation}" onclick="$montantAna=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantAna;" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.avantageNonAssujettiInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterAna" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addAvantageNonAssujetti}"
+									   action="#{salarieRemunerationsFormBB.refreshAna}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNAvantageNonAssujetti}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecAvantageNonAssujetti}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idAvantageNonAssujettiSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comAvantageNonAssujetti}" value="#{item.commentaire}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.actuAvantageNonAssujetti}" value="#{item.actualisation}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerAna" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelAvantageNonAssujetti}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<br />
+			<h:message for="dataTableEditableAna" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total avantages non assujettis" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNPrecAvantageNonAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalNAvantageNonAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.totalActuAvantageNonAssujetti}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+			
+		</fieldset>
+	</ice:panelGrid>
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<!-- ice:panelGrid style="width: 100%" columns="2" rowClasses="fondGris">
+				<ice:outputLabel value="REMUNERATION GLOBALE - €" styleClass="lblFieldset gras"/>	
+				<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationGlobale}" styleClass="lblFieldset gras textRight" />
+			</ice:panelGrid-->
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4,tdRemunerationBaseBruteAnnuelle5,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="REMUNERATION BRUTE GLOBALE - €" styleClass="gras"/>	
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationGlobaleNPrec}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationGlobale}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationGlobaleActu}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel value="#{salarieRemunerationsFormBB.remunerationGlobaleEvol}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+
+	<!-- ********************************************************************** -->
+	<!-- *************************FRAIS PROFESSIONNELS************************* -->
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>FRAIS PROFESSIONNELS - €</b></legend>
+				
+				<ice:outputLabel value="Frais professionnel à ajouter " styleClass="lblFieldset" style="width: 110px;"/>
+				<img alt="(?)" class="tipsy" src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+						title="Les frais professionnels : il s’agit de dépenses effectuées par le salarié pour les besoins de sa fonction. Les indemnités versées au salarié en remboursement de ces frais ne sont pas soumises aux cotisations sociales."
+						width="20px" height="20px" align="center" />
+				<ice:selectOneMenu id="idFraisProf" tabindex="15"
+					partialSubmit="true"
+					value="#{salarieRemunerationsFormBB.idFraisProfSelected}"
+					valueChangeListener="#{salarieRemunerationsFormBB.majFp}"
+					style="overflow: auto;">
+					<f:selectItem itemLabel="" itemValue="-1" />
+					<f:selectItems
+						value="#{salarieRemunerationsFormBB.fraisProfessionnelList}" />
+				</ice:selectOneMenu>
+				
+				<h:message for="idFraisProf" errorStyle="color: red" />
+				<br />
+					
+
+			<ice:dataTable id="dataTableFp" value="#{salarieRemunerationsFormBB.fraisProfInventoryLien}" 
+				  var="item" 
+				  rendered="#{not empty salarieRemunerationsFormBB.fraisProfInventoryLien}"
+				  style="width : 100%;"
+				  columnWidths="190px,100px,100px,290px,200px">	
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Libellé" />
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" />
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montant}" />
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaire" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idModifierFp" 
+									   value="Modifier" 
+									   actionListener="#{salarieRemunerationsFormBB.modifierFraisProf}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimerFp" 
+									   value="Supprimer" 
+									   disabled="#{item.remonteNPrec}" 
+									   actionListener="#{salarieRemunerationsFormBB.supprimerFraisProf}"
+							   		   panelConfirmation="deleteConfirmPanelF"
+							   		   onclick="this.disabled=true;">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idLienRevComp}" value="#{item.idLienRemunerationRevenuComplementaire}" />
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			
+			<ice:dataTable id="dataTableEditableFp" value="#{salarieRemunerationsFormBB.fraisProfInventoryLienEditable}" 
+							  var="item" 
+							  rendered="#{not empty salarieRemunerationsFormBB.fraisProfInventoryLienEditable}"
+							  style="width : 100%;"
+							  columnWidths="190px,100px,100px,290px,200px">	
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Libellé" rendered="#{empty salarieRemunerationsFormBB.fraisProfInventoryLien}"/>
+					</f:facet>
+					<ice:outputText value="#{item.libelle}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNPrecString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.fraisProfInventoryLien}"/>
+					</f:facet>
+					<ice:outputText style="text-align: right;" value="#{item.montantNPrec==0.0 ? '-' : item.montantNPrec}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="#{salarieRemunerationsFormBB.montantNString}" escape="false" rendered="#{empty salarieRemunerationsFormBB.fraisProfInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;text-align:right;" value="#{item.montant}"  onclick="$montantFp=this.value;this.value='';" onblur="if (this.value == '')this.value=$montantFp;"/>
+				</ice:column>
+		
+				<ice:column>
+					<f:facet name="header" >
+						<ice:outputText value="Commentaire" rendered="#{empty salarieRemunerationsFormBB.fraisProfInventoryLien}"/>
+					</f:facet>
+					<ice:inputText style="width: 95%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouterFp" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieRemunerationsFormBB.addFraisProf}"
+									   action="#{salarieRemunerationsFormBB.refreshFp}">
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNFraisProf}" value="#{item.montant}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.montantNPrecFraisProf}" value="#{item.montantNPrec}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.idFraisProfSelected}" value="#{item.libelle}" />
+						<f:setPropertyActionListener target="#{salarieRemunerationsFormBB.comFraisProf}" value="#{item.commentaire}" />
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnulerFp" 
+									   value="Annuler" 
+									   action="#{salarieRemunerationsFormBB.cancelFraisProf}"
+							   		   panelConfirmation="deleteConfirmPanelService">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<br />
+			<h:message for="dataTableEditableFp" errorStyle="color: red"></h:message>
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="6" rowClasses="fondGris" columnClasses="tdRemunerationBaseBruteAnnuelle1,tdRemunerationBaseBruteAnnuelle2,tdRemunerationBaseBruteAnnuelle3,tdRemunerationBaseBruteAnnuelle4Fp,tdRemunerationBaseBruteAnnuelle6">
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="Total frais professionnels" styleClass="gras" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel id="testcss1" value="#{salarieRemunerationsFormBB.totalNPrecFraisProf}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;text-align:right;" columns="1">
+					<ice:outputLabel id="testcss2" value="#{salarieRemunerationsFormBB.totalNFraisProf}" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras textRight" />
+				</ice:panelGrid>
+				<ice:panelGrid style="width:100%;" columns="1">
+					<ice:outputLabel value="" styleClass="lblFieldset gras" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+			
+		</fieldset>
+	</ice:panelGrid>
+	
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+		<legend><b>COMMENTAIRES</b></legend>
+	
+			<ice:panelGrid style="width: 100%" colums="1" >
+				<ice:inputTextarea value="#{salarieRemunerationsFormBB.commentaire}" rows="3" style="width: 98%;resize: none;"></ice:inputTextarea>
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+	
+	<!-- Les panelConfirmation ne fonctionnent pas, a voir pour une popup en js -->
+	<ice:panelConfirmation id="deleteConfirmPanelC" 
+					   message="Êtes-vous sûr de vouloir supprimer cette commission ?"
+           			   acceptLabel="Oui" 
+           			   cancelLabel="Non"
+           			   title="Confirmer"/>
+	<ice:panelConfirmation id="deleteConfirmPanelP" 
+					   message="Êtes-vous sûr de vouloir supprimer cette prime ?"
+           			   acceptLabel="Oui" 
+           			   cancelLabel="Non"
+           			   title="Confirmer"/>
+	<ice:panelConfirmation id="deleteConfirmPanelA" 
+					   message="Êtes-vous sûr de vouloir supprimer cet avantage ?"
+           			   acceptLabel="Oui" 
+           			   cancelLabel="Non"
+           			   title="Confirmer"/>
+	<ice:panelConfirmation id="deleteConfirmPanelF" 
+					   message="Êtes-vous sûr de vouloir supprimer ce frais ?"
+           			   acceptLabel="Oui" 
+           			   cancelLabel="Non"
+           			   title="Confirmer"/>           			              			   
+	
+	<ice:panelGrid columns="3">
+		<ice:panelGroup>
+			<ice:commandButton id="modalPnlValiderEntretien" type="submit"
+				value="Valider"
+				actionListener="#{salarieRemunerationsFormBB.saveOrUpdateSalarieRemuneration}" />
+			<ice:commandButton id="modalPnlCloseRemuneration" type="submit"
+				value="Quitter"
+				actionListener="#{salarieRemunerationsFormBB.toggleModal}"
+				immediate="true" />
+		</ice:panelGroup>
+	</ice:panelGrid>
+	<script type="text/javascript">
+		document.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.left = ""+((document.body.clientWidth/2)-450)+"px";
+		document.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.top = "10px";
+</script>
+</ice:panelGrid>
+               
+<script language="javascript" type="text/javascript"> 
+		jQuery('.tipsy').tipsy({html: true, fade: true,gravity: 'ne'});
+</script>
+</html>

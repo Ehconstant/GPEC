@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Objectifsentretien"
+		table="OBJECTIFSENTRETIEN"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="IdObjectif"
+			type="integer"
+			column="ID_OBJECTIF"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Intitule"
+			column="INTITULE"
+			type="text"
+			not-null="false"
+		/>
+		
+		<property
+			name="Delai"
+			column="DELAI"
+			type="text"
+			not-null="false"
+		/>
+	
+		<property
+			name="Moyen"
+			column="MOYEN"
+			type="text"
+			not-null="false"
+		/>
+		
+		<property
+			name="Resultat"
+			column="RESULTAT"
+			type="text"
+			not-null="false"
+		/>
+		
+		<property
+			name="Commentaire"
+			column="COMMENTAIRE"
+			type="text"
+			not-null="false"
+		/>
+
+		<many-to-one 
+			name="Entretien" 
+			column="ID_ENTRETIEN"
+			class="Entretien" 
+			not-null="false">
+		</many-to-one>
+
+
+	</class>	
+</hibernate-mapping>

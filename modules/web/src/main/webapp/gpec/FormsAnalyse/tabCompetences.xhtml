@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<head>
+		<link href="../../style/panelGrid.css" rel="stylesheet"
+			type="text/css" />
+		</head>
+		<h3>Evaluation des compétences</h3>
+
+		<ice:form>
+			<ice:panelGrid columns="2">
+				<ice:outputLabel for="entrepriseListTabComp" 
+								 value="Entreprise " />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListTabComp"
+						value="#{tabCompetencesFormBB.idEntrepriseSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{tabCompetencesFormBB.recalculeDataTableCompetence}" 
+						partialSubmit="true">
+						<f:selectItems value="#{tabCompetencesFormBB.entrepriseList}" />
+					</ice:selectOneMenu>	
+				</ice:panelGroup>
+				<ice:outputLabel for="idServiceListTabComp" 
+								 value="Service " 
+								 rendered="#{not empty tabCompetencesFormBB.servicesList}"/>
+				<ice:panelGroup rendered="#{not empty tabCompetencesFormBB.servicesList}">
+						<ice:selectOneMenu id="idServiceListTabComp"
+							 partialSubmit="true"
+							 style="overflow: auto;"
+							 valueChangeListener="#{tabCompetencesFormBB.recalculeDataTableCompetence}"
+							 value="#{tabCompetencesFormBB.idServiceSelected}">
+							 <f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{tabCompetencesFormBB.servicesList}" />
+						</ice:selectOneMenu>
+				</ice:panelGroup>			
+			</ice:panelGrid>
+			<br />
+			<br />
+			<ice:commandButton value="Exporter au format Excel" 
+							   actionListener="#{tabCompetencesFormBB.download}"/>
+		</ice:form>
+		<ice:dataTable value="#{tabCompetencesFormBB.evaluationCompetencesBeanList}" var="item">
+			<f:facet name="header">
+		        <ice:columnGroup>
+		            <ice:headerRow>
+		            	<ice:column colspan="10">
+				        	<ice:outputText value="Evaluation des compétences"/>
+				        </ice:column>
+				    </ice:headerRow>
+	                   
+	                <ice:headerRow>
+	                   	 <ice:column rowspan="3">
+							<ice:outputText value="Intitulé" />
+			             </ice:column>
+	
+	                 	<!-- <ice:column colspan="3">
+			                <ice:outputText value="#{tabCompetencesFormBB.twoYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column colspan="3">
+			                <ice:outputText value="#{tabCompetencesFormBB.oneYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column> -->
+			            <ice:column colspan="3">
+			                <ice:outputText value="#{tabCompetencesFormBB.curYear}" 
+			                				style="width: 200px;"/>
+			            </ice:column>
+	                 </ice:headerRow>
+	                 
+	                 <ice:headerRow>
+			            <ice:column colspan="3">
+			                <ice:outputText value="Niveau d'évaluation des compétences" 
+			                				style="width: 200px;"/>
+			            </ice:column>
+	                 </ice:headerRow>
+	                 
+	                 <ice:headerRow>
+							<!--<ice:column style="width: 40px;
+										   text-align:center;">
+						 <ice:outputText value="-" />
+						</ice:column>
+						<ice:column style="width: 40px;
+										   text-align:center;">
+							<ice:outputText value="=" />
+						</ice:column>
+						<ice:column style="width: 40px;
+										   text-align:center;">
+							<ice:outputText value="+" />
+						</ice:column>
+						<ice:column style="width: 40px;
+										   text-align:center;">
+							<ice:outputText value="-" />
+						</ice:column>
+						<ice:column style="width: 40px;
+										   text-align:center;">
+							<ice:outputText value="=" />
+						</ice:column>
+						<ice:column style="width: 40px;
+										   text-align:center;">
+							<ice:outputText value="+" />
+						</ice:column> -->
+						<ice:column style="width: 80px;
+										   text-align:center;">
+							<ice:outputText value="-" />
+						</ice:column>
+						<ice:column style="width: 80px;
+										   text-align:center;">
+							<ice:outputText value="=" />
+						</ice:column>
+						<ice:column style="width: 80px;
+										   text-align:center;">
+							<ice:outputText value="+" />
+						</ice:column>
+					</ice:headerRow>
+	           </ice:columnGroup>
+	           
+	        </f:facet> 
+		        <ice:column styleClass="#{item.footer eq 'true'?'footerDataTable':''}">
+		            	<ice:outputText value="#{item.intituleCol}" 
+		            					style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+		        </ice:column>
+		       
+		       
+	          <!-- <ice:column rendered="#{item.nbCompMoinsTwoYearAgo != null}"
+	           			   styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsTwoYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleTwoYearAgo != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleTwoYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusTwoYearAgo != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusTwoYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            
+	            
+	            <ice:column rendered="#{item.nbCompMoinsOneYearAgo != null}"
+	           			   styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        		   style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsOneYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleOneYearAgo != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleOneYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusOneYearAgo != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusOneYearAgo}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column> --> 
+	            
+	            
+	            <ice:column rendered="#{item.nbCompMoinsCurrentYear != null}"
+	           			   styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsCurrentYear}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleCurrentYear != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleCurrentYear}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusCurrentYear != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusCurrentYear}" 
+	                				style="font-weight:#{item.footer eq 'true'?'bold':''};"/>
+	            </ice:column>
+	            
+	           
+	            <!--  <ice:column rendered="#{item.nbCompMoinsTwoYearAgoTaux != null}"
+	             			 styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsTwoYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleTwoYearAgoTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleTwoYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusTwoYearAgoTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusTwoYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+				
+				<ice:column rendered="#{item.nbCompMoinsOneYearAgoTaux!= null}"
+	             			 styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsOneYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleOneYearAgoTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleOneYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusOneYearAgoTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusOneYearAgoTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column> -->
+	            
+	            
+	            <ice:column rendered="#{item.nbCompMoinsCurrentYearTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompMoinsCurrentYearTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompEgaleCurrentYearTaux != null}"
+	            			styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompEgaleCurrentYearTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+	            <ice:column rendered="#{item.nbCompPlusCurrentYearTaux != null}"
+	             			 styleClass="#{item.footer eq 'true'?'footerDataTable':''}"
+		        			style="text-align:center;">
+	                <ice:outputText value="#{item.nbCompPlusCurrentYearTaux}" 
+	                				style="font-weight: bold;"/>
+	            </ice:column>
+        </ice:dataTable>
+		<br />
+		<br />
+		<ice:outputText value="Mémo: Les pourcentages sont calculés par rapport au nombre de fiches de postes renseignées." />
+		<br />
+	</ui:define>
+
+</ui:composition>

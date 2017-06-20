@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Gestion des accidents du travail / Taux de gravité</h3>
+		<head>
+		<link href="../../style/panelGrid.css" rel="stylesheet"
+			type="text/css" />
+		</head>
+		<br />
+		<ice:outputText rendered="#{empty arretTravailBB.entrepriseList}"
+			value="Il n'y a pas encore d'entreprise." />
+		<br />
+		<ice:form id="idForm">
+		<ice:panelGrid columns="2">
+				<ice:outputLabel rendered="#{not empty arretTravailBB.entrepriseList}" for="entrepriseListArret" value="Entreprise " />
+				<ice:panelGroup rendered="#{not empty arretTravailBB.entrepriseList}" styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListArret"
+						value="#{arretTravailBB.idEntrepriseSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{arretTravailBB.change}" 
+						partialSubmit="true">
+						<f:selectItems value="#{arretTravailBB.entrepriseList}" />
+					</ice:selectOneMenu>
+					<h:message for="entrepriseListArret"/>
+				</ice:panelGroup>
+				
+				<ice:outputLabel for="idServiceListArret" value="Service " rendered="#{not empty arretTravailBB.servicesList}"/>
+				<ice:panelGroup rendered="#{not empty arretTravailBB.servicesList}">
+						<ice:selectOneMenu id="idServiceListArret"
+							 partialSubmit="true"
+							 style="overflow: auto;"
+							 valueChangeListener="#{arretTravailBB.change}"
+							 value="#{arretTravailBB.idServiceSelected}">
+							 <f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{arretTravailBB.servicesList}" />
+						</ice:selectOneMenu>
+						&#xa0;&#xa0;<h:message for="idServiceListArret"/>
+				</ice:panelGroup>
+				
+				<ice:outputLabel for="idMetierListArret" value="Métier " rendered="#{not empty arretTravailBB.metiersList}"/>
+				<ice:panelGroup rendered="#{not empty arretTravailBB.metiersList}">
+						<ice:selectOneMenu id="idMetierListArret"
+							 partialSubmit="true"
+							 style="overflow: auto;"
+							 valueChangeListener="#{arretTravailBB.change}"
+							 value="#{arretTravailBB.idMetierSelected}">
+							 <f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{arretTravailBB.metiersList}" />
+						</ice:selectOneMenu>
+				</ice:panelGroup>	
+						
+			</ice:panelGrid>
+			<br/>
+			<ice:commandButton actionListener="#{arretTravailBB.download}"
+						 value="Exporter au format Excel" />
+			<ice:dataTable id="dataTableArretTravail"
+				columnWidths="150px,70px,70px,70px"
+				value="#{arretTravailBB.listBean}" styleClass="table" var="item">
+				<f:facet name="header">
+		        <ice:columnGroup>
+		            <ice:headerRow>
+		            	<ice:column colspan="4">
+				        	<ice:outputText value="Nombre de jours d’arrêt du travail / nature"/>
+				        </ice:column>
+				    </ice:headerRow>
+				     <ice:headerRow>
+		            	<ice:column colspan="4">
+				        	<ice:outputText value="Taux de gravité / année"/>
+				        </ice:column>
+				    </ice:headerRow>
+	                   
+	                <ice:headerRow>
+	                   	 <ice:column>
+							<ice:outputText value="Nature" />
+			             </ice:column>
+	
+	                 	<ice:column>
+			                <ice:outputText value="#{arretTravailBB.twoYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{arretTravailBB.oneYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{arretTravailBB.curYear}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+	                 </ice:headerRow>
+	                 
+	           </ice:columnGroup>
+	           
+	        </f:facet>
+	        
+			<ice:column rendered="#{item.espace == false and item.boolTitre == false and item.boolTaux == false}">
+				<ice:outputText style="#{item.style}" value="#{item.nom}" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.espace == false and item.boolTitre == false and item.boolTaux == false}">
+				<ice:outputText style="#{item.style}" value="#{item.nbJourTwoYearAgo}" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.espace == false and item.boolTitre == false and item.boolTaux == false}">
+				<ice:outputText style="#{item.style}" value="#{item.nbJourOneYearAgo}" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.espace == false and item.boolTitre == false and item.boolTaux == false}">
+				<ice:outputText style="#{item.style}" value="#{item.nbJourCurYear}" />
+			</ice:column>
+
+			<ice:column rendered="#{item.boolTaux == true}" style="font-weight: bold;">
+				<ice:outputText value="#{item.nom}" style="width:300px;" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.boolTaux == true}" style="font-weight: bold ;">
+				<ice:outputText value="#{item.tauxN2}" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.boolTaux == true}" style="font-weight: bold ;">
+				<ice:outputText value="#{item.tauxN1}" />
+			</ice:column>
+			
+			<ice:column rendered="#{item.boolTaux == true}" style="font-weight: bold ;">
+				<ice:outputText value="#{item.tauxN}" />
+			</ice:column>
+
+			</ice:dataTable>
+			<br />
+			<ice:panelGroup rendered="#{arretTravailBB.afficheErreur}">
+				<ice:outputText value="Indéfini* :"/>
+					<ul>
+						<li>
+							<ice:outputText value="soit aucune entreprise n'a été séléctionée"/>
+						</li>
+						<li>
+							<ice:outputText value="la durée de travail théorique année N / heures / effectif total n'est pas spécifiée dans les paramètres généraux." />
+						</li>
+					</ul>
+			</ice:panelGroup>
+			<br />
+			<br/>
+			<ice:outputText value="Mémo:" />
+			<ul>
+				<li>
+					<ice:outputText value="Le taux de gravité représente le nombre de journées de travail perdues en raison d’un accident du travail pour 1000 heures travaillées" />
+				</li>
+				<li>
+					<ice:outputText value=" Mode de calcul du taux de gravité (exprimé pour un millier d’heures travaillées)  : " />
+					<br />
+					<ice:outputText value="( Nbr de jrs d’arrêt du travail x 1 000) &#247; nombre d'heures de travail annuel réalisées " />
+				</li>
+			</ul>
+		</ice:form>
+	</ui:define>
+</ui:composition>

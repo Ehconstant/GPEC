@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EntretienIndividuelSalarie" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="evenementList">
+		<field name="dateEvenement" class="java.util.Date"/>
+		<field name="nature" class="java.lang.String"/>
+		<field name="commentaire" class="java.lang.String"/>
+		<field name="decision" class="java.lang.String"/>
+		<field name="interlocuteur" class="java.lang.String"/>
+		<field name="nom" class="java.lang.String"/>
+		<field name="prenom" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\projects\\gpec\\gpec\\modules\\web\\src\\main\\webapp\\reportTemplates\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="nomEntreprise" class="java.lang.String"/>
+	<field name="idEntreprise" class="java.lang.Integer"/>
+	<field name="justificatif" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
+	<field name="evenementList" class="java.util.List"/>
+	<field name="dateEvenement" class="java.util.Date"/>
+	<field name="interlocuteur" class="java.lang.String"/>
+	<field name="commentaire" class="java.lang.String"/>
+	<field name="decision" class="java.lang.String"/>
+	<field name="nature" class="java.lang.String"/>
+	<field name="path" class="java.lang.String"/>
+	<field name="service" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="161" y="6" width="233" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVENEMENTS]]></text>
+			</staticText>
+			<image hAlign="Left" onErrorType="Blank">
+				<reportElement x="0" y="0" width="150" height="60">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{justificatif}.equals("") & $F{justificatif}!=null)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$F{url}+$F{justificatif}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="68" width="164" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomEntreprise}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="118" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="31" width="535" height="57" isPrintWhenDetailOverflows="true"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{evenementList})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"EvenementsSalarie_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="465" y="12" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="12" width="186" height="14"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom} + " " + $F{nom}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="4" width="535" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

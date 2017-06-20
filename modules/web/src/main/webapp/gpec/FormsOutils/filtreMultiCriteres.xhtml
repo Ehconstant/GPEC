@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:define name="content">
+    
+	<head>
+        <link href="../../style/overrideTab/override.css" rel="stylesheet" type="text/css"/>
+        
+	</head>
+		<ice:form id="formFiltre">
+			<h3>Filtre multi-critères</h3>
+			
+			<ice:panelGrid columns="2">
+				<ice:outputLabel for="idEntrepriseList" value="Entreprise " />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+
+					<ice:selectOneMenu id="idEntrepriseList" partialSubmit="true"
+						style="overflow: auto;"
+						value="#{filtreMultiBB.idEntrepriseSelected}"
+						valueChangeListener="#{filtreMultiBB.entrepriseChanged}"
+						immediate="true">
+						<f:selectItems value="#{filtreMultiBB.entreprisesList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+
+				<ice:outputLabel for="idServiceList" rendered="#{not empty filtreMultiBB.servicesList}" value="Service " />
+				<ice:panelGroup rendered="#{not empty filtreMultiBB.servicesList}">
+					 <ice:selectManyMenu id="selectService"  
+					 		styleClass="multiSelect"
+					 		style="height:75px;width:240px;"
+                           	value="#{filtreMultiBB.idServicesSelected}" 
+                           	partialSubmit="true"
+                           	valueChangeListener="#{filtreMultiBB.serviceChanged}">
+                			<f:selectItems id="SlctServiceItms"
+                           	value="#{filtreMultiBB.servicesList}"/>
+           			</ice:selectManyMenu>
+				</ice:panelGroup>
+				
+			<script type="text/javascript">
+				transformMultiSelect();
+			</script>
+
+				<!-- ice:outputLabel rendered="#{not empty filtreMultiBB.metiersList}" for="selectMetier" value="Métier " />
+				<ice:panelGroup rendered="#{not empty filtreMultiBB.metiersList}">
+					<ice:selectManyMenu id="selectMetier" style="height:75px;"
+						value="#{filtreMultiBB.idMetiersSelected}" partialSubmit="true" >
+						<f:selectItems id="SlctMetierItms"
+							value="#{filtreMultiBB.metiersList}" />
+					</ice:selectManyMenu>
+				</ice:panelGroup-->
+			</ice:panelGrid>
+			
+			<br/>
+			
+			<ice:panelGrid columns="4">			
+				<ice:outputLabel value="Recherche sur la période du " />
+				<ice:panelGroup id="panelGroup1">
+					<ice:selectInputDate id="debutPeriode"
+						value="#{filtreMultiBB.debutPeriode}"
+						highlightClass="weekend: august:" renderMonthAsDropdown="true"
+						renderYearAsDropdown="true" immediate="true"
+						highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+						renderAsPopup="true" partialSubmit="true"
+						converterMessage="#{msg.dateTimeConverter}"
+						valueChangeListener="#{filtreMultiBB.updateDate}" >
+						<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="#{dateSelect.timeZone}"/> -->
+						<f:converter converterId="dateConverter"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:selectInputDate>
+					<h:message for="debutPeriode" errorStyle="color: red"></h:message>
+				</ice:panelGroup>
+				
+				<ice:outputLabel value=" au " style="padding-left:10px;padding-right:10px;"/>
+				<ice:panelGroup id="panelGroup2">
+					<ice:selectInputDate id="finPeriode"
+						style="padding-right:20px;"
+						value="#{filtreMultiBB.finPeriode}"
+						highlightClass="weekend: august:" renderMonthAsDropdown="true"
+						renderYearAsDropdown="true" immediate="true"
+						highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+						renderAsPopup="true" partialSubmit="true"
+						converterMessage="#{msg.dateTimeConverter}"
+						valueChangeListener="#{filtreMultiBB.updateDate}" >
+						<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="#{dateSelect.timeZone}"/> -->
+						<f:converter converterId="dateConverter"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:selectInputDate>
+					<h:message for="finPeriode" errorStyle="color: red"></h:message>
+				</ice:panelGroup>
+				
+			</ice:panelGrid>
+			
+			<br/>
+			
+			<ice:commandButton id="rechercher" action="#{filtreMultiBB.rechercher}" value="Rechercher" />
+			<ice:commandButton id="reset" action="#{filtreMultiBB.reinitialiseValeur}" value="Réinitialiser la recherche" />
+			<ice:commandButton id="recap" action="#{filtreMultiBB.displayRecap}" value="Visualiser les filtres en cours" partialSubmit="true"/>
+			<br/>
+			<br/>
+			
+			<ice:panelPopup id="modalPnlPopRecapFiltre" 
+				draggable="true"
+				modal="true" 
+				rendered="#{filtreMultiBB.displayRecap}"  
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Récapitulatif des filtres sélectionnés"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ui:include src="/gpec/FormsOutils/recapFiltres.xhtml" />
+				</f:facet>
+			</ice:panelPopup>
+			
+			<ice:panelTabSet immediate="true" partialSubmit="true"
+				id="idFiltreTabSet">
+				<ice:panelTab label="Salarié" style="width:30px;height:15px;"
+							  immediate="true" partialSubmit="true">
+					<br/>
+					
+					<ice:panelGrid columns="2">
+						
+						<ice:outputLabel for="idSexe" value="Sexe " />
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+
+							<ice:selectManyCheckbox id="idSexe"
+                            value="#{filtreMultiBB.selectedSexe}"
+                            partialSubmit="true">
+                        			<f:selectItem itemLabel="H&#160;&#160;&#160;" itemValue="H" />
+                                    <f:selectItem itemLabel="F" itemValue="F" />
+                   			</ice:selectManyCheckbox>
+                               
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="selectSituationFamille" value="Situation de famille "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectSituationFamille"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idSituationFamilleSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctSituationFamilleItems"
+                                	value="#{filtreMultiBB.situationFamilleList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="idEnfant" value="Enfants " />
+						<ice:selectManyCheckbox id="idEnfant"
+                            value="#{filtreMultiBB.selectedEnfant}"
+                            partialSubmit="true">
+                        			<f:selectItem itemLabel="Oui&#160;&#160;&#160;" itemValue="true" />
+                                    <f:selectItem itemLabel="Non" itemValue="false" />
+                   			</ice:selectManyCheckbox>
+						
+<!-- 						<ice:panelGroup styleClass="selectionListBoxGroup">
+							<ice:selectOneRadio id="idEnfant"
+								value="#{filtreMultiBB.enfant}"
+								partialSubmit="true" >
+								<f:selectItem itemLabel="Oui" itemValue="true" />
+								<f:selectItem itemLabel="Non" itemValue="false" />
+							</ice:selectOneRadio>
+						</ice:panelGroup> -->
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="idPC" value="Permis de conduire " />
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+							<ice:selectManyCheckbox id="idPC"
+	                            value="#{filtreMultiBB.selectedPermisConduire}"
+	                            partialSubmit="true">
+	                        			<f:selectItem itemLabel="Oui&#160;&#160;&#160;" itemValue="true" />
+	                                    <f:selectItem itemLabel="Non" itemValue="false" />
+	                   		</ice:selectManyCheckbox>
+<!-- 							<ice:selectOneRadio id="idPC"
+								value="#{filtreMultiBB.permisConduire}"
+								partialSubmit="true" >
+								<f:selectItem itemLabel="Oui" itemValue="true" />
+								<f:selectItem itemLabel="Non" itemValue="false" />
+							</ice:selectOneRadio> -->
+                               
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="idAgeDebut" value="Age " />
+						<ice:panelGroup>
+							 <table>
+							 <tr><td>De</td>
+							 	 <td><ice:inputText id="idAgeDebut" value="#{filtreMultiBB.debutAge}" size="3" partialSubmit="true" /></td>
+								<td>à</td>
+								<td><ice:inputText id="idAgeFin" value="#{filtreMultiBB.finAge}" size="3" partialSubmit="true" /></td>
+								<td>an(s)</td>
+								</tr></table>
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="idAncienneteDebut" value="Ancienneté " />
+						<ice:panelGroup>
+							 <table>
+							 <tr><td>De</td>
+							 	 <td><ice:inputText id="idAncienneteDebut" value="#{filtreMultiBB.debutAnciennete}" size="3" partialSubmit="true" /></td>
+								<td>à</td>
+								<td><ice:inputText id="idAncienneteFin" value="#{filtreMultiBB.finAnciennete}" size="3" partialSubmit="true" /></td>
+								<td>an(s)</td>
+								</tr></table>
+						</ice:panelGroup>
+						
+						<br />
+								
+						<!-- ice:outputLabel for="selectStatut" value="Catégorie Socio-Pro "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectStatut"  
+							 		styleClass="selectStatut"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idStatutsSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctStatutItems"
+                                	value="#{filtreMultiBB.statutsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+                		
+						<ice:outputLabel for="selectContrat" value="Contrat " />
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectContrat"  style="height:75px;"
+                                value="#{filtreMultiBB.idContratsSelected}" partialSubmit="true" >
+                     			 <f:selectItems id="SlctContratItms"
+                                value="#{filtreMultiBB.contratsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup-->
+					</ice:panelGrid>
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+							
+				</ice:panelTab>	
+				
+				<ice:panelTab label="Contrat de travail" style="width:30px;height:15px;"
+						  immediate="true" partialSubmit="true">
+					<br/><br/>
+					
+					<ice:panelGrid columns="2">
+					
+						<ice:outputLabel for="selectTypeContrat" value="Type de contrat "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectTypeContrat"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idContratsSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctTypeContratItems"
+                                	value="#{filtreMultiBB.contratsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+						
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectMetier" value="Métier "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectMetier"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idMetiersSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctMetierItems"
+                                	value="#{filtreMultiBB.metiersList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectStatut" value="Catégorie Socio-Professionnelle "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectStatut"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idStatutsSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctStatutItems"
+                                	value="#{filtreMultiBB.statutsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectCoef" value="Coefficient "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectCoef"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idCoefsSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctCoefItems"
+                                	value="#{filtreMultiBB.coefsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectNiveau" value="Niveau "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectNiveau"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idNiveauxSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctNiveauItems"
+                                	value="#{filtreMultiBB.niveauxList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectEchelon" value="Echelon "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectEchelon"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idEchelonsSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctEchelonItems"
+                                	value="#{filtreMultiBB.echelonsList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectMotifRupture" value="Motif de rupture "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectMotifRupture"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idMotifsRuptureSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctMotifRuptureItems"
+                                	value="#{filtreMultiBB.motifsRuptureList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+						
+						<ice:outputLabel for="selectMotifRecours" value="Motif de recours à l'intérim "/>
+						<ice:panelGroup>
+							 <ice:selectManyMenu id="selectMotifRecours"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idMotifsRecoursSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctMotifRecoursItems"
+                                	value="#{filtreMultiBB.motifsRecoursList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+												
+						<br />
+						<br />
+					
+					</ice:panelGrid>
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+					
+				</ice:panelTab>
+					
+				
+				<ice:panelTab label="Absences" style="width:30px;height:15px;"
+							  immediate="true" partialSubmit="true">
+					<br/><br/>
+					
+					<ice:panelGrid columns="2">
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeAbsence" value="Nature de l'absence " />
+		                		<ice:selectOneRadio id="selectRadioAbs" value="#{filtreMultiBB.typeAbsET}" partialSubmit="true">
+			               			<f:selectItem itemLabel="Et" itemValue="Et"/>
+			               			<f:selectItem itemLabel="Ou" itemValue="Ou"/>
+			      				</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+						 	<ice:selectManyMenu id="selectTypeAbsence"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idTypeAbsenceSelected}" 
+                                	partialSubmit="true"
+                                	valueChangeListener="#{filtreMultiBB.selectTypeAbsence}">
+                     			 <f:selectItems id="SlctCauseAccidentItms"
+                                	value="#{filtreMultiBB.typeAbsenceList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+						
+						<br/><br/>
+					</ice:panelGrid>
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+					
+				</ice:panelTab>
+					
+				<ice:panelTab label="Accidents" style="width:30px;height:15px;"
+							 immediate="true" partialSubmit="true">
+					<br/><br/>
+					
+					<ice:panelGrid columns="2">
+					
+						<ice:outputLabel for="idNature" value="Nature " style="padding-left:27px;"/>
+						<ice:panelGroup styleClass="selectionListBoxGroup">
+
+							<ice:selectManyCheckbox id="idNature"
+                            	value="#{filtreMultiBB.selectedNature}"
+                            	partialSubmit="true"
+                            	style="padding-top:2px;">
+                        			<f:selectItem itemLabel="Initial" itemValue="I" />
+                                    <f:selectItem itemLabel="Rechute" itemValue="R" />
+                   			</ice:selectManyCheckbox>
+                               
+						</ice:panelGroup>
+						
+						<br/><br/>
+					
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeAccident" value="Type " style="font-size:1.05em;"/>
+		                		<ice:selectOneRadio id="selectRadioAcc2" value="#{filtreMultiBB.typeAccET}" partialSubmit="true">
+			               			<f:selectItem itemLabel="Et" itemValue="Et"/>
+			               			<f:selectItem itemLabel="Ou" itemValue="Ou"/>
+			      				</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectTypeAccident"  
+							 		styleClass="multiSelect"
+							 		multiple="multiple"
+							 		style="margin-bottom:6px;"
+                                	value="#{filtreMultiBB.idTypeAccidentSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctTypeAccidentItms"
+                                	value="#{filtreMultiBB.typeAccidentList}"/>
+                			</ice:selectManyMenu>
+                			
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeAccident" value="Cause " style="font-size:1.05em;"/>
+			                	<ice:selectOneRadio id="selectRadioCauseAcc" value="#{filtreMultiBB.typeCauseAccET}" partialSubmit="true">
+		               				<f:selectItem itemLabel="Et" itemValue="Et"/>
+		               			    <f:selectItem itemLabel="Ou" itemValue="Ou"/>
+		      					</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectCauseAccident"  
+							 		styleClass="multiSelect"
+							 		style="margin-bottom:6px;"
+                                	value="#{filtreMultiBB.idCauseAccidentSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctCauseAccidentItms"
+                                	value="#{filtreMultiBB.typeCauseAccidentList}"/>
+                			</ice:selectManyMenu>
+						
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeAccident" value="Lésion " style="font-size:1.05em;"/>
+			                	<ice:selectOneRadio id="selectRadioALesion" value="#{filtreMultiBB.typeLesionET}" partialSubmit="true">
+		              				<f:selectItem itemLabel="Et" itemValue="Et"/>
+		              			    <f:selectItem itemLabel="Ou" itemValue="Ou"/>
+	             				</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectTypeLesion"  
+							 		styleClass="multiSelect"
+							 		style="margin-bottom:6px;"
+                                	value="#{filtreMultiBB.idTypeLesionSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctLesionItms"
+                                	value="#{filtreMultiBB.typeLesionList}"/>
+                			</ice:selectManyMenu>
+						
+						</ice:panelGroup>
+						
+						<br/><br/>
+					
+					</ice:panelGrid>	
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+					  
+				</ice:panelTab>
+				
+				<ice:panelTab label="Habilitations et formations" style="width:30px;height:15px;"
+							  immediate="true" partialSubmit="true">
+					<br/><br/>	
+					<h3>Habilitations</h3>
+					<ice:panelGrid columns="2">
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeHab" value="Type " style="font-size:1.05em;"/>
+		                		<ice:selectOneRadio id="selectRadioHab" value="#{filtreMultiBB.typeHabET}" partialSubmit="true">
+			               			<f:selectItem itemLabel="Et" itemValue="Et"/>
+			               			<f:selectItem itemLabel="Ou" itemValue="Ou"/>
+			      				</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectTypeHab"  
+							 		styleClass="multiSelect"
+							 		style="height:75px;"
+                                	value="#{filtreMultiBB.idTypeHabSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctHabItms"
+                                	value="#{filtreMultiBB.typeHabList}"/>
+                			</ice:selectManyMenu>
+						</ice:panelGroup>
+						
+						<ice:outputLabel for="habValide" value="Habilitation valide " style="margin-right:70px;"/>
+						<ice:selectBooleanCheckbox
+							value="#{filtreMultiBB.habValide}" 
+							id="habValide"
+							partialSubmit="true" 
+							immediate="true" />
+						
+						<ice:outputLabel for="SelectPerime" value="Habilitation périmée au " />
+						<ice:panelGroup>
+							<ice:selectInputDate id="datePeremption" value="#{filtreMultiBB.datePeremption}"
+								size="8"
+								valueChangeListener="#{dateSelect.effectChangeListener}"
+								highlightClass="weekend: august:"
+								renderMonthAsDropdown="true"
+								renderYearAsDropdown="true"
+								highlightUnit="DAY_OF_WEEK: MONTH" highlightValue="1,7: 8"
+								renderAsPopup="true"
+								converterMessage="#{msg.dateTimeConverter}"
+								partialSubmit="true">
+									<f:converter converterId="dateConverter"
+													timeZone="#{dateSelect.timeZone}"/>
+							</ice:selectInputDate>
+						</ice:panelGroup>
+						<br/><br/>
+					</ice:panelGrid>
+					
+					<h3>Formations</h3>
+						
+					<ice:panelGrid columns="2">	
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectTypeAccident" value="Type de formation réalisée " style="font-size:1.05em;"/>
+			                	<ice:selectOneRadio id="selectRadioCauseAcc" 
+			                		value="#{filtreMultiBB.typeFormationET}" 
+			                		partialSubmit="true"
+			                		style="margin-left:35px;">
+		               				<f:selectItem itemLabel="Et" itemValue="Et"/>
+		               			    <f:selectItem itemLabel="Ou" itemValue="Ou"/>
+		      					</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectTypeFormation"  
+							 		styleClass="multiSelect"
+							 		style="margin-bottom:6px;"
+                                	value="#{filtreMultiBB.idFormationSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctCauseAccidentItms"
+                                	value="#{filtreMultiBB.domaineFormationList}"/>
+                			</ice:selectManyMenu>
+						
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel for="habValide" value="Utilisation du DIF " style="margin-right:76px;" />
+						<ice:selectBooleanCheckbox
+							value="#{filtreMultiBB.useDIF}" 
+							id="useDIF"
+							partialSubmit="true" />
+							
+						<br/><br/>
+						
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;">
+								<ice:outputLabel for="selectRadioFinancement" value="Financement " style="font-size:1.05em;"/>
+			                	<ice:selectOneRadio id="selectRadioFinancement" 
+			                		value="#{filtreMultiBB.financementET}" 
+			                		partialSubmit="true"
+			                		style="margin-left:-2px;">
+		               				<f:selectItem itemLabel="Et" itemValue="Et"/>
+		               			    <f:selectItem itemLabel="Ou" itemValue="Ou"/>
+		      					</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+                		<ice:panelGroup styleClass="selectionListBoxGroup" style="margin-left:-14px;">
+
+							<ice:selectManyCheckbox id="idTypeFinancement"
+                            	value="#{filtreMultiBB.selectedTypeFinancement}"
+                           		partialSubmit="true">
+                        			<f:selectItem itemLabel="Entreprise&#160;&#160;&#160;" itemValue="Entreprise"/>
+		               			    <f:selectItem itemLabel="OPCA&#160;&#160;&#160;" itemValue="OPCA"/>
+		               			    <f:selectItem itemLabel="Autre&#160;&#160;&#160;" itemValue="Autre"/>
+                   			</ice:selectManyCheckbox>
+                               
+						</ice:panelGroup>
+						
+					</ice:panelGrid>
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+					  
+				</ice:panelTab>
+				
+				<ice:panelTab label="Compétences" style="width:30px;height:15px;"
+							  immediate="true" partialSubmit="true"
+							  rendered="#{loginBB.entretien and loginBB.ficheDePoste}">
+					<br/><br/>
+					<h3>Fiche de poste</h3>	
+					<ice:panelGrid columns="2">
+						
+						<ice:panelGrid>
+							<ice:panelGroup style="text-align:center;width:185px;">
+								<ice:outputLabel for="selectPO" value="Poste occupé" style="margin-right:90px;font-size:1.05em;" />
+		                		<ice:selectOneRadio id="selectPO" value="#{filtreMultiBB.metierET}" partialSubmit="true">
+			               			<f:selectItem itemLabel="Et" itemValue="Et"/>
+			               			<f:selectItem itemLabel="Ou" itemValue="Ou"/>
+			      				</ice:selectOneRadio>
+		      				</ice:panelGroup>
+                		</ice:panelGrid>
+						<ice:panelGroup>
+							<ice:selectManyMenu id="selectMetierFDP"  
+							 		styleClass="multiSelect"
+							 		style="margin-bottom:6px;width:231px;"
+                                	value="#{filtreMultiBB.idMetiersSelectedFDP}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctTypeAccidentItms"
+                                	value="#{filtreMultiBB.metiersListFDP}"/>
+                			</ice:selectManyMenu>
+                			
+						</ice:panelGroup>
+						<br/><br/>
+						
+					</ice:panelGrid>
+					
+					<h3>Compétences</h3>	
+					<ice:panelGrid columns="2">
+					
+						<ice:outputLabel value="Compétences " style="margin-right:94px;" />
+						<ice:panelGroup>
+							<ice:outputLabel value="Mot clé " />
+							<h:inputText value="#{filtreMultiBB.motCleCompetences}" 
+								style="width:165px;margin-left:5px;"
+								partialSubmit="false"
+								id="idMotCleCompetences" 
+								onkeypress="return noSubmitOnEnter(event);" />
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel value="Compétences à améliorer" />
+						<ice:panelGroup>
+							<ice:outputLabel value="Mot clé " />
+							<h:inputText value="#{filtreMultiBB.motCleCompetencesAAmeliorer}" 
+								style="width:165px;margin-left:5px;"
+								partialSubmit="false"
+								id="idMotCleCOmpetencesAAmeliorer" 
+								onkeypress="return noSubmitOnEnter(event);" />
+						</ice:panelGroup>
+						
+						<br/><br/>
+					
+					</ice:panelGrid>
+					
+					<h3>Entretiens</h3>	
+					<ice:panelGrid columns="2">
+					
+						<ice:outputLabel value="Formation souhaitée " style="margin-right:45px;" />
+						<ice:panelGroup>
+							<ice:outputLabel value="Mot clé " />
+							<h:inputText value="#{filtreMultiBB.motCleFormationSouhaitee}" 
+								style="width:165px;margin-left:5px;"
+								partialSubmit="false"
+								id="idMotCleFormationSouhaitee" 
+								onkeypress="return noSubmitOnEnter(event);" />
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel value="Domaine de formation " />
+                		<ice:panelGroup styleClass="selectionListBoxGroup">
+
+							<ice:selectManyMenu id="selectDomaineFormation"  
+							 		styleClass="multiSelect"
+							 		style="margin-bottom:6px;width:231px;"
+                                	value="#{filtreMultiBB.idDomaineFormationSelected}" 
+                                	partialSubmit="true">
+                     			 <f:selectItems id="SlctDomaineAccidentItms"
+                                	value="#{filtreMultiBB.domaineFormationList}"/>
+                			</ice:selectManyMenu>
+                               
+						</ice:panelGroup>
+						
+						<br/><br/>
+						
+						<ice:outputLabel value="Evolution souhaitée " />
+						<ice:panelGroup>
+							<ice:outputLabel value="Mot clé " />
+							<h:inputText value="#{filtreMultiBB.motCleEvolutionSouhaitee}" 
+								style="width:165px;margin-left:5px;"
+								partialSubmit="false"
+								id="idMotCleEvolutionSouhaitee" 
+								onkeypress="return noSubmitOnEnter(event);" />
+						</ice:panelGroup>
+						
+						<br/><br/>
+					
+					</ice:panelGrid>
+					
+					<script type="text/javascript">
+						transformMultiSelect();
+					</script>
+					
+				</ice:panelTab>		
+				
+		</ice:panelTabSet>	
+		<br/>
+		<br/>
+		</ice:form>
+	</ui:define>
+</ui:composition>

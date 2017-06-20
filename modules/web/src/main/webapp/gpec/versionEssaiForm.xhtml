@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:ice-cc="http://www.icesoft.com/icefaces-composite-comps">
+
+<head>
+	<title>GPEC - Demande d'un compte d'essai</title>
+	<link href="#{facesContext.externalContext.requestContextPath}/style/rime/rime.css" rel="stylesheet"
+		type="text/css" />
+	<link href="#{facesContext.externalContext.requestContextPath}/style/tipsy/tipsy.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript" language="javascript"
+		src="#{facesContext.externalContext.requestContextPath}/style/jQuery/jquery-1.2.6.min.js"></script>
+	<script type="text/javascript" language="javascript"
+		src="#{facesContext.externalContext.requestContextPath}/style/tipsy/jquery.tipsy.js"></script>
+	<script type="text/javascript">
+
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery('.tipsy').tipsy({
+				html : true,
+				fade : true,
+				gravity : 'ne'
+			});
+			jQuery('.tabdisabled').tipsy({
+				html : true,
+				fade : true,
+				gravity : 'ne'
+			});
+		});
+		function showLoadingTableauAnalyse() {
+			jQuery('#loadingTableauAnalyse').show();
+		}
+	</script>
+	<script type="text/javascript">
+		function recentre() {
+			if (document
+					.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration') != null) {
+				document
+						.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.left = ""
+						+ (document.body.clientWidth / 2) - 100 + "px";
+				document
+						.getElementById('idSalarieForm:idSalarieTabSet:0:modalPnlPopRemuneration').style.top = "10px";
+			}
+		}
+		function noSubmitOnEnter(e) {
+			var keycode;
+			if (window.event)
+				keycode = window.event.keyCode;
+			else if (e)
+				keycode = e.which;
+			else
+				return true;
+	
+			if (keycode == 13) {
+				return false;
+			} else
+				return true;
+		}
+	</script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		function slideSwitch() {
+			var $active = jQuery('#slideshow img.active');
+	
+			if ($active.length == 0)
+				$active = jQuery('#slideshow img:last');
+	
+			var $next = $active.next().length ? $active.next()
+					: jQuery('#slideshow img:first');
+	
+			$active.addClass('last-active');
+	
+			$next.css({
+				opacity : 0.0
+			}).addClass('active').animate({
+				opacity : 1.0
+			}, 1000, function() {
+				$active.removeClass('active last-active');
+			});
+		}
+	
+		jQuery(function() {
+			setInterval("slideSwitch()", 5000);
+		});
+	</script>
+
+	<style type="text/css">
+		#slideshow {
+		    height:350px;
+		}
+		
+		#slideshow IMG {
+			position:absolute;
+		    z-index:8;
+		    opacity:0.0;
+		}
+		
+		#slideshow IMG.active {
+		    z-index:10;
+		    opacity:1.0;
+		}
+		
+		#slideshow IMG.last-active {
+		    z-index:9;
+		}
+	</style>
+</head>
+<body style="background-color: #f5f5f5;">
+	<div class="page">
+		<div class="header" style="width: 1240px;"> 
+			<ice:inputHidden
+				value="#{loginBB.delog}" />
+			<ui:insert name="header">
+				<ui:include src="/WEB-INF/pages/facelets/header.xhtml" />
+			</ui:insert>
+			<hr />
+		</div>
+		<div style="width: 1240px;">
+			<div align="center">
+				<ice:panelGroup style=" padding-top:80px;" >
+					<fieldset style="border: 1px solid;width: 450px; padding-top:20px;" >
+						<legend style="font-weight:bold;">Création d'un compte d'essai</legend>
+						<h:form id="idForm" action="/captcha-demos/simple" method="post">
+							<h:panelGrid columns="2">
+								<ice:outputText value="Nom de l'entreprise*" />
+								<h:panelGroup>
+									<ice:inputText id="nomEntreprise"
+										value="#{versionEssaiFormBB.nomEntreprise}"
+										onkeypress="return noSubmitOnEnter(event);" required="true"
+										requiredMessage="#{msg.required}"
+										style="width:150px;" partialSubmit="true" />
+									<h:message for="nomEntreprise" errorStyle="color: red" />
+								</h:panelGroup>
+
+								<ice:outputText value="Nom*" />
+								<h:panelGroup>
+									<ice:inputText id="nomAdmin"
+										value="#{versionEssaiFormBB.nomAdmin}"
+										onkeypress="return noSubmitOnEnter(event);" required="true"
+										requiredMessage="#{msg.required}"
+										style="width:150px;" partialSubmit="true" />
+									<h:message for="nomAdmin" errorStyle="color: red" />
+								</h:panelGroup>
+								
+								<ice:outputText value="Prénom*" />
+								<h:panelGroup>
+									<ice:inputText id="prenomAdmin"
+										value="#{versionEssaiFormBB.prenomAdmin}"
+										onkeypress="return noSubmitOnEnter(event);" required="true"
+										requiredMessage="#{msg.required}"
+										style="width:150px;" partialSubmit="true" />
+									<h:message for="prenomAdmin" errorStyle="color: red" />
+								</h:panelGroup>
+
+								<ice:outputText value="Téléphone*" />
+								<h:panelGroup>
+									<ice:inputText id="telephoneAdmin"
+										value="#{versionEssaiFormBB.telephoneAdmin}"
+										onkeypress="return noSubmitOnEnter(event);" required="true"
+										requiredMessage="#{msg.required}"
+										style="width:150px;" partialSubmit="true" />
+									<h:message for="telephoneAdmin" errorStyle="color: red" />
+								</h:panelGroup>
+
+								<ice:outputText value="Email*" />
+								<h:panelGroup>
+									<ice:inputText id="mail"
+										value="#{versionEssaiFormBB.mailAdmin}" partialSubmit="true"
+										onkeypress="return noSubmitOnEnter(event);" required="true"
+										requiredMessage="#{msg.required}"
+										style="width:150px;"
+										valueChangeListener="#{versionEssaiFormBB.checkMail}" />
+									<img alt="(?)" class="tipsy"
+										src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+										title="Cette adresse sera uniquement utilisée pour l'envoi du mot de passe du compte et sera l'identifiant de votre compte."
+										width="20px" height="20px" align="center" />
+									<h:message for="mail" errorStyle="color: red" />
+								</h:panelGroup>
+
+								<h:graphicImage id="CaptchaImgID" value="/simpleCaptcha.png" style="height: 35px; width: 140px;"/>
+					            <h:panelGroup>
+						            <h:inputText id="CaptchaID"
+						                         required="true"
+						                         requiredMessage="Captcha missing"
+						                         validator="#{captchaBB.validateCaptcha}"
+						                         validatorMessage="Le texte et l'image ne correspondent pas."
+						                         immediate="true"
+						                         style="width:150px;">
+						            </h:inputText>
+					                <img alt="(?)" class="tipsy"
+										src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+										title="Vous devez saisir le texte présent sur l'image. Vous pouvez regénérer l'image en rafraichissant la page."
+										width="20px" height="20px" align="center" />
+									<br/><h:message for="CaptchaID" errorStyle="color: red" />
+								</h:panelGroup>
+
+<!-- 								<img src="/captcha-demos/simple" style="height: 35px; width: 140px;" />
+								<h:panelGroup>
+									<h:inputText name="jcaptcha" id="jcaptcha" required="true"
+										requiredMessage="#{msg.required}" partialSubmit="true"
+										style="width:150px;">
+										<f:validator validatorId="captchaValidator" />
+									</h:inputText>
+									<img alt="(?)" class="tipsy"
+										src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+										title="Vous devez saisir le texte présent sur l'image. Vous pouvez regénérer l'image en rafraichissant la page."
+										width="20px" height="20px" align="center" />
+									<h:message for="jcaptcha" errorStyle="color: red" />
+								</h:panelGroup> -->
+
+							</h:panelGrid>
+
+							<div align="center">
+								<h:commandButton value="Valider" actionListener="#{versionEssaiFormBB.saveOrUpdateUser}"/>
+								<h:commandButton value="Annuler" action="#{versionEssaiFormBB.cancel}" immediate="true"/>
+								<br/>
+								<ice:outputLabel value="La demande a bien été envoyée. Un mail vous sera envoyé avec vos identifiants de connexion dès la validation de votre compte."
+				    				style="color: green;padding-left:20px;"
+				    				rendered="#{versionEssaiFormBB.confirmDemande}"/>
+			    			</div>
+			    			
+			    			
+						</h:form>
+					</fieldset>
+				</ice:panelGroup>
+			</div>
+		</div>
+			<!-- <div id="slideshow" style="float:right; width: 840px; padding-top:20px;">
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/listeSalaries.JPG" alt="" class="active" width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/ficheSalarie.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/formulaireSaisie.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/entretien.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/competences.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/exportParcours.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/gestionEffectif.JPG" alt=""  width="840" height="420"/>
+			    <img src="#{facesContext.externalContext.requestContextPath}/img/capturesEcran/pyramideAge.JPG" alt=""  width="840" height="420"/>
+			</div> -->
+			
+	</div>
+</body>
+</html>

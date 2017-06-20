@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Typerecours"
+		table="TYPERECOURSINTERIM"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_TYPE_RECOURS"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomTypeRecours"
+			column="NOM_TYPE_RECOURS"
+			type="text"
+			not-null="false"
+		/>
+	
+
+		<set name="PARCOURSs" inverse="true">
+			<key column="ID_TYPE_RECOURS"/>
+			<one-to-many class="Parcours"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

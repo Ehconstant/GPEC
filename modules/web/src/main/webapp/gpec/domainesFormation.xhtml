@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+
+
+	<h:form id="idForm">
+	<h3>Domaines de formation</h3>
+	<ice:commandButton value="Ajouter un domaine de formation" 
+					   action="#{domaineFormationFormBB.init}">
+		     
+	</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;"/>
+	
+	<ice:dataTable id="dataTable" value="#{domaineFormationList.domaineFormationsInventory}" var="item"
+	rendered="#{not empty domaineFormationList.domaineFormationsInventory}">
+
+		<!-- Stock number -->
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Nom" />
+			</f:facet>
+			<ice:outputText value="#{item.nom}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Famille de domaine de formation" />
+			</f:facet>
+			<ice:outputText value="#{item.nomFamilleDomaineFormation}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Action" />
+			</f:facet>
+	
+			<ice:commandButton value="Modifier" action="#{domaineFormationFormBB.saveOrUpdateDomaineFormation}">
+					   		 
+			 <f:setPropertyActionListener target="#{domaineFormationFormBB.id}" value="#{item.id}" />
+ 			 <f:setPropertyActionListener target="#{domaineFormationFormBB.nom}" value="#{item.nom}" />
+			 <f:setPropertyActionListener target="#{domaineFormationFormBB.idFamilleDomaineFormation}" value="#{item.idFamilleDomaineFormation}" />
+			 <f:setPropertyActionListener target="#{domaineFormationFormBB.nomFamilleDomaineFormation}" value="#{item.nomFamilleDomaineFormation}" />
+			 
+			</ice:commandButton>
+			
+			<ice:commandButton id="idSupprimer" value="Supprimer" action="#{domaineFormationFormBB.supprimerDomaineFormation}">
+					   		 
+			 <f:setPropertyActionListener target="#{domaineFormationFormBB.id}" value="#{item.id}" />
+			 
+			</ice:commandButton>
+			
+		</ice:column>
+		
+	</ice:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>

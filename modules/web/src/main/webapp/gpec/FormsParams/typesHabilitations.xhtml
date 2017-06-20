@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+	<h:form id="idForm">
+	<h3>Natures d'habilitation</h3>
+	<br/>
+	<ice:commandButton value="Ajouter une nature d'habilitation" 
+					   action="#{typeHabilitationFormBB.init}">
+	<br/>	     
+	</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;"/>
+	<ice:dataTable id="dataTable" value="#{typeHabilitationList.typeHabilitationInventory}" var="item" rendered="#{not empty typeHabilitationList.typeHabilitationInventory}">
+
+		<!-- Stock number -->
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Nom" />
+			</f:facet>
+			<ice:outputText value="#{item.nom}" />
+		</ice:column>
+		
+		<ice:column rendered="#{typeHabilitationList.afficheActions}">
+			<f:facet name="header">
+				<ice:outputText value="Action" />
+			</f:facet>
+	
+			<ice:commandButton value="Modifier" rendered="#{item.id gt 12}" action="#{typeHabilitationFormBB.saveOrUpdateTypeHabilitation}">
+					   		 
+			 <f:setPropertyActionListener target="#{typeHabilitationFormBB.id}" value="#{item.id}" />
+ <!-- com --><f:setPropertyActionListener target="#{typeHabilitationFormBB.nom}" value="#{item.nom}" />
+			 
+			</ice:commandButton>
+			
+			<ice:commandButton id="idSupprimer" 
+							   rendered="#{item.id gt 12}" 
+							   value="Supprimer" 
+							   action="#{typeHabilitationFormBB.supprimerTypeHabilitation}"
+					   		   panelConfirmation="deleteConfirmPanelTypeHabilitation">
+			 <f:setPropertyActionListener target="#{typeHabilitationFormBB.id}" value="#{item.id}" />
+			 
+			
+					</ice:commandButton>
+					<!-- Panel de confirmation de suppression -->
+					<ice:panelConfirmation id="deleteConfirmPanelTypeHabilitation" 
+										   message="Êtes-vous sûr de vouloir supprimer cette nature d'habilitation ?"
+                      					   acceptLabel="Oui" 
+                      					   cancelLabel="Non"
+                      					   title="Confirmer"/>
+			
+		</ice:column>
+		
+	</ice:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>

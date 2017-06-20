@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FicheIndividuelleSalarie" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="896"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#C0C0C0">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="personneAChargeBeanDataset">
+		<field name="nom" class="java.lang.String"/>
+		<field name="prenom" class="java.lang.String"/>
+		<field name="dateNaissance" class="java.util.Date"/>
+		<field name="lienParente" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="parcoursBeanDataset">
+		<field name="nomMetier" class="java.lang.String"/>
+		<field name="debutFonction" class="java.util.Date"/>
+		<field name="finFonction" class="java.util.Date"/>
+		<field name="nomTypeContrat" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="habilitationBeanDataset">
+		<field name="nomTypeHabilitation" class="java.lang.String"/>
+		<field name="delivrance" class="java.util.Date"/>
+		<field name="expiration" class="java.util.Date"/>
+	</subDataset>
+	<subDataset name="absenceBeanDataset">
+		<field name="debutAbsence" class="java.util.Date"/>
+		<field name="finAbsence" class="java.util.Date"/>
+		<field name="nomTypeAbsence" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="accidentBeanDataset">
+		<field name="nomTypeAccident" class="java.lang.String"/>
+		<field name="dateAccident" class="java.util.Date"/>
+		<field name="nomTypeCauseAccident" class="java.lang.String"/>
+		<field name="nomTypeLesion" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="entretienBeanDataset">
+		<field name="principaleConclusion" class="java.lang.String"/>
+		<field name="souhait" class="java.lang.String"/>
+		<field name="competence" class="java.lang.String"/>
+		<field name="dateEntretien" class="java.util.Date"/>
+		<field name="crSigne" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="formationBeanDataset">
+		<field name="debutFormation" class="java.util.Date"/>
+		<field name="finFormation" class="java.util.Date"/>
+		<field name="nomFormation" class="java.lang.String"/>
+		<field name="coutEntreprise" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\projects\\gpec\\gpec\\modules\\web\\src\\main\\webapp\\reportTemplates\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="posteOccupe" class="java.lang.String"/>
+	<field name="nom" class="java.lang.String"/>
+	<field name="possedePermisConduire" class="java.lang.Boolean"/>
+	<field name="adresse" class="java.lang.String"/>
+	<field name="dateNaissance" class="java.util.Date"/>
+	<field name="lieuNaissance" class="java.lang.String"/>
+	<field name="telephone" class="java.lang.String"/>
+	<field name="telephonePortable" class="java.lang.String"/>
+	<field name="situationFamiliale" class="java.lang.String"/>
+	<field name="personneAPrevenirNom" class="java.lang.String"/>
+	<field name="personneAPrevenirPrenom" class="java.lang.String"/>
+	<field name="personneAPrevenirAdresse" class="java.lang.String"/>
+	<field name="personneAPrevenirTelephone" class="java.lang.String"/>
+	<field name="personneAPrevenirLienParente" class="java.lang.String"/>
+	<field name="age" class="java.lang.String"/>
+	<field name="parcoursBeanList" class="java.util.List"/>
+	<field name="habilitationBeanList" class="java.util.List"/>
+	<field name="absenceBeanList" class="java.util.List"/>
+	<field name="accidentBeanList" class="java.util.List"/>
+	<field name="entretienBeanList" class="java.util.List"/>
+	<field name="formationBeanList" class="java.util.List"/>
+	<field name="personneAChargeBeanList" class="java.util.List"/>
+	<field name="nomLienSubordination" class="java.lang.String"/>
+	<field name="anciennete" class="java.lang.String"/>
+	<field name="pjCI" class="java.lang.Boolean"/>
+	<field name="nomEntreprise" class="java.lang.String"/>
+	<field name="pjASS" class="java.lang.Boolean"/>
+	<field name="pjRIB" class="java.lang.Boolean"/>
+	<field name="pjD" class="java.lang.Boolean"/>
+	<field name="pjCT" class="java.lang.Boolean"/>
+	<field name="pjAVM" class="java.lang.Boolean"/>
+	<field name="pjPC" class="java.lang.Boolean"/>
+	<field name="pjH" class="java.lang.Boolean"/>
+	<field name="commentaire" class="java.lang.String"/>
+	<field name="impression" class="java.lang.Boolean"/>
+	<field name="service" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="debutExtraction" class="java.lang.String"/>
+	<field name="finExtraction" class="java.lang.String"/>
+	<field name="idEntreprise" class="java.lang.Integer"/>
+	<field name="justificatif" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
+	<field name="typeContrat" class="java.lang.String"/>
+	<field name="urlChecked" class="java.lang.String"/>
+	<field name="urlUnchecked" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<group name="lvl1" isStartNewPage="true">
+		<groupHeader>
+			<band height="170">
+				<textField>
+					<reportElement x="205" y="19" width="294" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" à " +$F{lieuNaissance}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="147" y="95" width="352" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{possedePermisConduire} == true)]]></printWhenExpression>
+					</reportElement>
+					<textElement/>
+					<text><![CDATA[oui]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="38" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Adresse]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="19" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Date et lieu de naissance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="147" y="95" width="352" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{possedePermisConduire} == false)]]></printWhenExpression>
+					</reportElement>
+					<textElement/>
+					<text><![CDATA[non]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="147" y="132" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{situationFamiliale}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="132" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Situation familiale]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="147" y="19" width="58" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{dateNaissance}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="147" y="0" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nom} +"  "+$F{prenom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Nom Prénom]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="147" y="57" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{telephone}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="95" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Permis de conduire]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="147" y="76" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{telephonePortable}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="76" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[N° tél. portable]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="57" width="133" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[N° tél. fixe]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="147" y="38" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{adresse}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="47">
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="572" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{entretienBeanList} != null && $F{entretienBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[ENTRETIENS]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="0" y="23" width="572" height="15"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="entretienBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{entretienBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="15" width="572">
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="1" width="175" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["Date de l'entretien "]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="175" y="1" width="90" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["le "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{dateEntretien})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="263" y="0" width="125" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{crSigne}.equals("Oui"))]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["Compte-rendu signé"]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="422" y="0" width="148" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{competence} != null && !$F{competence}.equals(""))]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["("+$F{competence} +")"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="263" y="0" width="125" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{crSigne}.equals("Non"))]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["Compte-rendu non signé"]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl2">
+		<groupHeader>
+			<band height="80">
+				<staticText>
+					<reportElement x="1" y="0" width="151" height="20"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[PERSONNES A CHARGE]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table 2" style="table 2" x="0" y="38" width="572" height="28"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="personneAChargeBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{personneAChargeBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="143">
+							<jr:detailCell style="table 2_TD" height="14" rowSpan="1">
+								<box leftPadding="2"/>
+								<textField>
+									<reportElement x="0" y="0" width="141" height="14"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{nom}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="143">
+							<jr:detailCell style="table 2_TD" height="14" rowSpan="1">
+								<box leftPadding="2"/>
+								<textField>
+									<reportElement x="0" y="0" width="141" height="14"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="143">
+							<jr:detailCell style="table 2_TD" height="14" rowSpan="1">
+								<box leftPadding="2"/>
+								<textField>
+									<reportElement x="0" y="0" width="141" height="14"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat ("dd/MM/yyyy" ).format($F{dateNaissance})]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="143">
+							<jr:detailCell style="table 2_TD" height="14" rowSpan="1">
+								<box leftPadding="2"/>
+								<textField>
+									<reportElement x="0" y="0" width="141" height="14"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{lienParente}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement x="429" y="24" width="143" height="14"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[ Parenté]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="286" y="24" width="143" height="14"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[ Date de naissance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="143" y="24" width="143" height="14"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[ Prenom]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="24" width="143" height="14"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[ Nom]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="58">
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="572" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{accidentBeanList} != null && $F{accidentBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[ACCIDENTS]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="0" y="39" width="572" height="14"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="accidentBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{accidentBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="14" width="572">
+							<textField>
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="175" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeAccident}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="175" y="0" width="90" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["le "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{dateAccident})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="370" y="0" width="99" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeCauseAccident}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="469" y="0" width="99" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeLesion}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement x="469" y="20" width="99" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{accidentBeanList} != null && $F{accidentBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="10" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Siège de la lésion]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="20" width="99" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{accidentBeanList} != null && $F{accidentBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="10" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Cause]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl3">
+		<groupHeader>
+			<band height="160">
+				<rectangle>
+					<reportElement positionType="Float" x="0" y="29" width="572" height="113"/>
+				</rectangle>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="38" width="33" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Nom ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="114" width="200" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{personneAPrevenirLienParente}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="76" width="54" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Adresse ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="95" width="65" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Téléphone ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="57" width="200" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{personneAPrevenirPrenom}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="95" width="200" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{personneAPrevenirTelephone}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="38" width="200" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{personneAPrevenirNom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="257" height="20"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[PERSONNE A PREVENIR EN CAS D'URGENCE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="114" width="81" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Lien de parenté ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="76" width="200" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{personneAPrevenirAdresse}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="57" width="44" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Prenom ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="49">
+				<staticText>
+					<reportElement positionType="Float" x="1" y="0" width="571" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{absenceBeanList} != null && $F{absenceBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[ABSENCES]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="-1" y="27" width="572" height="14"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="absenceBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{absenceBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="14" width="572">
+							<textField>
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="176" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeAbsence}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="176" y="0" width="90" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["du "+   new SimpleDateFormat ("dd/MM/yyyy" ).format($F{debutAbsence})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="264" y="0" width="95" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["au "+  new SimpleDateFormat ("dd/MM/yyyy" ).format($F{finAbsence})]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl4">
+		<groupHeader>
+			<band height="205">
+				<rectangle>
+					<reportElement x="0" y="24" width="572" height="170"/>
+				</rectangle>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="72" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Permis de conduire en cours de validitié]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="34" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Carte d'identité en cours de validité]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="148" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Attestation dernière visite médicale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="91" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[RIB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="167" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Habilitations]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="53" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Attestation de sécurité sociale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="129" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Certificat de travail]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="257" height="20"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[PIECES JUSTIFICATIVES FOURNIES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="38" y="110" width="300" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Diplômes]]></text>
+				</staticText>
+				<image>
+					<reportElement positionType="Float" x="8" y="35" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="54" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="147" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="167" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="150" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjAVM}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="72" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="127" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="75" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjPC}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="38" width="12" height="12" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{pjCI}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="57" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjASS}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="170" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjH}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="130" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjCT}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="90" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="8" y="109" width="19" height="19"/>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlUnchecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="112" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjD}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement positionType="Float" x="11" y="93" width="12" height="12">
+						<printWhenExpression><![CDATA[$F{pjRIB}]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{urlChecked}]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="56">
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="572" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{formationBeanList} != null && $F{formationBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[FORMATIONS SUIVIES]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="1" y="35" width="570" height="14"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="formationBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{formationBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="14" width="570">
+							<textField>
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="174" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomFormation}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="174" y="0" width="90" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["du " +new SimpleDateFormat ("dd/MM/yyyy" ).format($F{debutFormation})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="262" y="0" width="85" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["au "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{finFormation})]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="456" y="0" width="81" height="14"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression class="java.lang.String"><![CDATA[($F{coutEntreprise}!=null)?new java.text.DecimalFormat("0.00").format($F{coutEntreprise}):""]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement x="537" y="0" width="10" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{coutEntreprise} != null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<text><![CDATA[ €]]></text>
+							</staticText>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement x="457" y="21" width="116" height="14">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{formationBeanList} != null && $F{formationBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="10" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Coût de la formation]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl5">
+		<groupHeader>
+			<band height="97">
+				<rectangle>
+					<reportElement x="2" y="27" width="568" height="50">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{impression} == false || ($F{impression} == true && $F{commentaire}.equals("")))]]></printWhenExpression>
+					</reportElement>
+				</rectangle>
+				<staticText>
+					<reportElement positionType="Float" x="1" y="0" width="120" height="20"/>
+					<textElement textAlignment="Left">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[COMMENTAIRES]]></text>
+				</staticText>
+				<break>
+					<reportElement x="0" y="91" width="100" height="1"/>
+				</break>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement positionType="Float" x="2" y="31" width="568" height="43" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{impression} == true)]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="1.25"/>
+						<topPen lineWidth="1.25" lineStyle="Solid"/>
+						<leftPen lineWidth="1.25" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.25" lineStyle="Solid"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					</box>
+					<textElement>
+						<font size="10" isItalic="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<staticText>
+					<reportElement positionType="Float" x="0" y="0" width="573" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{habilitationBeanList} != null && $F{habilitationBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[HABILITATIONS]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="2" y="24" width="570" height="14"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="habilitationBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{habilitationBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="14" width="570">
+							<textField isStretchWithOverflow="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="175" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeHabilitation}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="265" y="0" width="93" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["au "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{expiration})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="173" y="0" width="92" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["du "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{delivrance})]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl6" isStartNewPage="true">
+		<groupHeader>
+			<band height="192">
+				<staticText>
+					<reportElement x="0" y="142" width="152" height="20"/>
+					<textElement/>
+					<text><![CDATA[Responsable hiérarchique ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="152" y="103" width="352" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nom} +"  "+$F{prenom}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="152" y="141" width="352" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomLienSubordination}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="166" y="0" width="221" height="27"/>
+					<textElement textAlignment="Center">
+						<font size="18"/>
+					</textElement>
+					<text><![CDATA[FICHE EVENEMENTS]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="200" y="27" width="145" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{debutExtraction} != null)]]></printWhenExpression>
+					</reportElement>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA["du " + $F{debutExtraction} + " au " + $F{finExtraction}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="152" y="161" width="352" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{anciennete}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="123" width="152" height="20"/>
+					<textElement/>
+					<text><![CDATA[Service ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="104" width="152" height="20"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Nom / Prénom ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="161" width="152" height="20"/>
+					<textElement/>
+					<text><![CDATA[Ancienneté dans l'entreprise ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="152" y="122" width="352" height="20"/>
+					<textElement>
+						<font isItalic="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{service}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="63" width="164" height="20"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomEntreprise}]]></textFieldExpression>
+				</textField>
+				<image hAlign="Left" onErrorType="Blank">
+					<reportElement x="0" y="3" width="150" height="60">
+						<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{justificatif}.equals("") & $F{justificatif}!=null)]]></printWhenExpression>
+					</reportElement>
+					<imageExpression class="java.lang.String"><![CDATA[$F{url}+$F{justificatif}]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="57">
+				<staticText>
+					<reportElement x="0" y="0" width="572" height="20">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($F{parcoursBeanList} != null && $F{parcoursBeanList}.size() > 0)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[POSTES OCCUPES]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="0" y="37" width="572" height="14"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="parcoursBeanDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{parcoursBeanList})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="14" width="572">
+							<textField isStretchWithOverflow="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="200" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{finFonction} == null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomMetier}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="422" y="0" width="143" height="14"/>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomTypeContrat}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="267" y="0" width="94" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{finFonction} != null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["au "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{finFonction})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="177" y="0" width="90" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{finFonction} != null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["du "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{debutFonction})]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="175" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{finFonction} != null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{nomMetier}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="177" y="0" width="90" height="14">
+									<printWhenExpression><![CDATA[new java.lang.Boolean($F{finFonction} == null)]]></printWhenExpression>
+								</reportElement>
+								<textElement/>
+								<textFieldExpression class="java.lang.String"><![CDATA["du "+ new SimpleDateFormat ("dd/MM/yyyy" ).format($F{debutFonction})]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="167" y="0" width="221" height="27"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[FICHE SALARIE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="60" width="164" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomEntreprise}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Left" onErrorType="Blank">
+				<reportElement x="0" y="0" width="150" height="60">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{justificatif}.equals("") & $F{justificatif}!=null)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$F{url}+$F{justificatif}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="27">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="13" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="19" y="13" width="186" height="14"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom} + " " + $F{nom}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="19" y="5" width="535" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

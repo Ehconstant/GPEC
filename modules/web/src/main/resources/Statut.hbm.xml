@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Statut"
+		table="STATUT"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_STATUT"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomStatut"
+			column="NOM_STATUT"
+			type="text"
+			not-null="false"
+		/>
+	
+
+		<set name="PARCOURSs" inverse="true">
+			<key column="ID_STATUT"/>
+			<one-to-many class="Parcours"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

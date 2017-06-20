@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EntretienIndividuelSalarie" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="objectifNDataset">
+		<field name="intitule" class="java.lang.String"/>
+		<field name="delai" class="java.lang.String"/>
+		<field name="moyen" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="objectifNPrecDataset">
+		<field name="commentaire" class="java.lang.String"/>
+		<field name="intitule" class="java.lang.String"/>
+		<field name="resultat" class="java.lang.String"/>
+	</subDataset>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="service" class="java.lang.String"/>
+	<field name="poste" class="java.lang.String"/>
+	<field name="rappelObj" class="java.lang.String"/>
+	<field name="principaleConclusion" class="java.lang.String"/>
+	<field name="souhait" class="java.lang.String"/>
+	<field name="competence" class="java.lang.String"/>
+	<field name="dateEntretien" class="java.lang.String"/>
+	<field name="crSigne" class="java.lang.String"/>
+	<field name="formations" class="java.lang.String"/>
+	<field name="nomManager" class="java.lang.String"/>
+	<field name="serviceManager" class="java.lang.String"/>
+	<field name="bilanDessous" class="java.lang.String"/>
+	<field name="bilanEgal" class="java.lang.String"/>
+	<field name="bilanDessus" class="java.lang.String"/>
+	<field name="commentaireBilan" class="java.lang.String"/>
+	<field name="formationNMoinsUn" class="java.lang.String"/>
+	<field name="commentaireFormation" class="java.lang.String"/>
+	<field name="domainesFormation" class="java.lang.String"/>
+	<field name="synthese" class="java.lang.String"/>
+	<field name="objIntitule" class="java.lang.String"/>
+	<field name="objDelais" class="java.lang.String"/>
+	<field name="objMoyens" class="java.lang.String"/>
+	<field name="objCriteres" class="java.lang.String"/>
+	<field name="evolutionPerso" class="java.lang.String"/>
+	<field name="observations" class="java.lang.String"/>
+	<field name="modifProfil" class="java.lang.String"/>
+	<field name="evaluationGlobale" class="java.lang.String"/>
+	<field name="formations2" class="java.lang.String"/>
+	<field name="formations3" class="java.lang.String"/>
+	<field name="formations4" class="java.lang.String"/>
+	<field name="formations5" class="java.lang.String"/>
+	<field name="domainesFormation2" class="java.lang.String"/>
+	<field name="domainesFormation3" class="java.lang.String"/>
+	<field name="domainesFormation4" class="java.lang.String"/>
+	<field name="domainesFormation5" class="java.lang.String"/>
+	<field name="idEntreprise" class="java.lang.Integer"/>
+	<field name="justificatif" class="java.lang.String"/>
+	<field name="url" class="java.lang.String"/>
+	<field name="nomEntreprise" class="java.lang.String"/>
+	<field name="objectifN" class="java.util.List"/>
+	<field name="objectifNPrec" class="java.util.List"/>
+	<group name="lvl1" isStartNewPage="true">
+		<groupHeader>
+			<band height="160" splitType="Prevent">
+				<staticText>
+					<reportElement x="1" y="0" width="100" height="14"/>
+					<textElement>
+						<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Date de l'entretien ]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="281" y="34" width="274" height="109"/>
+				</rectangle>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="101" y="0" width="55" height="15" backcolor="#EBEBEB"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{dateEntretien}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="377" y="86" width="170" height="15" backcolor="#EBEBEB"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{serviceManager}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="34" width="281" height="109"/>
+				</rectangle>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="377" y="67" width="170" height="17" backcolor="#EBEBEB"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomManager}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="4" y="68" width="87" height="16"/>
+					<textElement>
+						<font size="9" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Nom / Prénom]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="90" y="86" width="180" height="15" backcolor="#EBEBEB"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{service}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="288" y="83" width="87" height="16"/>
+					<textElement>
+						<font size="9" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Service]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="85" width="87" height="16"/>
+					<textElement>
+						<font size="9" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Service]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="4" y="103" width="86" height="16"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Poste occupé]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="90" y="66" width="180" height="17" backcolor="#EBEBEB"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nom} +"  "+$F{prenom}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="288" y="65" width="87" height="16"/>
+					<textElement>
+						<font size="9" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Nom / Prénom]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="288" y="43" width="100" height="20"/>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[MANAGER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="4" y="43" width="113" height="20"/>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[COLLABORATEUR]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="90" y="104" width="180" height="15" backcolor="#EBEBEB"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{poste}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="268" splitType="Prevent">
+				<staticText>
+					<reportElement positionType="Float" x="73" y="116" width="100" height="14"/>
+					<textElement>
+						<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[COLLABORATEUR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="81" y="130" width="87" height="16"/>
+					<textElement/>
+					<text><![CDATA[Date / Signature]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="490" y="233" width="25" height="16" backcolor="#EBEBEB"/>
+					<textElement markup="none"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{modifProfil}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="102" y="233" width="25" height="16" backcolor="#EBEBEB"/>
+					<textElement markup="none"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{crSigne}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="340" y="233" width="148" height="16"/>
+					<textElement>
+						<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Modification de fiche de poste :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="13" y="51" width="532" height="57" backcolor="#EBEBEB"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{synthese}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="352" y="130" width="87" height="16"/>
+					<textElement/>
+					<text><![CDATA[Date / Signature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="362" y="116" width="57" height="14"/>
+					<textElement>
+						<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[MANAGER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="233" width="102" height="16"/>
+					<textElement>
+						<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Compte-rendu signé]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="35" width="533" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Synthèse de l'entretien]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl2" isStartNewPage="true">
+		<groupHeader>
+			<band height="86" splitType="Prevent">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="23" width="555" height="63"/>
+					<box>
+						<leftPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="2" width="555" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="222" y="39" width="76" height="16"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Résultats]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="297" y="39" width="248" height="16"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Commentaires]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="4" y="3" width="208" height="20"/>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[BILAN DE L'ANNEE ECOULEE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="39" width="208" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Rappel des objectifs]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="14" y="54" width="531" height="20" backcolor="#EBEBEB"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="objectifNPrecDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{objectifNPrec})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="208">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="208" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{intitule}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="76">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="76" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{resultat}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="248">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="248" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaire}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="98" splitType="Prevent">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="85"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="18" width="532" height="57" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{evolutionPerso}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="1" width="531" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Décision d'évolution]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl3">
+		<groupHeader>
+			<band height="115">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="115"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="14" y="15" width="284" height="89" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formationNMoinsUn}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="309" y="15" width="237" height="89" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireFormation}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="0" width="282" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Formations suivies N-1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="309" y="0" width="236" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Commentaires]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="82">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="82"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="0" width="531" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Souhaits exprimés / Evolution souhaitée ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="17" width="532" height="57" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{principaleConclusion}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl4">
+		<groupHeader>
+			<band height="158">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="144"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="15" width="533" height="120" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{souhait}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="0" width="531" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Conclusions N-1]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="101">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="101"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="81" width="270" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formations5}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="296" y="15" width="250" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{domainesFormation}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="296" y="48" width="250" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{domainesFormation3}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="32" width="270" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formations2}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="49" width="270" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formations3}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="0" width="270" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Formations]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="296" y="80" width="250" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{domainesFormation5}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="296" y="0" width="249" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Domaines de formation]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="296" y="63" width="250" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{domainesFormation4}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="65" width="270" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formations4}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="296" y="32" width="250" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{domainesFormation2}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="15" width="270" height="17" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formations}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="lvl5" isStartNewPage="true">
+		<groupHeader>
+			<band height="111">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="52" width="555" height="59"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="32" width="555" height="20"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="4" y="32" width="142" height="20"/>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[PLAN DE PROGRES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="222" y="65" width="76" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Délais]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="65" width="208" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Objectifs de l'année à venir]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="297" y="65" width="248" height="16"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Moyens spécifiques / Critères d'évaluation]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="13" y="80" width="532" height="20" backcolor="#EBEBEB"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="objectifNDataset">
+							<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{objectifN})]]></dataSourceExpression>
+						</datasetRun>
+						<jr:column width="208">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="208" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{intitule}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="76">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="76" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{delai}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="248">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="248" height="20" isPrintWhenDetailOverflows="true" backcolor="#EBEBEB"/>
+									<box leftPadding="2" bottomPadding="4" rightPadding="2"/>
+									<textElement/>
+									<textFieldExpression class="java.lang.String"><![CDATA[$F{moyen}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="83">
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="83"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="14" y="15" width="532" height="57" backcolor="#EBEBEB"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{competence}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="0" width="531" height="16"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement>
+						<font size="11" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Compétences à améliorer]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="20" width="233" height="22"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTRETIEN INDIVIDUEL ANNUEL]]></text>
+			</staticText>
+			<image hAlign="Left" onErrorType="Blank">
+				<reportElement x="0" y="0" width="150" height="60">
+					<printWhenExpression><![CDATA[new java.lang.Boolean(!$F{justificatif}.equals("") & $F{justificatif}!=null)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$F{url}+$F{justificatif}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="60" width="164" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomEntreprise}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="466" y="17" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="17" width="186" height="14"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom} + " " + $F{nom}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="11" y="9" width="535" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

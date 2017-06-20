@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:define name="content">
+	<head>
+	</head>
+		<h:form>
+			<h3>Planning des absences</h3>
+			
+			<br />
+			<br />
+			<ice:panelGrid columns="2">
+				<ice:outputLabel for="entrepriseListPlanningA" value="Entreprise "/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListPlanningA"
+						value="#{planningAbsenceBB.idEntrepriseSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{planningAbsenceBB.selectOneMenuChange}" 
+						partialSubmit="true">
+						<f:validator validatorId="selectOneMenuValidator"/>
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{planningAbsenceBB.entrepriseList}" />
+					</ice:selectOneMenu>
+					<h:message for="entrepriseListPlanningA" errorStyle="color: red"></h:message>		
+				</ice:panelGroup>
+				<ice:outputLabel for="idServiceListPlanningA" value="Service " rendered="#{not empty planningAbsenceBB.servicesList}"/>
+				<ice:panelGroup rendered="#{not empty planningAbsenceBB.servicesList}">
+					<ice:selectOneMenu id="idServiceListPlanningA"
+						 partialSubmit="true"
+						 style="overflow: auto;"
+						 valueChangeListener="#{planningAbsenceBB.selectOneMenuChange}"
+						 value="#{planningAbsenceBB.idServiceSelected}">
+						 <f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{planningAbsenceBB.servicesList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+					
+				<ice:outputLabel value="Métier "  rendered="#{not empty planningAbsenceBB.metierList}"/>
+				<ice:panelGroup rendered="#{not empty planningAbsenceBB.metierList}">
+					<ice:selectOneMenu id="metierListPlanningA"
+						partialSubmit="true"
+						value="#{planningAbsenceBB.idMetierSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{planningAbsenceBB.selectOneMenuChange}">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{planningAbsenceBB.metierList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				
+				<ice:outputLabel for="yearListPlanningA" value="Année de départ " 
+								 rendered="#{planningAbsenceBB.idEntrepriseSelected >-1 }"/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="yearListPlanningA"
+						value="#{planningAbsenceBB.idYearSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{planningAbsenceBB.selectOneMenuChange}"  
+						partialSubmit="true"					
+						rendered="#{planningAbsenceBB.idEntrepriseSelected >-1 }">
+						<f:validator validatorId="selectOneMenuValidator"/>
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{planningAbsenceBB.yearList}" />
+					</ice:selectOneMenu>
+					<h:message for="yearListPlanningA" errorStyle="color: red"></h:message>
+				</ice:panelGroup>	
+				<ice:outputLabel for="monthListPlanningA" value="Mois de départ:" 
+								 rendered="#{planningAbsenceBB.idEntrepriseSelected >-1 }"/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="monthListPlanningA"
+						value="#{planningAbsenceBB.idMonthSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{planningAbsenceBB.selectOneMenuChange}"  
+						partialSubmit="true"					
+						rendered="#{planningAbsenceBB.idEntrepriseSelected >-1 }">
+						<f:validator validatorId="selectOneMenuValidator"/>
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{planningAbsenceBB.monthList}" />
+					</ice:selectOneMenu>
+					<h:message for="monthListPlanningA" errorStyle="color: red"></h:message>
+				</ice:panelGroup>			
+			</ice:panelGrid>
+			<ice:commandButton value="Générer le planning" actionListener="#{planningAbsenceBB.generatePlanning}"/>
+			<br />
+			<br />
+			 <ice:outputResource id="imageResourcePlanningA"
+	                    resource="#{planningAbsenceBB.imagen}" mimeType="image/jpeg"
+	                    fileName="planningDesAbsence.jpeg" 
+	                    shared="false"
+	                    label="Exporter le planning des absences"
+	                    type="button"/>
+			<!-- <ice:commandButton  actionListener="#{planningAbsenceBB.printPlanningAbsence}" value="Génération Excel du planning" />
+		 -->
+			<br />
+	        <br/> 
+	        <ice:graphicImage id="iceGphPlanningA" value="#{planningAbsenceBB.imagen}"
+		           alt="" 
+		           title="Planning des absences"
+		           rendered="#{planningAbsenceBB.idEntrepriseSelected > 0}"/>
+
+	        
+		</h:form>
+	</ui:define>
+</ui:composition>

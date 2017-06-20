@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<style type="text/css">
+	.iceSelOneRb input {
+	    margin: 3px;
+	    padding:0px;
+	}
+</style>
+
+<h3>Fiche de poste du salarié</h3>
+
+<ice:commandButton id="idSauvegarde2"
+	value="Valider"
+	disabled="#{!ficheDePosteFormBB.newSalarie}"
+	actionListener="#{ficheDePosteFormBB.saveOrUpdateFicheDePoste}" />
+
+<h:message for="idSauvegarde2" errorStyle="color: green"></h:message>
+
+<ice:commandButton id="modalPnlCloseParcours2" type="submit"
+	value="Quitter" actionListener="#{ficheDePosteFormBB.toggleModal}"
+	immediate="true" />
+<br />
+<ice:outputText style="color: red"
+	value="Pour créer une nouvelle fiche de poste, vous devez avoir préalablement renseigné les onglets 'coordonnées' et 'emplois occupés' et avoir effectué un premier enregistrement."
+	rendered="#{!ficheDePosteFormBB.newSalarie}" />
+	
+<br />
+
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 900px;" columns="2"
+	columnClasses="tdProfilSalarie, tdProfilMetier">
+	<fieldset style="border: 1px solid; width: 380px; height: 190px;">
+		<legend><b>Profil Salarié</b></legend>
+		<ice:panelGrid columns="2">
+			<ice:outputLabel value="Nom / Prenom " styleClass="lblFieldset" />
+			<ice:outputText value="#{salarieFormBB.nomPrenom}" />
+			
+			<ice:outputLabel value="Service " styleClass="lblFieldset" />
+			<ice:outputText value="#{salarieFormBB.libelleService}" />
+			
+			<ice:outputLabel value="Intitulé du poste occupé " styleClass="lblFieldset" />
+			<ice:outputText	value="#{ficheDePosteFormBB.intituleMetier}" />
+			
+			<ice:outputLabel value="Niveau de formation "	styleClass="lblFieldset" />
+			<ice:outputText	value="#{salarieFormBB.nivFormationAtteint}" />
+			
+			<ice:outputLabel value="CSP " styleClass="lblFieldset" />
+			<ice:outputText value="#{ficheDePosteFormBB.csp}" />
+			
+			<ice:outputLabel value="Ancienneté dans l'entreprise " styleClass="lblFieldset" />
+			<ice:outputText	value="#{ficheDePosteFormBB.ancienneteEntreprise}" />
+			
+			<ice:outputLabel value="Ancienneté dans le poste " styleClass="lblFieldset" />
+			<ice:outputText	value="#{ficheDePosteFormBB.anciennetePoste}" />
+		</ice:panelGrid>
+	</fieldset>
+	<fieldset style="border: 1px solid; width: 460px; height: 190px;">
+	<legend><b>Profil Métier de référence</b></legend>
+	<ice:panelGrid
+		rendered="#{ficheDePosteFormBB.newSalarie}" style="width: 90%"
+		columns="2">
+		<ice:panelGroup>
+			<ice:outputLabel value="Métier type " styleClass="lblFieldset" />
+			<img alt="(?)" class="tipsy"
+				src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+				title="Fiche métier : Ensemble de postes englobant un large champ d’activités et de compétences communes"
+				width="20px" height="20px" align="center" />
+		</ice:panelGroup>
+		<ice:panelGroup>
+			<ice:selectOneMenu id="idMetierType"
+				value="#{ficheDePosteFormBB.idFicheMetierType}"
+				style="overflow: auto;" immediate="true"
+				valueChangeListener="#{ficheDePosteFormBB.change}"
+				partialSubmit="true">
+				<f:validator validatorId="selectOneMenuValidatorPoste" />
+				<f:selectItem itemLabel="" itemValue="-1" />
+				<f:selectItems value="#{ficheDePosteFormBB.ficheMetierList}" />
+			</ice:selectOneMenu>
+			<br/>
+			<h:message for="idMetierType" errorStyle="color: red"></h:message>
+		</ice:panelGroup>
+	</ice:panelGrid> <br />
+	<ice:panelGrid columns="2">
+		<ice:outputLabel value="Niveau de formation requis: "
+			styleClass="lblFieldset" /> 
+		<ice:outputText
+			value="#{ficheDePosteFormBB.niveauFormationRef}" />
+		<ice:outputLabel value="CSP de référence " styleClass="lblFieldset" />
+		<ice:outputText value="#{ficheDePosteFormBB.cspRef}" /> 
+	</ice:panelGrid>
+	<br />
+	</fieldset>
+</ice:panelGrid>
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 75%" columns="4">
+	<ice:outputLabel value="Fiche créée le " />
+	<ice:outputText value="#{ficheDePosteFormBB.dateCreationAffiche}" />
+	<ice:outputLabel value="Fiche modifiée le " />
+	<ice:outputText value="#{ficheDePosteFormBB.dateModificationAffiche}" />
+</ice:panelGrid>
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 100%" columns="1">
+	<ice:panelGroup>
+		<ice:outputLabel value="Finalité du métier " />
+		<img alt="(?)" class="tipsy"
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			title="Il s’agit de la raison d’être du métier. La finalité répond à la question « à quoi sert l’emploi ou le métier ? ». La finalité met en évidence le sens du métier dans la structure."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5" readonly="true" value="#{ficheDePosteFormBB.finalitePoste}" />
+	</ice:panelGroup>
+	<ice:panelGroup>
+		<ice:outputLabel value="Activités et responsabilités principales " />
+		<img alt="(?)" class="tipsy"
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			title="Ensemble cohérent de tâches identifiées et organisées selon un processus logique et observable en tant que tel. L’activité concourt à la réalisation des finalités d’un métier. Les activités sont exprimées par des verbes d’action."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5" readonly="true"
+			value="#{ficheDePosteFormBB.activiteResponsabilite}"
+			id="idFinalitePoste" />
+		<h:message for="idFinalitePoste" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	<ice:panelGroup>
+		<ice:outputLabel value="Activités et responsabilités spécifiques " />
+		<img
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			alt="(?)" class="tipsy"
+			title="Activités complémentaires en lien avec l’activité principale, réalisées en fonction des besoins d’un projet et/ou des spécificités de l’organisation de l’entreprise. Ex : activité de tutorat, …. Chaque activité doit commencer par un verbe."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%" rows="5"
+			value="#{ficheDePosteFormBB.activitesSpecifiques}"
+			partialSubmit="false" id="idactiviteSpecifique" />
+		<h:message for="idactiviteSpecifique" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+</ice:panelGrid>
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 100%" columns="2" id="panelGridFDP"
+	columnClasses="tdCompetenceLeft, tdCompetenceRight">
+	<ice:outputLabel value=" " />
+	<ice:outputLabel value="Grille d'évaluation des compétences" />
+
+	<ice:panelGroup>
+		<ice:outputLabel value="Compétences métier" />
+		<img alt="(?)" class="tipsy"
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			title="Il s’agit d’une combinaison de capacités à agir et de comportements professionnels regroupés au sein de savoirs, savoir-faire et savoir-faire relationnels (savoir être). La compétence est définie en fonction d’une situation de travail donnée. Elle s’exprime par des verbes d’action."
+			width="20px" height="20px" align="center" />
+	</ice:panelGroup>
+	<ice:panelGroup>
+		<ice:outputLabel value="+" style="padding-right: 10px;" />
+		<ice:outputLabel value="=" style="padding-right: 10px;" />
+		<ice:outputLabel value="-" style="padding-right: 26px;" />
+		<ice:outputLabel value="Non &#233;valu&#233;" />
+	</ice:panelGroup>
+
+
+	<ice:panelGroup>
+		<ice:outputLabel value="Savoir " />
+		<img
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			alt="(?)" class="tipsy"
+			title="Le savoir :  il s’agit de l’ensemble des connaissances théoriques, généralement acquises dans le cadre d’un curcus de formation initiale ou professionnelle."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5" readonly="true" value="#{ficheDePosteFormBB.savoirMetier}"
+			partialSubmit="false" id="idSavoir" />
+		<h:message for="idSavoir" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:selectOneRadio layout="ckeckSavoir"
+		value="#{ficheDePosteFormBB.savoir}" style="padding-right:40px;">
+		<f:selectItem itemDescription="+ " itemLabel="" itemValue="1" styleclass="cb" />
+		<f:selectItem itemDescription="= " itemLabel="" itemValue="0" styleclass="cb" />
+		<f:selectItem itemDescription="-" itemLabel="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="-1" styleclass="cb" />
+		<f:selectItem itemDescription="Non &#233;valu&#233;" itemLabel="" itemValue="2" styleclass="cb" />
+	</ice:selectOneRadio>
+
+	<ice:panelGroup>
+		<ice:outputLabel value="Savoir-faire " />
+		<img
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			alt="(?)" class="tipsy"
+			title="Le savoir-faire : il est issu de l’expérience et concerne la mise en œuvre d’un savoir pratique maitrisé dans une réalisation spécifique."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5" readonly="true"
+			value="#{ficheDePosteFormBB.savoirFaireMetier}" partialSubmit="false"
+			id="idSavoirFaire" />
+		<h:message for="idSavoirFaire" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:selectOneRadio layout="ckeckSavoir"
+		value="#{ficheDePosteFormBB.savoirFaire}" style="padding-right:40px;">
+		<f:selectItem itemDescription="+" itemLabel="" itemValue="1" styleclass="cb" />
+		<f:selectItem itemDescription="=" itemLabel="" itemValue="0" styleclass="cb" />
+		<f:selectItem itemDescription="-" itemLabel="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="-1" styleclass="cb" />
+		<f:selectItem itemDescription="Non &#233;valu&#233;" itemLabel="" itemValue="2" styleclass="cb" />
+	</ice:selectOneRadio>
+
+	<ice:panelGroup>
+		<ice:outputLabel value="Savoir-être " />
+		<img
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			alt="(?)" class="tipsy"
+			title="Le savoir-être : comportements et attitudes attendues dans une situation donnée. Il est relatif aux relations avec autrui. Il permet de coopérer efficacement dans une situation donnée."
+			width="20px" height="20px" align="center" />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5" readonly="true"
+			value="#{ficheDePosteFormBB.savoirEtreMetier}" partialSubmit="false"
+			id="idSavoirEtre" />
+		<h:message for="idSavoirEtre" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:selectOneRadio layout="ckeckSavoir"
+		value="#{ficheDePosteFormBB.savoirEtre}" style="padding-right:40px;">
+		<f:selectItem itemDescription="+" itemLabel="" itemValue="1" styleclass="cb" />
+		<f:selectItem itemDescription="=" itemLabel="" itemValue="0" styleclass="cb" />
+		<f:selectItem itemDescription="-" itemLabel="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="-1" styleclass="cb" />
+		<f:selectItem itemDescription="Non &#233;valu&#233;" itemLabel="" itemValue="2" styleclass="cb" />
+	</ice:selectOneRadio>
+
+	<ice:panelGroup>
+		<ice:outputLabel value="Compétences spécifiques " />
+		<img
+			src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+			alt="(?)" class="tipsy"
+			title="Savoir, savoir-faire et savoir-être en lien avec l’activité spécifique définie. Elles s’expriment par des verbes d’action."
+			width="20px" height="20px" align="center" />
+		<ice:commandButton id="modalPnlCloseBtnComp"
+			actionListener="#{ficheDePosteFormBB.toggleModalAideComp}"
+			partialSubmit="true" value="Aide" alt="Close" immediate="true" />
+
+		<ice:panelPopup id="modalPnlPopFicheDePoste" rendered="true"
+			visible="#{ficheDePosteFormBB.modalRenderedAideComp}"
+			styleClass="corePopup ficheMetierPopup" positionOnLoadOnly="true"
+			autoCentre="true">
+
+			<f:facet name="header">
+				<ice:panelGroup styleClass="popupHeaderWrapper">
+					<ice:outputText value="Aide" styleClass="popupHeaderText" />
+				</ice:panelGroup>
+			</f:facet>
+			<f:facet name="body">
+				<ui:include src="/gpec/FormsSalarie/FicheDePosteFormAide.xhtml" />
+			</f:facet>
+		</ice:panelPopup>
+		<br />
+		<h:inputTextarea style="width: 98%" rows="5"
+			value="#{ficheDePosteFormBB.competencesSpecifiquesTexte}"
+			partialSubmit="true" immediate="true" id="idCompetencesSpecifiques"
+			onmouseover="if(this.value=='') this.value = '- Connaitre les fondamentaux du droit du travail \n- Préparer les réunions de service \n- Traiter avec confidentialité les données liées à l\'activité'"
+			onmouseout="if(this.value.indexOf('Connaitre les fondamentaux du droit du travail')!=-1) this.value = ''"
+			onfocus="if(this.value.indexOf('Connaitre les fondamentaux du droit du travail')!=-1) this.value = ''" />
+		<h:message for="idCompetencesSpecifiques" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:selectOneRadio layout="ckeckSavoir"
+		value="#{ficheDePosteFormBB.competencesSpecifiques}" style="padding-right:40px;">
+		<f:selectItem itemDescription="+" itemLabel="" itemValue="1" styleclass="cb" />
+		<f:selectItem itemDescription="=" itemLabel="" itemValue="0" styleclass="cb" />
+		<f:selectItem itemDescription="-" itemLabel="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="-1" styleclass="cb" />
+		<f:selectItem itemDescription="Non &#233;valu&#233;" itemLabel="" itemValue="2" styleclass="cb" />
+	</ice:selectOneRadio>
+</ice:panelGrid>
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 98%; border: 3px double #DD0000; margin-left: 3px;"
+	columns="2" columnClasses="tdCompetenceLeft, tdCompetenceRight">
+	<ice:outputLabel value="Evaluation globale " />
+	<ice:selectOneRadio layout="ckeckEvalGlobale"
+		value="#{ficheDePosteFormBB.evaluationGlobale}"
+		style="margin-left: 25px;padding-right:40px;">
+		<f:selectItem itemDescription="+" itemLabel="" itemValue="1" styleclass="cb" />
+		<f:selectItem itemDescription="=" itemLabel="" itemValue="0" styleclass="cb" />
+		<f:selectItem itemDescription="-" itemLabel="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" itemValue="-1" styleclass="cb" />
+		<f:selectItem itemDescription="Non &#233;valu&#233;" itemLabel="" itemValue="2" styleclass="cb" />
+	</ice:selectOneRadio>
+
+</ice:panelGrid>
+
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 100%" columns="2"
+	columnClasses="tdCompetenceLeft, tdCompetenceRight">
+
+	<ice:panelGroup>
+		<ice:outputLabel value=" Compétences à améliorer " />
+		<br />
+		<h:inputTextarea style="width: 98%" rows="5"
+			value="#{ficheDePosteFormBB.commentaire}" id="idCommentaire" />
+		<h:message for="idCommentaire" errorStyle="color: red"></h:message>
+		<!-- </ice:panelGroup>
+	<ice:panelGroup> -->
+		<ice:outputLabel value="Particularités du poste " />
+		<br />
+		<h:inputTextarea style="width: 98%;background-color: #EEEEEE;"
+			rows="5"
+			readonly="true"
+			value="#{ficheDePosteFormBB.particularitePoste}"
+			partialSubmit="false"
+			id="idMobiliteEnvisagee" />
+		<h:message for="idMobiliteEnvisagee" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+</ice:panelGrid>
+
+<ice:panelGrid rendered="#{ficheDePosteFormBB.newSalarie}"
+	style="width: 100%" columns="2"
+	columnClasses="tdCompetenceLeft, tdCompetenceRight">
+	<ice:outputLabel value="Compétences à acquérir " />
+	<ice:outputLabel value="Catégorie de compétences " />
+	<ice:panelGroup>
+		<h:inputTextarea style="width: 98%" rows="2"
+			value="#{ficheDePosteFormBB.competencesNouvelles}"
+			id="idCompetencesNouvelles" />
+		<h:message for="idCompetencesNouvelles" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	<ice:selectOneMenu id="idCategorieCompetence"
+		value="#{ficheDePosteFormBB.categorieCompetence}" immediate="true"
+		partialSubmit="true">
+		<f:selectItem itemLabel="" itemValue="" />
+		<f:selectItem itemLabel="Techniques du métier"
+			itemValue="Techniques du métier" />
+		<f:selectItem itemLabel="Relations/Communication"
+			itemValue="Relations/Communication" />
+		<f:selectItem itemLabel="Organisation/Gestion"
+			itemValue="Organisation/Gestion" />
+	</ice:selectOneMenu>
+	<ice:panelGroup>
+		<h:inputTextarea style="width: 98%" rows="2"
+			value="#{ficheDePosteFormBB.competencesNouvelles2}"
+			id="idCompetencesNouvelles2" />
+		<h:message for="idCompetencesNouvelles2" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	<ice:selectOneMenu id="idCategorieCompetenc2e"
+		value="#{ficheDePosteFormBB.categorieCompetence2}" immediate="true"
+		partialSubmit="true">
+		<f:selectItem itemLabel="" itemValue="" />
+		<f:selectItem itemLabel="Techniques du métier"
+			itemValue="Techniques du métier" />
+		<f:selectItem itemLabel="Relations/Communication"
+			itemValue="Relations/Communication" />
+		<f:selectItem itemLabel="Organisation/Gestion"
+			itemValue="Organisation/Gestion" />
+	</ice:selectOneMenu>
+	<ice:panelGroup>
+		<h:inputTextarea style="width: 98%" rows="2"
+			value="#{ficheDePosteFormBB.competencesNouvelles3}"
+			id="idCompetencesNouvelles3" />
+		<h:message for="idCompetencesNouvelles3" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	<ice:selectOneMenu id="idCategorieCompetence3"
+		value="#{ficheDePosteFormBB.categorieCompetence3}" immediate="true"
+		partialSubmit="true">
+		<f:selectItem itemLabel="" itemValue="" />
+		<f:selectItem itemLabel="Techniques du métier"
+			itemValue="Techniques du métier" />
+		<f:selectItem itemLabel="Relations/Communication"
+			itemValue="Relations/Communication" />
+		<f:selectItem itemLabel="Organisation/Gestion"
+			itemValue="Organisation/Gestion" />
+	</ice:selectOneMenu>
+	<ice:panelGroup>
+		<h:inputTextarea style="width: 98%" rows="2"
+			value="#{ficheDePosteFormBB.competencesNouvelles4}"
+			id="idCompetencesNouvelles4" />
+		<h:message for="idCompetencesNouvelles4" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	<ice:selectOneMenu id="idCategorieCompetence4"
+		value="#{ficheDePosteFormBB.categorieCompetence4}" immediate="true"
+		partialSubmit="true">
+		<f:selectItem itemLabel="" itemValue="" />
+		<f:selectItem itemLabel="Techniques du métier"
+			itemValue="Techniques du métier" />
+		<f:selectItem itemLabel="Relations/Communication"
+			itemValue="Relations/Communication" />
+		<f:selectItem itemLabel="Organisation/Gestion"
+			itemValue="Organisation/Gestion" />
+	</ice:selectOneMenu>
+
+	<ice:panelGroup>
+		<h:inputTextarea style="width: 98%" rows="2"
+			value="#{ficheDePosteFormBB.competencesNouvelles5}"
+			id="idCompetencesNouvelles5" />
+		<h:message for="idCompetencesNouvelles5" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:selectOneMenu id="idCategorieCompetence5"
+		value="#{ficheDePosteFormBB.categorieCompetence5}" immediate="true"
+		partialSubmit="true">
+		<f:selectItem itemLabel="" itemValue="" />
+		<f:selectItem itemLabel="Techniques du métier"
+			itemValue="Techniques du métier" />
+		<f:selectItem itemLabel="Relations/Communication"
+			itemValue="Relations/Communication" />
+		<f:selectItem itemLabel="Organisation/Gestion"
+			itemValue="Organisation/Gestion" />
+	</ice:selectOneMenu>
+
+
+</ice:panelGrid>
+<ice:outputLabel value="Justificatif" />
+<ice:panelGroup>
+	<!-- t:inputFileUpload id="inputFileNameFicheDePoste" width="500"
+		autoUpload="true"
+		valueChangeListener="#{ficheDePosteFormBB.uploadFileFicheDePoste}"
+		disabled="#{not empty ficheDePosteFormBB.fileListFicheDePosteTemp}"
+		target="../#{salarieFormBB.uploadDir}/#{ficheDePosteFormBB.idSalarie}/ficheDePoste/" /-->
+	<ice:inputFile id="inputFileNameFicheDePoste" width="500"
+		autoUpload="true"
+		progressListener="#{ficheDePosteFormBB.fileUploadProgressFicheDePoste}"
+		actionListener="#{ficheDePosteFormBB.uploadFileFicheDePoste}"
+		disabled="#{not empty ficheDePosteFormBB.fileListFicheDePosteTemp}"
+		uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{ficheDePosteFormBB.idSalarie}/ficheDePoste/" />
+	<ice:outputProgress
+		value="#{ficheDePosteFormBB.fileProgressFicheDePoste}"
+		styleClass="uploadProgressBar" />
+	<br/>
+	<h:message for="inputFileNameFicheDePoste" errorStyle="color: red"/>
+	<ice:outputLabel
+		value="/!\ Un fichier existe déjà avec ce nom. Si vous validez, le fichier sera écrasé."
+		rendered="#{ficheDePosteFormBB.alreadyExist}" style="color: red;" />
+	<ice:dataTable width="350px"
+		value="#{ficheDePosteFormBB.fileListFicheDePosteTemp}" var="file"
+		rendered="#{not empty ficheDePosteFormBB.fileListFicheDePosteTemp}">
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Nom du fichier" />
+			</f:facet>
+			<ice:panelGrid rendered="#{not file.fileError}">
+				<!-- <a id="lien"
+					href="#{ficheDePosteFormBB.url}#{file.fileInfo.fileName}"
+					target="_blank"> <ice:outputText
+					value="#{file.fileInfo.fileName}" /> </a> -->
+				<ice:commandLink actionListener="#{ficheDePosteFormBB.download}"
+								 style="text-decoration: underline;" immediate="true">
+					<ice:outputText value="#{file.fileInfo.fileName}" />
+				</ice:commandLink>
+			</ice:panelGrid>
+			<ice:outputLabel
+				value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible."
+				style="color: red" rendered="#{file.fileError}" />
+		</ice:column>
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputLabel value="Action" />
+			</f:facet>
+			<ice:commandLink value="Supprimer"
+				onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+				actionListener="#{ficheDePosteFormBB.removeUploadedFileFicheDePosteTemp}"
+				style="text-decoration: underline; color: red;">
+			</ice:commandLink>
+		</ice:column>
+	</ice:dataTable>
+</ice:panelGroup>
+<ice:commandButton id="idSauvegarde"
+	value="Valider"
+	disabled="#{!ficheDePosteFormBB.newSalarie}"
+	actionListener="#{ficheDePosteFormBB.saveOrUpdateFicheDePoste}" />
+
+
+<h:message for="idSauvegarde" errorStyle="color: green"></h:message>
+
+<ice:commandButton id="modalPnlCloseParcours" type="submit"
+	value="Quitter" actionListener="#{ficheDePosteFormBB.toggleModal}"
+	immediate="true" />
+<br />
+<ice:outputText style="color: red"
+	value="Pour créer une nouvelle fiche de poste, vous devez avoir préalablement renseigné les onglets 'coordonnées' et 'emplois occupés' et avoir effectué un premier enregistrement."
+	rendered="#{!ficheDePosteFormBB.newSalarie}" />
+	
+<ice:panelPopup id="modalDelFile" draggable="true" rendered="true"
+		visible="#{ficheDePosteFormBB.modalRenderedDelFile}"
+		style="width:285px;height:auto;top:-20px;left:300px;position:absolute;"
+		>
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+			<br />
+			<ice:commandButton id="delFile" value="oui"
+				actionListener="#{ficheDePosteFormBB.removeUploadedFileFicheDePosteTemp}" />
+			<ice:commandButton id="cancelDelFile" value="non"
+				actionListener="#{ficheDePosteFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+<script type="text/javascript"> 
+   		 
+		jQuery('.tipsy').tipsy({html: true, fade: true,gravity: 'ne'});</script>
+</html>

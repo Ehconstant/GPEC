@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:c="http://java.sun.com/jstl/core">
+
+    <ui:define name="content">
+    
+		<h:form id="idForm">
+			<h:panelGroup rendered="#{adminFormBB.myAccount}">
+				<h3>Mon compte</h3>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{not adminFormBB.myAccount}">
+				<h3>Formulaire de saisie d'un superAdmin</h3>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not adminFormBB.myAccount}">
+				<br />
+				<br />
+				<ice:commandButton id="idAjout" value="Ajouter " 
+								   action="#{adminFormBB.initUserForm}">	     
+				</ice:commandButton>
+			</h:panelGroup>
+			
+			<br />
+			<br />
+		
+			<ice:dataTable id="dataTable" value="#{adminFormBB.userList}" 
+										  var="item" 
+										  rendered="#{not empty adminFormBB.userList}">
+				<f:facet name="header">
+			        <ice:columnGroup >
+			            <ice:headerRow>
+			            	<ice:column rowspan="2" >
+					        	<ice:outputText value="Identifiant"/>
+					        </ice:column>
+					        
+					        <ice:column rowspan="2" >
+					        	<ice:outputText value="Nom"/>
+					        </ice:column>
+					        
+					        <ice:column rowspan="2" >
+					        	<ice:outputText value="Prenom"/>
+					        </ice:column>
+					        
+					        <ice:column colspan="5" >
+					        	<ice:outputText value="Droits d'accès aux onglets"/>
+					        	<img alt="(?)" class="tipsy"
+									src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+									title="Permet de définir les onglets auxquels l'utilisateur aura accès."
+									width="12px" 
+									height="12px" 
+									align="center" />
+					        </ice:column>
+					        
+					        <ice:column rowspan="2" >
+					        	<ice:outputText value="Administrateur"/>
+					        	<img alt="(?)" class="tipsy"
+									src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+									title="Un administrateur est un utilisateur ayant accès à la partie de gestion des utilisateurs."
+									width="12px" 
+									height="12px" 
+									align="center" />
+					        </ice:column>
+					        
+					         <ice:column rowspan="2" rendered="#{loginBB.superAdmin}">
+					        	<ice:outputText value="Super Administrateur"/>
+					        	<img alt="(?)" class="tipsy"
+									src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+									title="Un administrateur est un utilisateur ayant accès à la partie de gestion des utilisateurs."
+									width="12px" 
+									height="12px" 
+									align="center" />
+					        </ice:column>
+					        
+					        <ice:column rowspan="2" >
+					        	<ice:outputText value="Action"/>
+					        </ice:column>
+					        
+					    </ice:headerRow>
+		                   
+		                <ice:headerRow>
+		              		<ice:column >
+					        	<ice:outputText value="Evènements"/>
+					        </ice:column>
+					        
+					    	<ice:column >
+					        	<ice:outputText value="Contrats de travail"/>
+					        </ice:column>
+					        
+					        <ice:column >
+					        	<ice:outputText value="Rémunérations"/>
+					        </ice:column>
+					        
+					        <ice:column >
+					        	<ice:outputText value="Fiches de poste"/>
+					        </ice:column>
+					        
+					        <ice:column >
+					        	<ice:outputText value="Entretiens"/>
+					        </ice:column>
+					        						        
+					    </ice:headerRow>
+		                 
+		           </ice:columnGroup>
+			           
+			    </f:facet> 
+			    
+				<ice:column>
+					<ice:outputText value="#{item.login}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{item.nom}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{item.prenom}" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.evenement}" 
+						id="eve"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.contratTravail}" 
+						id="ct"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.remuneration}" 
+						id="remu"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.ficheDePoste}" 
+						id="fdp"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.entretien}" 
+						id="ent"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column style="text-align:center;">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.admin}" 
+						id="admin"
+						onclick="return false" />
+				</ice:column>
+				 
+				<ice:column style="text-align:center;" rendered="#{loginBB.superAdmin}">
+					<ice:selectBooleanCheckbox
+						style="text-align:center;"
+						value="#{item.superAdmin}" 
+						id="superAdmin"
+						onclick="return false" />
+				</ice:column>
+				
+				<ice:column>
+			
+					<ice:commandButton value="Modifier" 
+									   actionListener="#{adminFormBB.modif}" />
+							
+					<ice:commandButton id="idSupprimer" 
+									   value="Supprimer" 
+									   actionListener="#{adminFormBB.supprimer}"
+							   		   panelConfirmation="deleteConfirmPanelUser"
+							   		   rendered="#{loginBB.superAdmin}">
+					</ice:commandButton>
+		
+					<!-- Panel de confirmation de suppression -->
+					<ice:panelConfirmation id="deleteConfirmPanelUser" 
+										   message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+		                    			   acceptLabel="Oui" 
+		                    			   cancelLabel="Non"
+		                    			   title="Confirmer"/>
+							
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			 <ice:panelPopup id="modalPnlPopUser" draggable="true" modal="true"
+				rendered="true" visible="#{adminFormBB.modalRendered}"
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Ajout d'un utilisateur" styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<c:if test="#{adminFormBB.modalRendered}">
+						<ui:include src="/gpec/FormsParams/adminForm.xhtml" />
+					</c:if>
+				</f:facet>
+			</ice:panelPopup>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

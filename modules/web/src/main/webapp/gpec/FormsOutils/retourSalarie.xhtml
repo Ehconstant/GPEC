@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		
+		<h3>Liste des Salariés</h3>
+		<br/>
+		<ice:outputText rendered="#{empty filtreMultiBB.filtres}" value="Aucun filtre n'a été selectionné"/>
+		<ice:dataTable rendered="#{not empty filtreMultiBB.filtres}" value="#{filtreMultiBB.filtres}" var="item" id="idDatatableFiltre">
+				<f:facet name="header">
+			        <ice:columnGroup>
+			            <ice:headerRow>
+			            	<ice:column>
+					        	<ice:outputText value="Filtres utilisés"/>
+					        </ice:column>
+					        <ice:column>
+					        	<ice:outputText value="Valeurs sélectionnées"/>
+					        </ice:column>
+					    </ice:headerRow>    
+		           </ice:columnGroup>
+		        </f:facet> 
+				<ice:column>
+						<ice:outputText value="#{item.filtre}" />
+				</ice:column>
+				<ice:column>
+						<ice:outputText value="#{item.value}" />
+				</ice:column>
+		</ice:dataTable>
+		<br/>
+
+		<!-- ice:outputText value="#{filtreMultiBB.nbSalaries} salaries" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbAbsences} absences" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbAccidents} accidents" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbEntretiens} entretiens" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbHabilitations} habilitations" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbContratTravail} contrats" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbFormations} formations" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbParcours} parcours" /><br/>
+		<ice:outputText value="#{filtreMultiBB.nbRemunerations} remunerations" /><br/-->
+
+		<ice:outputText rendered="#{empty filtreMultiBB.salarieList}" value="Il n'y a pas de salarié correspondant à ces critères"/>
+		<br/>
+		<ice:form id="idForm" rendered="#{not empty filtreMultiBB.salarieList}">	
+		
+		<ice:outputLabel for="idExporter" value="Exports au format excel" />
+							  	   
+		<br/> 
+		<ice:panelGrid columns="5">
+				<ice:commandButton id="suiviSal"
+						disabled="#{empty filtreMultiBB.salarieList}"
+						value="Salariés"
+						action="#{filtreMultiBB.exportExcelSalaries}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviCt"
+						disabled="#{empty filtreMultiBB.contratBeanList}"
+						value="Contrats de travail"
+						action="#{filtreMultiBB.exportExcelContratTravail}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviParc"
+						disabled="#{empty filtreMultiBB.parcoursBeanList}"
+						value="Parcours professionnels"
+						action="#{filtreMultiBB.exportExcelParcoursProfessionnels}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviRem"
+						disabled="#{empty salariesList.salariesInventory and loginBB.remuneration}"
+						value="Remunerations"
+						style="width:180px;margin:5px;"
+						action="#{filtreMultiBB.exportExcelRemunerations}" />
+				<ice:commandButton id="suiviHab"
+						disabled="#{empty filtreMultiBB.habilitationBeanList}"
+						value="Habilitations"
+						action="#{filtreMultiBB.exportExcelHabilitations}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviForm"
+						disabled="#{empty filtreMultiBB.formationBeanList}"
+						value="Formations"
+						action="#{filtreMultiBB.exportExcelFormations}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviAbs"
+						disabled="#{empty filtreMultiBB.absenceBeanList}"
+						value="Absences"
+						action="#{filtreMultiBB.exportExcelAbsences}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviAcc"
+						disabled="#{empty filtreMultiBB.accidentBeanList}"
+						value="Accidents"
+						action="#{filtreMultiBB.exportExcelAccidents}"
+						style="width:180px;margin:5px;" />
+				<ice:commandButton id="suiviComp"
+						disabled="#{empty filtreMultiBB.salarieList and loginBB.ficheDePoste}"
+						value="Compétences"
+						style="width:180px;margin:5px;"
+						action="#{filtreMultiBB.exportExcelCompetences}" />
+				<ice:commandButton id="suiviEnt"
+						disabled="#{empty filtreMultiBB.entretienBeanList and loginBB.entretien}"
+						value="Entretiens"
+						style="width:180px;margin:5px;"
+						action="#{filtreMultiBB.exportExcelEntretiens}" />
+						
+		</ice:panelGrid>
+		<br/>   
+			
+			<ice:dataTable value="#{filtreMultiBB.salarieList}" var="item"
+				id="idDatatableSalarie"
+				rows="12">
+
+				<!-- Stock number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Nom" />
+					</f:facet>
+					<ice:outputText value="#{item.nom}" />
+				</ice:column>
+
+				<!-- Model number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Prénom" />
+					</f:facet>
+					<ice:outputText value="#{item.prenom}" />
+				</ice:column>
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Action" />
+					</f:facet>
+			
+					<ice:commandButton value="Détails" 
+							   action="#{salarieFormBB.initSalarieForm}"
+							   actionListener="#{filtreMultiBB.setRetourSession}" >
+					 <f:setPropertyActionListener target="#{salarieFormBB.id}" value="#{item.id}" />
+							   
+					</ice:commandButton>
+			
+				</ice:column>
+			</ice:dataTable>
+			<!-- Paginator with page controls -->
+                <ice:dataPaginator id="dataScroll_3"
+                                   for="idDatatableSalarie"
+                                   paginator="true"
+                                   fastStep="3">
+                    <f:facet name="first">
+                        <ice:graphicImage
+                            url="../../style/rime/css-images/arrow-first.gif"
+                            style="border:none;"
+                            title="First Page"/>
+                    </f:facet>
+                    <f:facet name="last">
+                        <ice:graphicImage
+                            url="../../style/rime/css-images/arrow-last.gif"
+                            style="border:none;"
+                            title="Last Page"/>
+                    </f:facet>
+                    <f:facet name="previous">
+                        <ice:graphicImage
+                            url="../../style/rime/css-images/arrow-previous.gif"
+                            style="border:none;"
+                            title="Previous Page"/>
+                    </f:facet>
+                    <f:facet name="next">
+                        <ice:graphicImage
+                            url="../../style/rime/css-images/arrow-next.gif"
+                            style="border:none;"
+                            title="Next Page"/>
+                    </f:facet>
+                    <f:facet name="fastforward">
+                        <ice:graphicImage url="../../style/rime/css-images/arrow-ff.gif"
+                                          style="border:none;"
+                                          title="Fast Forward"/>
+                    </f:facet>
+                    <f:facet name="fastrewind">
+                        <ice:graphicImage url="../../style/rime/css-images/arrow-fr.gif"
+                                          style="border:none;"
+                                          title="Fast Backwards"/>
+                    </f:facet>
+                </ice:dataPaginator>
+		<br/>
+		<!-- h4>Planning des indisponibilités</h4>
+		<ice:panelGrid columns="2">		  	   
+				<ice:outputLabel for="monthListRetourS" value="Mois de départ " />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="monthListRetourS"
+						value="#{filtreMultiBB.idMonthSelected}"
+						style="overflow: auto;"
+						valueChangeListener="#{filtreMultiBB.selectDureeChange}"  
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{filtreMultiBB.monthList}" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				<ice:outputLabel for="dureeListPlanningA" value="Durée (en mois) " 
+								 rendered="#{filtreMultiBB.idMonthSelected != -1}"/>
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="dureeListPlanningA"
+						value="#{filtreMultiBB.idDureeSelected}"
+						rendered="#{filtreMultiBB.idMonthSelected != -1}"
+						style="overflow: auto;"
+						valueChangeListener="#{filtreMultiBB.selectDureeChange}"  
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItem itemLabel="2" itemValue="2" />
+						<f:selectItem itemLabel="6" itemValue="6" />
+						<f:selectItem itemLabel="12" itemValue="12" />
+					</ice:selectOneMenu>
+				</ice:panelGroup>
+				
+				<ice:outputLabel for="imageResourcePlanningA" value="Exporter le planning des absences" 
+				rendered="#{filtreMultiBB.idDureeSelected != -1}"/>
+				<ice:outputResource id="imageResourcePlanningA"
+	                    resource="#{filtreMultiBB.imagen}" mimeType="image/jpeg"
+	                    fileName="planningDesAbsence.jpeg" 
+	                    shared="false"
+	                    label="Exporter"
+	                    type="button"
+	                    rendered="#{filtreMultiBB.idDureeSelected != -1}"/>
+		</ice:panelGrid-->
+		 
+		</ice:form>
+		<br/>
+		<ice:form>
+		<ice:commandButton value="Modifier la recherche" action="#{filtreMultiBB.retour}"/> 
+		</ice:form>
+	</ui:define>
+
+</ui:composition>

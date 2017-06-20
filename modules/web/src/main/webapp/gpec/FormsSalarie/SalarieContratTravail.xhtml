@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+		<ice:inputHidden value="#{salarieContratTravailFormBB.init}" />
+	
+		<!-- <h3>ContratTravail du Salarié</h3> -->
+		<h3>Contrat de travail du salarié</h3>
+			<ice:commandButton id="toggleModalContratTravail" value="Ajouter un contrat de travail"
+								style="margin-right: 2px;font-size:12px"
+								action="#{salarieContratTravailFormBB.initSalarieContratTravailForm}"
+								disabled="#{empty salarieContratTravailFormBB.typeContratList || empty salarieContratTravailFormBB.metierList}"/>
+			<ice:panelGrid columns="1">
+				<ice:outputText value="Vous devez préalablement saisir les métiers dans paramètres." 
+								rendered="#{empty salarieContratTravailFormBB.metierList}" 
+								style="color: red" />
+										
+				<ice:outputText value="Vous devez préalablement saisir les natures de contrat dans paramètres." 
+								rendered="#{empty salarieContratTravailFormBB.typeContratList}" 
+								style="color: red" />
+			</ice:panelGrid>
+			
+			<br />
+			<fieldset style="border: 1px solid;width: 310px;">
+				<legend>Affichage des données par année</legend>
+				<ice:panelGrid columns="5" >
+					<ice:outputText value="Année de" style="margin-right:10px;" />
+					<ice:selectOneMenu id="anneeDCt"
+							value="#{salarieFormBB.debutCt}"
+							partialSubmit="true" style="overflow: auto;"
+							immediate="true"
+							valueChangeListener="#{salarieFormBB.datesFiltre}" >
+							<f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{salarieFormBB.anneesCt}" />
+					</ice:selectOneMenu>
+					<ice:outputText value="à" style="margin-left:10px;margin-right:10px;" />
+					<ice:selectOneMenu id="anneeFCt"
+							value="#{salarieFormBB.finCt}"
+							partialSubmit="true" style="overflow: auto;"
+							immediate="true"
+							valueChangeListener="#{salarieFormBB.datesFiltre}" >
+							<f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{salarieFormBB.anneesCt}" />
+					</ice:selectOneMenu>
+					<ice:commandButton value="afficher" action="#{salarieFormBB.filtrerCT}" />
+				</ice:panelGrid>
+			</fieldset>
+				
+			
+			<ice:dataTable value="#{salarieFormBB.contratTravailBeanList}" var="item"
+						   rendered="#{not empty salarieFormBB.contratTravailBeanList}"
+						   id="idDatatableContratTravail"
+						   rows="12">
+						   
+						   
+				<f:facet name="header">
+			    	<ice:columnGroup>
+						<ice:headerRow>
+							<ice:column >
+								<ice:outputText value="Type de contrat"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Avenant au contrat"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Métier"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Début de contrat"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Fin de contrat"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Motif de rupture"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Justificatif"/>
+							</ice:column>
+							<ice:column >
+								<ice:outputText value="Actions"/>
+							</ice:column>
+						</ice:headerRow>
+			
+					</ice:columnGroup>
+				</f:facet>
+	
+				<ice:column>
+					<ice:outputText value="#{item.nomTypeContrat}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{(item.renouvellementCDD==false)?'':'oui'}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{item.nomMetier}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{item.debutContrat}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+
+				<ice:column>
+					<ice:outputText value="#{item.finContrat}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+				
+				<ice:column>
+					<ice:outputText value="#{item.nomMotifRuptureContrat}" />
+				</ice:column>
+
+				
+				<ice:column style="white-space: nowrap;">
+					<ice:outputText value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+						style="color: red" 
+						rendered="#{item.fileError}"/>
+					<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 						<a id="lien" href="#{salarieContratTravailFormBB.url}#{item.justif.name}" target="_blank">
+							<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+						</a> -->
+						<ice:commandLink actionListener="#{salarieContratTravailFormBB.download}"
+										 rendered="#{not item.fileError}" style="text-decoration: underline;">
+							<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+						</ice:commandLink>
+						<ice:commandLink 
+							actionListener="#{salarieContratTravailFormBB.removeUploadedFileContratTravail}"
+							style="text-decoration: underline; color: red;"
+							panelConfirmation="deleteConfirmPanelFileContratTravail">
+							<h:graphicImage url="../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+							<ui:insert />
+						</ice:commandLink>
+					</ice:panelGrid>
+					<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+						<ice:outputText value="-" />
+					</ice:panelGrid>
+					
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton value="Modifier"
+						actionListener="#{salarieContratTravailFormBB.modifContratTravail}" id="save_SkipValidation">					
+					</ice:commandButton>
+					<ice:commandButton value="Supprimer"
+						actionListener="#{salarieContratTravailFormBB.deleteContratTravail}"
+						panelConfirmation="deleteConfirmPanelContratTravail">
+					</ice:commandButton>
+					<!-- Panel de confirmation de suppression -->
+					<ice:panelConfirmation id="deleteConfirmPanelContratTravail" 
+										   message="Êtes-vous sûr de vouloir supprimer ce poste ?"
+                      					   acceptLabel="Oui" 
+                      					   cancelLabel="Non"
+                      					   title="Confirmer"/>
+                  	<ice:panelConfirmation id="deleteConfirmPanelFileContratTravail"
+											message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+											acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+				</ice:column>
+			</ice:dataTable>
+			<!-- Paginator with page controls -->
+                <ice:dataPaginator id="dataScrollDatatableContratTravail"
+                                   for="idDatatableContratTravail"
+                                   paginator="true"
+                                   fastStep="3">
+                    <f:facet name="first">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-first.gif"
+                            style="border:none;"
+                            title="First Page"/>
+                    </f:facet>
+                    <f:facet name="last">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-last.gif"
+                            style="border:none;"
+                            title="Last Page"/>
+                    </f:facet>
+                    <f:facet name="previous">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-previous.gif"
+                            style="border:none;"
+                            title="Previous Page"/>
+                    </f:facet>
+                    <f:facet name="next">
+                        <ice:graphicImage
+                            url="../style/rime/css-images/arrow-next.gif"
+                            style="border:none;"
+                            title="Next Page"/>
+                    </f:facet>
+                    <f:facet name="fastforward">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-ff.gif"
+                                          style="border:none;"
+                                          title="Fast Forward"/>
+                    </f:facet>
+                    <f:facet name="fastrewind">
+                        <ice:graphicImage url="../style/rime/css-images/arrow-fr.gif"
+                                          style="border:none;"
+                                          title="Fast Backwards"/>
+                    </f:facet>
+                </ice:dataPaginator>
+<!-- Modal Panel Popup -->
+<ice:panelPopup id="modalPnlPopContratTravail" draggable="true" modal="true"
+	rendered="true" visible="#{salarieContratTravailFormBB.modalRendered}"
+	styleClass="corePopup">
+	<f:facet name="header">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText value="Ajout contrat travail"
+				styleClass="popupHeaderText" />
+		</ice:panelGroup>
+	</f:facet>
+	<f:facet name="body">
+		<c:if test="#{salarieContratTravailFormBB.modalRendered}">
+			<ui:include src="/gpec/FormsSalarie/SalarieContratTravailForm.xhtml" />
+		</c:if>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

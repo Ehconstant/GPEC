@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="Evenement" table="EVENEMENT">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="Id" type="integer" column="ID_EVENEMENT">
+			<generator class="identity" />
+		</id>
+
+		<property 
+			name="DateEvenement" 
+			column="DATE_EVENEMENT"
+			type="date" 
+			not-null="false" 
+			length="10" />
+		<property 
+			column="COMMENTAIRE" 
+			name="Commentaire" 
+			not-null="false" 
+			type="text" />
+		<property 
+			column="INTERLOCUTEUR" 
+			length="20"
+			name="Interlocuteur" 
+			not-null="false" 
+			type="string" />
+		<property 
+			column="NATURE" 
+			name="Nature" 
+			not-null="false" 
+			type="text" />
+		<property 
+			column="DECISION" 
+			name="Decision" 
+			not-null="false" 
+			type="text" />
+		<property
+			name="Justificatif"
+			column="JUSTIFICATIF"
+			type="text"
+			not-null="false"
+		/>
+		<many-to-one 
+			name="Salarie" 
+			column="ID_SALARIE"
+			class="Salarie" 
+			not-null="false">
+		</many-to-one>
+
+
+	</class>
+</hibernate-mapping>

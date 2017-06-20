@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid style="width: 900px">
+	<h3>Formulaire de saisie d'un entretien individuel</h3>
+	
+	<ice:panelGrid style="width: 45%" columns="2">
+	
+		<ice:panelGroup>
+			<ice:commandButton id="modalPnlValiderEntretien2" type="submit"
+				value="Valider"
+				actionListener="#{salarieEntretiensFormBB.saveOrUpdateSalarieEntretien}"
+				disabled="#{salarieEntretiensFormBB.signe}" />
+			<ice:commandButton id="modalPnlCloseEntretien2" type="submit"
+				value="Quitter"
+				actionListener="#{salarieEntretiensFormBB.toggleModal}"
+				immediate="true" />
+		</ice:panelGroup>
+		<ice:outputLabel value="" />
+		
+		<ice:outputLabel value="" />
+		<ice:outputLabel value="" />
+	
+		<ice:outputLabel value="Date de l'entretien (jj/mm/aaaa)" />
+		<ice:panelGroup>
+			<ice:selectInputDate id="dateEntretien"
+				requiredMessage="Champ obligatoire"
+				value="#{salarieEntretiensFormBB.dateEntretien}"
+				highlightClass="weekend: august:" 
+				renderMonthAsDropdown="true"
+				renderYearAsDropdown="true" 
+				highlightUnit="DAY_OF_WEEK: MONTH"
+				highlightValue="1,7: 8" 
+				renderAsPopup="true" 
+				immediate="true"
+				partialSubmit="true" 
+				required="true" 
+				valueChangeListener="#{salarieFormBB.checkPresenceDebutEntretien}"
+				converterMessage="#{msg.dateTimeConverter}"
+				disabled="#{salarieEntretiensFormBB.signe}" >
+				<f:converter converterId="dateConverter"
+					timeZone="#{dateSelect.timeZone}" />
+			</ice:selectInputDate>
+			<h:message for="dateEntretien" errorStyle="color: red"></h:message>
+		</ice:panelGroup>
+		
+		<ice:outputLabel value="Année de référence " />
+		<ice:panelGroup>
+			<ice:inputText value="#{salarieEntretiensFormBB.anneeReference}"
+						id="anneeReference" 
+						style="color:black;"
+						tabindex="0" 
+						immediate="true"
+						partialSubmit="true" 
+						onkeypress="return noSubmitOnEnter(event);"
+						valueChangeListener="#{salarieEntretiensFormBB.refreshFormation}" 
+						disabled="#{salarieEntretiensFormBB.signe}"
+						converterMessage="#{msg.integerConverter}"
+						required="true" 
+						requiredMessage="#{msg.required}" />
+		</ice:panelGroup>
+		
+		<ice:outputLabel value="" />
+		<h:message for="anneeReference" errorStyle="color: red"></h:message>
+	</ice:panelGrid>
+	<ice:panelGrid style="width: 100%" 
+		columns="2" 
+		columnClasses="tdProfilSalarie, tdProfilMetier">
+		<fieldset style="border: 1px solid; height: 150px; width: 96%;">
+			<legend><b>Collaborateur</b></legend> 
+			<ice:panelGrid style="width: 100%" 
+				columns="2" 
+				columnClasses="tdProfilSalarie, tdProfilMetier">
+				<ice:outputLabel value="Nom" 
+					styleClass="lblFieldset" 
+					style="width: 110px;"/>
+				<ice:outputText value="#{salarieFormBB.nom} #{salarieFormBB.prenom}"
+							disabled="#{salarieEntretiensFormBB.signe}" />
+				<ice:outputLabel value="Service" 
+					styleClass="lblFieldset" 
+					style="width: 110px;" />
+				<ice:outputText	value="#{salarieEntretiensFormBB.libelleService}" />
+				<ice:outputLabel value="Métier" styleClass="lblFieldset" style="width: 110px;"/>
+				<ice:outputText value="#{salarieEntretiensFormBB.libelleMetier}"
+						tabindex="3" disabled="#{salarieEntretiensFormBB.signe}" />
+			</ice:panelGrid>
+		</fieldset>
+		
+		<fieldset style="border: 1px solid; height: 150px; width: 96%;">
+			<legend><b>Manager</b></legend> 
+			<ice:panelGrid style="width: 100%" columns="2" columnClasses="tdProfilSalarie, tdProfilMetier">
+				<ice:outputLabel value="Nom" styleClass="lblFieldset" style="width: 110px;"/>
+				<h:inputText value="#{salarieEntretiensFormBB.nomManager}" 
+					id="idNomMan" 
+					style="color:black;"
+					tabindex="1" 
+					partialSubmit="true"  
+					onkeypress="return noSubmitOnEnter(event);"
+					disabled="#{salarieEntretiensFormBB.signe}"/>
+				<ice:outputLabel value="Service" styleClass="lblFieldset" style="width: 110px;"/>
+				<h:inputText value="#{salarieEntretiensFormBB.serviceManager}"
+					id="idServiceMan" 
+					style="color:black;"
+					tabindex="2" 
+					partialSubmit="true" 
+					onkeypress="return noSubmitOnEnter(event);"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+		
+	<ice:panelGrid style="width: 98%" columns="1">
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>Bilan de l'année écoulée</b></legend> 
+			<!-- ice:panelGrid style="width: 100%"
+				columns="3" columnClasses="tdRappel1 tdRappel2 tdRappel3">
+				<ice:outputLabel value="Rappel des objectifs" />
+				<ice:outputLabel value="Résultats des activités" />
+				<ice:outputLabel value="Commentaires" />
+		
+				<h:inputTextarea rows="5"
+					style="width: 98%;background-color: #EEEEEE;"
+					value="#{salarieEntretiensFormBB.rappelObj}" id="idRappelObjectifs"
+					realonly="true" tabindex="4" readonly="true" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<h:inputTextarea cols="15" rows="5" value="#{salarieEntretiensFormBB.bilanDessous}"
+					id="idEnDessousObjectifs" tabindex="5" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<h:inputTextarea rows="5" style="width: 98%"
+					value="#{salarieEntretiensFormBB.commentaireBilan}"
+					id="idCommentairesObjectifs" tabindex="8" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}"  />
+			</ice:panelGrid-->
+			
+			<ice:outputLabel value="Il n'y a pas eu d'entretien en #{salarieEntretiensFormBB.anneeReference - 1}" 
+				styleClass="lblFieldset"
+				rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNMoins1List and salarieEntretiensFormBB.hasAnnee}" />
+			<ice:dataTable value="#{salarieEntretiensFormBB.objectifsAnneeNMoins1List}" 
+				var="item"
+				rendered="#{not empty salarieEntretiensFormBB.objectifsAnneeNMoins1List}"
+				id="idDatatableObjectifsNonEditableNMoins1" 
+				columnWidths="267px,132px,267px,155px">
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Rappel des objectifs" />
+					</f:facet>
+					<ice:outputText value="#{item.intitule}" />
+				</ice:column>
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Résultats des activités" />
+					</f:facet>
+					<ice:outputText value="#{item.resultat}" />
+				</ice:column>
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaires" />
+					</f:facet>
+					<ice:outputText value="#{item.commentaire}" />
+				</ice:column>
+									
+				<ice:column>
+					<ice:commandButton id ="idModifier" 
+									   value="Modifier" 
+									   actionListener="#{salarieEntretiensFormBB.modifObjNMoins1}"
+									   disabled="#{salarieEntretiensFormBB.disableButtonNMoins1 or salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<ice:dataTable value="#{salarieEntretiensFormBB.objectifsAnneeNMoins1ListTemp}" 
+				var="item"
+				rendered="#{not empty salarieEntretiensFormBB.objectifsAnneeNMoins1ListTemp}"
+				id="idDatatableObjNMoins1Editable" 
+				columnWidths="267px,132px,267px,155px">
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Rappel des objectifs" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNMoins1List}"/>
+					</f:facet>
+					<ice:inputText readonly="true" style="width: 90%;" value="#{item.intitule}" />
+				</ice:column>
+				
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Résultats des activités" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNMoins1List}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;" value="#{item.resultat}" />
+				</ice:column>
+									
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Commentaires" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNMoins1List}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;" value="#{item.commentaire}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouter" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieEntretiensFormBB.addObjNMoins1}"
+									   disabled="#{salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnuler" 
+									   value="Annuler" 
+									   actionListener="#{salarieEntretiensFormBB.cancelObjNMoins1}"
+									   disabled="#{salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<br />
+			<br />
+			
+			<ice:panelGrid style="width: 100%" columns="2">
+				<ice:outputLabel value="Formations suivies année N-1" />
+				<ice:outputLabel value="Commentaires" />
+				<h:inputTextarea rows="5" 
+					style="width: 98%;color:black;"
+					value="#{salarieEntretiensFormBB.formationNMoinsUn}"
+					id="idformationNMoinsUn" 
+					tabindex="9" 
+					partialSubmit="true"
+					immediate="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<h:inputTextarea rows="5" style="width: 97%;color:black;"
+					value="#{salarieEntretiensFormBB.commentaireFormation}"
+					id="idCommentairesFormations" 
+					tabindex="10" 
+					partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+			</ice:panelGrid> 
+			<ice:panelGrid style="width: 100%" columns="2" columnClasses="td1,td2">
+				<ice:outputLabel value="Conclusion N-1" />
+				<br/>
+				<h:inputTextarea rows="5" style="width: 98%;color:black;"
+					value="#{salarieEntretiensFormBB.souhait}"
+					id="idPrincipalesConclusion" tabindex="11" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<ice:panelGroup>
+					<ice:outputLabel
+						value="Evaluation globale des compétences sur le poste" /><br/><br/>
+					<h:inputText style="color:black;"
+						value="#{salarieEntretiensFormBB.evaluationGlobale}"
+						id="idCompetenceGlobales" tabindex="12"
+						partialSubmit="true" onkeypress="return noSubmitOnEnter(event);"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+				</ice:panelGroup>
+			</ice:panelGrid>
+		</fieldset>
+		
+		<fieldset style="border: 1px solid; width: 100%;">
+			<legend><b>Plan de progrès</b></legend> 
+			
+			<ice:panelGrid style="width: 100%" columns="1">
+				<ice:outputLabel value="Objectifs de l'année à venir" />
+			</ice:panelGrid> 
+			<!-- ice:panelGrid style="width: 100%" columns="3" columnClasses="tdRappel1 tdRappel2 tdRappel3">
+				<ice:outputLabel value="Intitulés" />
+				<ice:outputLabel value="Délais" />
+				<ice:outputLabel value="Moyens spécifiques / Critères d'évaluation" />
+				<h:inputTextarea rows="5" style="width: 98%"
+					value="#{salarieEntretiensFormBB.objIntitule}" id="idIntitule"
+					tabindex="26" requiredMessage="#{msg.required}" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<h:inputTextarea rows="5" cols="15" 
+					value="#{salarieEntretiensFormBB.objDelais}" id="idDelais"
+					tabindex="27" requiredMessage="#{msg.required}" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+				<h:inputTextarea rows="5" style="width: 97%"
+					value="#{salarieEntretiensFormBB.objMoyens}" id="idMoyensSpecifiques"
+					tabindex="28" requiredMessage="#{msg.required}" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+			</ice:panelGrid--> 
+			
+			<ice:dataTable value="#{salarieEntretiensFormBB.objectifsAnneeNList}" 
+				var="item"
+				rendered="#{not empty salarieEntretiensFormBB.objectifsAnneeNList}"
+				id="idDatatableObjectifsNonEditable" 
+				columnWidths="267px,132px,267px,155px">
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Intitulés" />
+					</f:facet>
+					<ice:outputText value="#{item.intitule}" />
+				</ice:column>
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Délais" />
+					</f:facet>
+					<ice:outputText value="#{item.delai}" />
+				</ice:column>
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Moyens spécifiques / Critères d'évaluation" />
+					</f:facet>
+					<ice:outputText value="#{item.moyen}" />
+				</ice:column>
+									
+				<ice:column>
+					<ice:commandButton id ="idModifier" 
+									   value="Modifier" 
+									   actionListener="#{salarieEntretiensFormBB.modifObj}"
+									   disabled="#{salarieEntretiensFormBB.disableButton or salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+					<ice:commandButton id ="idSupprimer" 
+									   value="Supprimer" 
+									   actionListener="#{salarieEntretiensFormBB.removeObj}"
+									   disabled="#{salarieEntretiensFormBB.disableButton or salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+			
+			<ice:dataTable value="#{salarieEntretiensFormBB.objectifsAnneeNListTemp}" 
+				var="item"
+				rendered="#{not empty salarieEntretiensFormBB.objectifsAnneeNListTemp}"
+				id="idDatatableObjEditable" 
+				columnWidths="267px,132px,267px,155px">
+			
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Intitulés" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNList}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;" value="#{item.intitule}" />
+				</ice:column>
+				
+				
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Délais" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNList}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;" value="#{item.delai}" />
+				</ice:column>
+									
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Moyens spécifiques / Critères d'évaluation" rendered="#{empty salarieEntretiensFormBB.objectifsAnneeNList}"/>
+					</f:facet>
+					<ice:inputText style="width: 90%;" value="#{item.moyen}" />
+				</ice:column>
+				
+				<ice:column>
+					<ice:commandButton id ="idAjouter" 
+									   value="Enregistrer" 
+									   actionListener="#{salarieEntretiensFormBB.addObj}"
+									   disabled="#{salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+					<ice:commandButton id ="idAnnuler" 
+									   value="Annuler" 
+									   action="#{salarieEntretiensFormBB.cancelObj}"
+									   disabled="#{salarieEntretiensFormBB.signe}">
+					</ice:commandButton>
+				</ice:column>
+				
+			</ice:dataTable>
+				
+			<br />
+			<br />
+				 
+			<ice:panelGrid style="width: 100%" columns="1">
+				<ice:outputLabel value="Compétences à améliorer" />
+				<h:inputTextarea rows="5"
+					style="width: 99%;;color:black;"
+					value="#{salarieEntretiensFormBB.competence}" 
+					id="idCompetencesAmeliorer" tabindex="13" partialSubmit="true"
+					disabled="#{salarieEntretiensFormBB.signe}" />
+			</ice:panelGrid>
+			
+			<ice:panelGrid style="width: 100%" columns="1">
+				<ice:panelGrid style="width: 100%" columns="2" columnClasses="tdFormation, tdDomaineFormation">
+					<ice:outputLabel value="Besoins en formation " />
+					<ice:outputLabel value="Domaine de formation" />
+					<ice:inputTextarea rows="1" style="width: 98%;color:black;"
+						value="#{salarieEntretiensFormBB.formations}" 
+						id="idFormation"
+						valueChangeListener="#{salarieEntretiensFormBB.majFormations}"
+						onkeyup="iceSubmitPartial(form,this,event);"
+						tabindex="14" 
+						immediate="true"
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					<ice:selectOneMenu id="idDomainesFormations" tabindex="15"
+						partialSubmit="true"
+						immediate="true"
+						value="#{salarieEntretiensFormBB.domaineFormation}"
+						style="overflow: auto;"
+						disabled="#{salarieEntretiensFormBB.signe or salarieEntretiensFormBB.disabledDomaine}" >
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems
+							value="#{salarieEntretiensFormBB.domaineFormationList}" />
+					</ice:selectOneMenu>
+					<ice:inputTextarea rows="1" style="width: 98%;color:black;"
+						value="#{salarieEntretiensFormBB.formations2}" 
+						id="idFormation2"
+						valueChangeListener="#{salarieEntretiensFormBB.majFormations}"
+						onkeyup="iceSubmitPartial(form,this,event);"
+						tabindex="16" 
+						requiredMessage="#{msg.required}" 
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					<ice:selectOneMenu id="idDomainesFormations2" tabindex="17"
+						partialSubmit="true"
+						value="#{salarieEntretiensFormBB.domaineFormation2}"
+						style="overflow: auto;"
+						disabled="#{salarieEntretiensFormBB.signe or salarieEntretiensFormBB.disabledDomaine2}" >
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems
+							value="#{salarieEntretiensFormBB.domaineFormationList}" />
+					</ice:selectOneMenu>
+					<ice:inputTextarea rows="1" style="width: 98%;color:black;"
+						value="#{salarieEntretiensFormBB.formations3}" 
+						id="idFormation3"
+						valueChangeListener="#{salarieEntretiensFormBB.majFormations}"
+						onkeyup="iceSubmitPartial(form,this,event);"
+						tabindex="18" 
+						requiredMessage="#{msg.required}" 
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					<ice:selectOneMenu id="idDomainesFormations3" tabindex="19"
+						partialSubmit="true"
+						value="#{salarieEntretiensFormBB.domaineFormation3}"
+						style="overflow: auto;"
+						disabled="#{salarieEntretiensFormBB.signe or salarieEntretiensFormBB.disabledDomaine3}" >
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems
+							value="#{salarieEntretiensFormBB.domaineFormationList}" />
+					</ice:selectOneMenu>
+					<ice:inputTextarea rows="1" style="width: 98%;color:black;"
+						value="#{salarieEntretiensFormBB.formations4}" 
+						id="idFormation4"
+						valueChangeListener="#{salarieEntretiensFormBB.majFormations}"
+						onkeyup="iceSubmitPartial(form,this,event);"
+						tabindex="20" 
+						requiredMessage="#{msg.required}" 
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					<ice:selectOneMenu id="idDomainesFormations4" tabindex="21"
+						partialSubmit="true"
+						value="#{salarieEntretiensFormBB.domaineFormation4}"
+						style="overflow: auto;"
+						disabled="#{salarieEntretiensFormBB.signe or salarieEntretiensFormBB.disabledDomaine4}" >
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems
+							value="#{salarieEntretiensFormBB.domaineFormationList}" />
+					</ice:selectOneMenu>
+					<ice:inputTextarea rows="1" style="width: 98%;color:black;"
+						value="#{salarieEntretiensFormBB.formations5}" 
+						id="idFormation5"
+						valueChangeListener="#{salarieEntretiensFormBB.majFormations}"
+						onkeyup="iceSubmitPartial(form,this,event);"
+						tabindex="22" 
+						requiredMessage="#{msg.required}" 
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					<ice:selectOneMenu id="idDomainesFormations5" tabindex="23"
+						partialSubmit="true"
+						value="#{salarieEntretiensFormBB.domaineFormation5}"
+						style="overflow: auto;"
+						disabled="#{salarieEntretiensFormBB.signe or salarieEntretiensFormBB.disabledDomaine5}" >
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems
+							value="#{salarieEntretiensFormBB.domaineFormationList}" />
+					</ice:selectOneMenu>
+				</ice:panelGrid> 
+				<ice:panelGrid style="width: 100%" columns="1">
+					<ice:outputLabel
+						value="Souhaits exprimés / Evolution souhaitée" />
+					<h:inputTextarea rows="5" style="width: 99%;color:black;"
+						value="#{salarieEntretiensFormBB.principaleConclusion}"
+						id="idSouhaitsExprimes" 
+						tabindex="24"
+						requiredMessage="#{msg.required}" 
+						partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+					
+				</ice:panelGrid> 
+				
+				<ice:panelGrid style="width: 100%" columns="1">
+					<ice:outputLabel value="Décision d'évolution" />
+					<h:inputTextarea rows="5" style="width: 99%;color:black;"
+						value="#{salarieEntretiensFormBB.evolutionPerso}"
+						id="idEvolutionPersonnelle" tabindex="29" partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+				</ice:panelGrid> 
+			</ice:panelGrid> 
+			</fieldset>
+			<fieldset style="border: 1px solid; width: 100%;">
+				<ice:panelGrid style="width: 100%" columns="1">
+				<ice:outputLabel value="Synthèse de l'entretien" />
+					<h:inputTextarea rows="5" style="width: 99%;color:black;"
+						value="#{salarieEntretiensFormBB.synthese}" id="idSynthese"
+						tabindex="25" requiredMessage="#{msg.required}" partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" />
+				<ice:panelGrid style="width: 100%" columns="2" columnClasses="tdProfilSalarie, tdProfilMetier">
+					<ice:outputLabel value="Modification du profil de poste" />
+					<ice:selectOneRadio id="SlctMP"
+						value="#{salarieEntretiensFormBB.modifProfil}" partialSubmit="true"
+						disabled="#{salarieEntretiensFormBB.signe}" >
+						<f:selectItem itemLabel="Oui" itemValue="Oui" />
+						<f:selectItem itemLabel="Non" itemValue="Non" />
+			
+					</ice:selectOneRadio>
+					
+					<ice:outputLabel value="Compte rendu signé" />
+					<ice:selectOneRadio id="SlctCR"
+						value="#{salarieEntretiensFormBB.crSigne}" partialSubmit="true"
+						immediate="true" >
+						<f:selectItem itemLabel="Oui" itemValue="Oui" />
+						<f:selectItem itemLabel="Non" itemValue="Non" />
+			
+					</ice:selectOneRadio>
+					<ice:outputLabel value="" rendered="#{salarieEntretiensFormBB.signe}"/>
+					<ice:outputText value="Ce document n'est plus modifiable - pour le réactiver cliquer sur Non" 
+									rendered="#{salarieEntretiensFormBB.signe}" style="color:black;font-weight:bold;"/>
+			
+				</ice:panelGrid> 
+				<ice:panelGrid style="width: 100%" colums="2">
+					<ice:outputLabel value="Justificatif" />
+					<ice:panelGroup>
+						<ice:inputFile id="inputFileNameEntretien" width="500"
+							autoUpload="true"
+							progressListener="#{salarieEntretiensFormBB.fileUploadProgressEntretien}"
+							actionListener="#{salarieEntretiensFormBB.uploadFileEntretien}"
+							uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieAbsencesFormBB.idSalarie}/entretien/"
+							disabled="#{salarieEntretiensFormBB.signe}" />
+						<ice:outputProgress value="#{salarieEntretiensFormBB.fileProgressEntretien}"
+							styleClass="uploadProgressBar" />
+						<br/>
+						<h:message for="inputFileNameEntretien" errorStyle="color: red"/>
+
+						<ice:dataTable width="350px"
+							value="#{salarieEntretiensFormBB.fileListEntretienTemp}" var="file"
+							rendered="#{not empty salarieEntretiensFormBB.fileListEntretienTemp}">
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputLabel value="Nom du fichier" />
+								</f:facet>
+								<ice:panelGrid rendered="#{not file.fileError}">
+									<!-- <a id="lien" href="#{salarieEntretiensFormBB.url}#{file.fileInfo.fileName}" target="_blank">
+										<ice:outputText value="#{file.fileInfo.fileName}" />
+									</a> -->
+									<ice:commandLink actionListener="#{salarieEntretiensFormBB.download}"
+													 style="text-decoration: underline;" immediate="true">
+										<ice:outputText value="#{file.fileInfo.fileName}" />
+									</ice:commandLink>
+								</ice:panelGrid>
+								<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+									style="color: red" 
+									rendered="#{file.fileError}"/>
+							</ice:column>
+							<ice:column rendered="#{not salarieEntretiensFormBB.signe}" >
+								<f:facet name="header">
+									<ice:outputLabel value="Action" />
+								</f:facet>
+								<ice:commandLink value="Supprimer"
+									onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+									actionListener="#{salarieEntretiensFormBB.removeUploadedFileEntretienTemp}"
+									style="text-decoration: underline; color: red;">
+								</ice:commandLink>
+							</ice:column>
+						</ice:dataTable>
+					</ice:panelGroup>
+					<ice:panelGroup>
+						<ice:commandButton id="modalPnlValiderEntretien" type="submit"
+							value="Valider"
+							actionListener="#{salarieEntretiensFormBB.saveOrUpdateSalarieEntretien}"
+							disabled="#{salarieEntretiensFormBB.signe}" />
+						<ice:commandButton id="modalPnlCloseEntretien" type="submit"
+							value="Quitter"
+							actionListener="#{salarieEntretiensFormBB.toggleModal}"
+							immediate="true" />
+					</ice:panelGroup>
+				</ice:panelGrid>
+			</ice:panelGrid>
+		</fieldset>
+	</ice:panelGrid>
+</ice:panelGrid>
+
+<ice:panelPopup id="modalDelFileEnt" draggable="true" rendered="true"
+		visible="#{salarieEntretiensFormBB.modalRenderedDelFile}"
+		style="position:absolute;width:285px;height:auto;top:450px;left:350px;" 
+		autoCentre="true"
+		positionOnLoadOnly="true" >
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+
+			<br />
+			<ice:commandButton id="delFileEnt" value="oui"
+				actionListener="#{salarieEntretiensFormBB.removeUploadedFileEntretienTemp}" />
+			<ice:commandButton id="cancelDelFileEnt" value="non"
+				actionListener="#{salarieEntretiensFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+
+</html>

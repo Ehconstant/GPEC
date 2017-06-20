@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="PersonneACharge" table="PERSONNE_A_CHARGE">
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			column="ID_PERSONNE_A_CHARGE"
+			name="Id"
+			type="integer"
+		>
+					<generator class="identity" />
+		</id>
+		<property
+			column="NOM"
+			length="50"
+			name="Nom"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="PRENOM"
+			length="50"
+			name="Prenom"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="LIEN_PARENTE"
+			length="50"
+			name="LienParente"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="DATE_NAISSANCE"
+			length="10"
+			name="DateNaissance"
+			not-null="false"
+			type="date"
+		 />
+		 <many-to-one
+			name="Salarie"
+			column="ID_SALARIE"
+			class="Salarie"
+			not-null="false"
+		>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

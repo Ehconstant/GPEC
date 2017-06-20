@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class name="LienRemunerationRevenuComplementaire" table="LIEN_REMUNERATION_REVENU_COMPLEMENTAIRE">
+		<id
+			column="ID_LIEN_REMUNERATION_REVENU_COMPLEMENTAIRE"
+			name="IdLienRemunerationRevenuComplementaire"
+			type="integer"
+		>
+			<generator class="identity" />
+		</id>
+		<property
+			column="MONTANT"
+			length="10"
+			name="Montant"
+			not-null="false"
+			type="double"
+		 />
+		<property
+			column="COMMENTAIRE"
+			name="Commentaire"
+			not-null="false"
+			type="text"
+		 />
+		<property
+			column="ACTUALISATION"
+			length="10"
+			name="Actualisation"
+			not-null="false"
+			type="double"
+		 />
+		 <property
+			name="RemonteNPrec"
+			column="REMONTE_N_PREC"
+			type="boolean"
+			not-null="false"
+			length="1"
+		/>
+
+		<many-to-one
+			class="Remuneration"
+			name="Remuneration"
+			not-null="true"
+		>
+			<column name="ID_REMUNERATION" />
+		</many-to-one>
+		<many-to-one
+			class="RevenuComplementaire"
+			name="RevenuComplementaire"
+			not-null="true"
+		>
+			<column name="ID_REVENU_COMPLEMENTAIRE" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

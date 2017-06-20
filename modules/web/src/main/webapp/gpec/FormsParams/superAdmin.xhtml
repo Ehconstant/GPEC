@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:c="http://java.sun.com/jstl/core">
+
+    <ui:define name="content">
+		<head>
+			<link href="../../style/overrideTab/override.css" rel="stylesheet"
+				type="text/css" />
+			<link href="../../style/tipsy/tipsy.css" rel="stylesheet"
+				type="text/css" />
+		</head>
+		
+		<h:form id="idForm">
+		
+			<ice:panelTabSet immediate="false" partialSubmit="false"
+						id="idSuperAdminTabSet" tabChangeListener="#{adminFormBB.processTabChange}">
+						
+				<ice:panelTab label="Demandes version d'essai" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<br/><br/>
+					
+					<ice:outputLabel value="Liste des demandes en attente de validation" />
+					
+					<br/><br/>
+						
+					<ice:outputText value="Aucune demande en attente." rendered="#{empty adminFormBB.demandesVersionEssaiList}" />
+					<ice:dataTable id="dataTable" value="#{adminFormBB.demandesVersionEssaiList}" 
+												  var="item" 
+												  rendered="#{not empty adminFormBB.demandesVersionEssaiList}">
+		            	<ice:column>
+		            		<f:facet name="header">
+				        		<ice:outputText value="Nom entreprise"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.nomEntreprise}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Nom admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.nom}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				       		<f:facet name="header">
+				        		<ice:outputText value="Prenom Admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.prenom}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				       		<f:facet name="header">
+				        		<ice:outputText value="Telephone admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.telephone}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Mail admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.login}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Action"/>
+				        	</f:facet>
+	
+							<ice:commandButton value="Valider" 
+								   actionListener="#{adminFormBB.validerDemande}"
+								   panelConfirmation="createConfirmPanel" />
+						
+							<ice:commandButton id="idSupprimer" 
+								   value="Supprimer" 
+								   actionListener="#{adminFormBB.supprimerDemande}"
+						   		   panelConfirmation="deleteConfirmPanel">
+							</ice:commandButton>
+	
+							<ice:panelConfirmation id="deleteConfirmPanel" 
+												   message="Êtes-vous sûr de vouloir supprimer cette demande ? Le compte ne sera pas créé et la demande définitivement supprimée."
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+				                    			   
+							<ice:panelConfirmation id="createConfirmPanel" 
+												   message="Êtes-vous sûr de vouloir valider cette demande ? Le compte sera créé et un mail avec les identifiants sera envoyée à l'administrateur."
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+				        </ice:column>
+					
+					</ice:dataTable>
+						
+				</ice:panelTab>
+				
+				<ice:panelTab label="Entreprises en version d'essai" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<br/><br/>
+					
+					<ice:outputLabel value="Liste des entreprises en version d'essai" />
+					
+					<br/><br/>
+						
+					<ice:outputText value="Aucune entreprise en version d'essai actuellement." rendered="#{empty adminFormBB.versionEssaiList}"/>
+					<ice:dataTable id="dataTable" value="#{adminFormBB.versionEssaiList}" 
+												  var="item" 
+												  rendered="#{not empty adminFormBB.versionEssaiList}">
+		            	<ice:column>
+		            		<f:facet name="header">
+				        		<ice:outputText value="Nom entreprise"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.nomEntreprise}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Nom admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.nom}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				       		<f:facet name="header">
+				        		<ice:outputText value="Prenom admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.prenom}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				       		<f:facet name="header">
+				        		<ice:outputText value="Telephone admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.telephone}" />
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Mail admin"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.login}" />
+				        </ice:column>
+				        
+				       	<ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Date de fin période d'essai"/>
+				        	</f:facet>
+							<ice:outputText value="#{item.finPeriodeEssai}"
+								rendered="#{not item.periodeEssaiTerminee}">
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="#{dateSelect.timeZone}" />
+							</ice:outputText>
+							<ice:outputText value="Validité dépassée" 
+								style="color: red;font-weight:bold;"
+								rendered="#{item.periodeEssaiTerminee}"/>
+				        </ice:column>
+				        
+				        <ice:column>
+				        	<f:facet name="header">
+				        		<ice:outputText value="Action"/>
+				        	</f:facet>
+	
+							<ice:commandButton value="Continuer avec les données saisies" 
+								   actionListener="#{adminFormBB.validerEssaiAvecDonnees}"
+								   panelConfirmation="continueConfirmPanel" />
+								   
+							<ice:commandButton value="Continuer avec base vierge" 
+								   actionListener="#{adminFormBB.validerEssaiSansDonnees}"
+								   panelConfirmation="continueNoDataConfirmPanel" />
+						
+							<ice:commandButton value="Arrêter définitivement" 
+								   actionListener="#{adminFormBB.supprimerEssai}"
+						   		   panelConfirmation="stopConfirmPanel" />
+	
+							<ice:panelConfirmation id="continueConfirmPanel" 
+												   message="Êtes-vous sûr de vouloir transformer l'essai en compte définitif ? Le compte sera transformé en vrai compte et les données déjà saisies conservées."
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+				                    			   
+							<ice:panelConfirmation id="continueNoDataConfirmPanel" 
+												   message="Êtes-vous sûr de vouloir transformer l'essai en compte définitif sans données ? Le compte sera transformé en vrai compte mais les données déjà saisies seront supprimées."
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+				                    			   
+							<ice:panelConfirmation id="stopConfirmPanel" 
+												   message="Êtes-vous sûr de vouloir stopper l'essai ? Le compte et les données saisies seront définitivement supprimés."
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+				        </ice:column>
+					
+					</ice:dataTable>
+						
+				</ice:panelTab>			
+						
+				<ice:panelTab label="Création groupe" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<br/><br/>
+					
+					<h:panelGrid columns="2">
+						<ice:outputText value="Nom du groupe*" />
+						<ice:panelGroup>
+							<h:inputText value="#{adminFormBB.nomGroupe}" 
+								style="width:200px;"
+								partialSubmit="false"
+								id="idGroupe" 
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idGroupe" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+						
+						<ice:outputText value="Nom admin*" />
+						<ice:panelGroup>
+							<h:inputText value="#{adminFormBB.nomAdmin}" 
+								style="width:200px;"
+								partialSubmit="false"
+								id="idNomAdmin" 
+								required=""
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idNomAdmin" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+						
+						<ice:outputText value="Prenom admin*" />
+						<ice:panelGroup>
+							<h:inputText value="#{adminFormBB.prenomAdmin}" 
+								style="width:200px;"
+								partialSubmit="false"
+								id="idPrenomAdmin" 
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idPrenomAdmin" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+						
+						<ice:outputText value="Téléphone admin*" />
+						<ice:panelGroup>
+							<h:inputText value="#{adminFormBB.telephoneAdmin}" 
+								style="width:200px;"
+								partialSubmit="false"
+								id="idTelephoneAdmin" 
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idTelephoneAdmin" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+						
+						<ice:outputText value="Email admin*" />
+						<ice:panelGroup>
+							<h:inputText value="#{adminFormBB.mailAdmin}" 
+								style="width:200px;"
+								partialSubmit="false"
+								id="idMailAdmin" 
+								onkeypress="return noSubmitOnEnter(event);" />
+							<h:message for="idMailAdmin" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+					</h:panelGrid>
+					
+					<br/>
+					
+					<!-- <ice:outputText value="Version d'essai" />
+					<ice:selectBooleanCheckbox value="#{adminFormBB.essai}"
+	          				style="margin-left: 10px;"
+	          				id="essai">
+	          		</ice:selectBooleanCheckbox>
+	                <br/>
+	                <br/> -->
+	                
+	                <ice:outputText value="Importer une base 2.0" />
+					<ice:selectBooleanCheckbox value="#{adminFormBB.importBase}"
+	          				style="margin-left: 10px;"
+	          				valueChangeListener="#{adminFormBB.displayFileList}"
+	          				id="import"
+	          				partialSubmit="true">
+	          		</ice:selectBooleanCheckbox>
+	                <br/>
+	                <br/>
+	                
+	              <!--  <ice:panelGroup rendered="#{not empty adminFormBB.fileListAdmin and adminFormBB.importBase}">
+		                <ice:outputText value="Import spécifique"/>
+						<ice:selectBooleanCheckbox value="#{adminFormBB.specificImportWithSplitByEntreprise}"
+		          				style="margin-left: 10px;"
+		          				valueChangeListener="#{adminFormBB.displayFileList}"
+		          				id="specificImport"
+		          				partialSubmit="true">
+		          		</ice:selectBooleanCheckbox>
+		          		<img alt="(?)" class="tipsy"
+							src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+							title="L'import spécifique va découper la base de données importée afin de créer un groupe par entreprise saisie dans l'application. Chaque entreprise deviendra donc indépendante des autres."
+							width="20px" 
+							height="20px" 
+							align="center" /><br/>
+						<ice:outputLabel value="Attention : Les identifiants des administrateurs des nouveaux groupes seront tous envoyés à l'administrateur du groupe initial (10 entreprises = 10 mails). Celui-ci devra ensuite transmettre ces mails aux nouveaux administrateurs qui devront modifier leur login pour mettre leurs propres adresses mail." rendered="#{adminFormBB.specificImportWithSplitByEntreprise}" />
+		                <br/>
+		                <br/>
+	                </ice:panelGroup> -->
+				
+					<ice:outputLabel value="Liste des fichiers pouvant être importés" rendered="#{adminFormBB.importBase}"/><br/>
+					<ice:outputLabel value="Aucun fichier n'est présent dans le répertoire de stockage des bases 2.0 à importer."
+				    				style="color: red;padding-left:20px;"
+				    				rendered="#{empty adminFormBB.fileListAdmin and adminFormBB.importBase}"/>
+					<ice:panelGroup>
+						<ice:dataTable width="350px"
+							value="#{adminFormBB.fileListAdmin}" var="file"
+							rendered="#{not empty adminFormBB.fileListAdmin and adminFormBB.importBase}">
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputLabel value="Nom du dossier" /> 
+								</f:facet>
+								<ice:outputText value="#{file.name}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputLabel value="Action" />
+								</f:facet>
+								<ice:commandLink 
+									value="Créer à partir de ce fichier"
+									actionListener="#{adminFormBB.importe}" 
+									style="text-decoration: underline;"/>
+							</ice:column>
+						</ice:dataTable>
+					</ice:panelGroup>
+					<br/>
+					
+					<ice:commandButton value="Créer" action="#{adminFormBB.creer}" disabled="#{adminFormBB.importBase}"/>
+					
+					<ice:outputLabel value="Le groupe a bien été créé."
+				    				style="color: green;padding-left:20px;"
+				    				rendered="#{adminFormBB.displayCreationOk}"/>
+				    				
+				    <ice:outputLabel value="Erreur lors de la création du groupe."
+				    				style="color: red;padding-left:20px;"
+				    				rendered="#{adminFormBB.displayCreationError}"/>
+					
+				</ice:panelTab>
+				
+				<ice:panelTab label="Extraction données" style="width:30px;height:15px;" immediate="true" partialSubmit="true">
+					<ice:panelGrid columns="2" >
+						<ice:outputLabel value="Nom du groupe" /> 
+						<ice:panelGroup>
+							<ice:selectOneMenu id="idGroupeList" 
+								style="overflow: auto;"
+								value="#{adminFormBB.idGroupeSelected}"
+								partialSubmit="true" valueChangeListener="#{adminFormBB.onGroupChanged}">
+								<f:selectItem itemLabel="" itemValue="-1" />
+								<f:selectItems value="#{adminFormBB.groupeList}" />
+							</ice:selectOneMenu>
+	
+							<h:message for="idGroupeList" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+				
+						<ice:commandButton value="Extraction" action="#{adminFormBB.extract}"/>
+						
+						<ice:dataTable width="350px"
+							value="#{adminFormBB.extractionFileList}" var="file"
+							rendered="#{not empty adminFormBB.extractionFileList}">
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputLabel value="Nom du fichier" /> 
+								</f:facet>
+								<ice:outputText value="#{file.name}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputLabel value="Action" />
+								</f:facet>
+								<ice:commandLink actionListener="#{adminFormBB.download}"
+											 style="text-decoration: underline;">
+									<ice:outputText value="Télécharger" />
+								</ice:commandLink>
+							</ice:column>
+						</ice:dataTable>
+					</ice:panelGrid>
+				</ice:panelTab>
+				
+				<ice:panelTab label="Import données" style="width:30px;height:15px;" immediate="true" partialSubmit="true">
+					<ice:outputLabel value="Fichier à importer" style="margin:5px 0px; display:block;"/> 
+					<ice:panelGroup>
+						<ice:inputFile id="importUpload" label="Importer" actionListener="#{adminFormBB.importAction}" />
+
+						<h:message for="importUpload" infoStyle="color: darkgreen" errorStyle="color: red"></h:message>
+					</ice:panelGroup>
+				</ice:panelTab>
+				
+				<ice:panelTab label="Suppression données groupe" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<ice:panelGrid columns="2" >
+						<ice:outputLabel value="Nom du groupe" /> 
+						<ice:panelGroup>
+							<ice:selectOneMenu id="idGroupeList2" 
+								style="overflow: auto;"
+								value="#{adminFormBB.idGroupeSelected}"
+								partialSubmit="true" valueChangeListener="#{adminFormBB.onGroupChanged}">
+								<f:selectItem itemLabel="" itemValue="-1" />
+								<f:selectItems value="#{adminFormBB.groupeList}" />
+							</ice:selectOneMenu>
+	
+							<h:message for="idGroupeList2" errorStyle="color: red"></h:message>
+						</ice:panelGroup>
+				
+						<ice:commandButton value="Suppression" disabled="#{not (adminFormBB.idGroupeSelected > 0)}" action="#{adminFormBB.delete}" 
+								panelConfirmation="deleteConfirmPanelGroupe"/>
+						
+					</ice:panelGrid>
+					<ice:outputLabel value="Le groupe a bien été supprimé."
+			    				style="color: green;padding-left:20px;"
+			    				rendered="#{adminFormBB.displaySuppressionOk}"/>
+			    				
+			    	<ice:outputLabel value="Erreur lors de la suppression du groupe."
+			    				style="color: red;padding-left:20px;"
+			    				rendered="#{adminFormBB.displaySuppressionError}"/>
+			    				
+			    	<ice:panelConfirmation id="deleteConfirmPanelGroupe"
+								message="Êtes-vous sûr de vouloir supprimer ce groupe ?"
+								acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+						
+				</ice:panelTab>
+				
+				<ice:panelTab label="Gestion utilisateurs entreprises" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<ice:outputLabel value="Nom du groupe" /> 
+					<ice:panelGroup>
+						<ice:selectOneMenu id="idGroupeListUser" 
+							style="overflow: auto;"
+							value="#{adminFormBB.idGroupeSelectedUser}"
+							partialSubmit="true" valueChangeListener="#{adminFormBB.onGroupChangedUser}">
+							<f:selectItem itemLabel="" itemValue="-1" />
+							<f:selectItems value="#{adminFormBB.groupeList}" />
+						</ice:selectOneMenu>
+	
+						<h:message for="idGroupeList3" errorStyle="color: red"></h:message>
+					</ice:panelGroup>	
+					
+						
+					<br />
+					<ice:commandButton id="idAjout" value="Ajouter " 
+									   action="#{adminFormBB.initUserForm}"
+									   rendered="#{adminFormBB.idGroupeSelectedUser != -1}">	     
+					</ice:commandButton>
+					
+					<br />
+					<br />
+				
+					<ice:dataTable id="dataTable" value="#{adminFormBB.userList}" 
+												  var="item" 
+												  rendered="#{not empty adminFormBB.userList and adminFormBB.idGroupeSelectedUser != -1}">
+						<f:facet name="header">
+					        <ice:columnGroup >
+					            <ice:headerRow>
+					            	<ice:column rowspan="2" >
+							        	<ice:outputText value="Identifiant"/>
+							        </ice:column>
+							        
+							        <ice:column colspan="5" >
+							        	<ice:outputText value="Droits d'accès aux onglets"/>
+							        	<img alt="(?)" class="tipsy"
+											src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+											title="Permet de définir les onglets auxquels l'utilisateur aura accès."
+											width="12px" 
+											height="12px" 
+											align="center" />
+							        </ice:column>
+							        
+							        <ice:column rowspan="2" >
+							        	<ice:outputText value="Administrateur"/>
+							        	<img alt="(?)" class="tipsy"
+											src="#{facesContext.externalContext.requestContextPath}/style/tipsy/aide.png"
+											title="Un administrateur est un utilisateur ayant accès à la partie de gestion des utilisateurs."
+											width="12px" 
+											height="12px" 
+											align="center" />
+							        </ice:column>
+							        
+							        <ice:column rowspan="2" >
+							        	<ice:outputText value="Action"/>
+							        </ice:column>
+							        
+							    </ice:headerRow>
+				                   
+				                <ice:headerRow>
+				              		<ice:column >
+							        	<ice:outputText value="Evènements"/>
+							        </ice:column>
+							        
+							    	<ice:column >
+							        	<ice:outputText value="Contrats de travail"/>
+							        </ice:column>
+							        
+							        <ice:column >
+							        	<ice:outputText value="Rémunérations"/>
+							        </ice:column>
+							        
+							        <ice:column >
+							        	<ice:outputText value="Fiches de poste"/>
+							        </ice:column>
+							        
+							        <ice:column >
+							        	<ice:outputText value="Entretiens"/>
+							        </ice:column>
+							        						        
+							    </ice:headerRow>
+				                 
+				           </ice:columnGroup>
+					           
+					    </f:facet> 
+					    
+						<ice:column>
+							<ice:outputText value="#{item.login}" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.evenement}" 
+								id="eve"
+								onclick="return false" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.contratTravail}" 
+								id="ct"
+								onclick="return false" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.remuneration}" 
+								id="remu"
+								onclick="return false" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.ficheDePoste}" 
+								id="fdp"
+								onclick="return false" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.entretien}" 
+								id="ent"
+								onclick="return false" />
+						</ice:column>
+						
+						<ice:column style="text-align:center;">
+							<ice:selectBooleanCheckbox
+								style="text-align:center;"
+								value="#{item.admin}" 
+								id="admin"
+								onclick="return false" />
+						</ice:column>
+						 
+						<ice:column>
+					
+							<ice:commandButton value="Modifier" 
+											   actionListener="#{adminFormBB.modif}" />
+									
+							<ice:commandButton id="idSupprimer" 
+											   value="Supprimer" 
+											   actionListener="#{adminFormBB.supprimer}"
+									   		   panelConfirmation="deleteConfirmPanelUser">
+							</ice:commandButton>
+				
+							<!-- Panel de confirmation de suppression -->
+							<ice:panelConfirmation id="deleteConfirmPanelUser" 
+												   message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+									
+						</ice:column>
+						
+					</ice:dataTable>
+						
+				</ice:panelTab>
+				
+				<ice:panelTab label="Gestion superAdmin" style="width:30px;height:15px;"
+						immediate="true" partialSubmit="true">
+						
+					<br />
+					<ice:commandButton id="idAjoutSA" value="Ajouter " 
+									   action="#{adminFormBB.initSuperAdminForm}"/>
+					
+					<br />
+					<br />
+				
+					<ice:dataTable id="dataTableSA" value="#{adminFormBB.superAdminList}" 
+												  var="item" 
+												  rendered="#{not empty adminFormBB.superAdminList}">
+						<f:facet name="header">
+					        <ice:columnGroup >
+					            <ice:headerRow>
+					            	<ice:column>
+							        	<ice:outputText value="Identifiant"/>
+							        </ice:column>
+							        
+							        <ice:column>
+							        	<ice:outputText value="Nom"/>
+							        </ice:column>
+							        
+							        <ice:column>
+							        	<ice:outputText value="Prénom"/>
+							        </ice:column>
+							        
+							        <ice:column>
+							        	<ice:outputText value="Action"/>
+							        </ice:column>
+							    </ice:headerRow>
+				           </ice:columnGroup>
+					           
+					    </f:facet> 
+					    
+						<ice:column>
+							<ice:outputText value="#{item.login}" />
+						</ice:column>
+						
+						<ice:column>
+							<ice:outputText value="#{item.nom}" />
+						</ice:column>
+						
+						<ice:column>
+							<ice:outputText value="#{item.prenom}" />
+						</ice:column>
+						
+						<ice:column>
+					
+							<ice:commandButton value="Modifier" 
+											   actionListener="#{adminFormBB.modifSuperAdmin}" />
+									
+							<ice:commandButton id="idSupprimerSA" 
+											   value="Supprimer" 
+											   actionListener="#{adminFormBB.supprimer}"
+									   		   panelConfirmation="deleteConfirmPanelUserSA">
+							</ice:commandButton>
+				
+							<!-- Panel de confirmation de suppression -->
+							<ice:panelConfirmation id="deleteConfirmPanelUserSA" 
+												   message="Êtes-vous sûr de vouloir supprimer ce super-administrateur ?"
+				                    			   acceptLabel="Oui" 
+				                    			   cancelLabel="Non"
+				                    			   title="Confirmer"/>
+									
+						</ice:column>
+						
+					</ice:dataTable>
+						
+				</ice:panelTab>
+				
+			</ice:panelTabSet>
+			
+	 		<ice:panelPopup id="modalPnlPopUser" draggable="true" modal="true"
+				rendered="true" visible="#{adminFormBB.modalRendered}"
+				styleClass="corePopup">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<h:panelGroup rendered="#{adminFormBB.superAdminForm}">
+							<ice:outputText value="Saisie d'un superAdmin" styleClass="popupHeaderText" />
+						</h:panelGroup>
+						<h:panelGroup rendered="#{not adminFormBB.superAdminForm}">
+							<ice:outputText value="Saisie d'un utilisateur" styleClass="popupHeaderText" />
+						</h:panelGroup>
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<c:if test="#{adminFormBB.modalRendered}">
+						<ui:include src="/gpec/FormsParams/adminForm.xhtml" />
+					</c:if>
+				</f:facet>
+			</ice:panelPopup>
+		
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

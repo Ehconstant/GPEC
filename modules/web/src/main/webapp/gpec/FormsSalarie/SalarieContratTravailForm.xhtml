@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+<h3>Formulaire de saisie d'un contrat de travail</h3>
+<ice:panelGrid columns="2" id="idPanelGridFormContratTravail">
+
+	<ice:outputLabel value="Type de contrat" />
+	<ice:panelGroup>
+		<ice:selectOneMenu id="contratContratTravailList"
+			value="#{salarieContratTravailFormBB.idTypeContratSelected}"
+			partialSubmit="true" 
+			immediate="true"
+			style="overflow: auto;" 
+			valueChangeListener="#{salarieContratTravailFormBB.displayRenouvellementCDD}">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieContratTravailFormBB.typeContratList}" />
+		</ice:selectOneMenu>
+		<h:message for="contratContratTravailList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Avenant au contrat ?" />
+	<ice:selectBooleanCheckbox
+		value="#{salarieContratTravailFormBB.renouvellementCDD}" 
+		id="renouvellement"
+		partialSubmit="true" 
+		immediate="true" />
+
+	<ice:outputLabel value="Métier" />
+	<ice:panelGroup id="idPanelGroupMetier">
+		<ice:selectOneMenu id="metierContratTravailList"
+			value="#{salarieContratTravailFormBB.idMetierSelected}"
+			style="overflow: auto;" 
+			immediate="true"
+			partialSubmit="true">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieContratTravailFormBB.metierList}" />
+		</ice:selectOneMenu>
+		<h:message for="metierContratTravailList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Date de début du contrat de travail" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="debutContrat"
+			value="#{salarieContratTravailFormBB.debutContrat}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			converterMessage="#{msg.dateTimeConverter}" 
+			partialSubmit="true"
+			immediate="true">
+			<!-- requiredMessage="#{msg.required}"
+					required="true"-->
+			<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="debutContrat" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+		<ice:outputLabel value="Date de fin du contrat de travail" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="finContrat"
+			value="#{salarieContratTravailFormBB.finContrat}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			converterMessage="#{msg.dateTimeConverter}">
+			<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="finContrat" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Motif de rupture" />
+	<ice:panelGroup id="idPanelGroupMotifRupture">
+		<ice:selectOneMenu id="motifRuptureContratTravailList"
+				value="#{salarieContratTravailFormBB.idMotifRuptureSelected}"
+				style="overflow: auto;" 
+				partialSubmit="true" >
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems value="#{salarieContratTravailFormBB.motifRuptureList}" />
+		</ice:selectOneMenu>
+		<h:message for="motifRuptureContratTravailList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Justificatif" />
+	<ice:panelGroup>
+		<ice:inputFile id="inputFileNameContratTravail" width="500"
+			autoUpload="true"
+			progressListener="#{salarieContratTravailFormBB.fileUploadProgressContratTravail}"
+			actionListener="#{salarieContratTravailFormBB.uploadFileContratTravail}"
+			disabled="#{not empty salarieContratTravailFormBB.fileListContratTravailTemp}"
+			uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieContratTravailFormBB.idSalarie}/contrat/" />
+		<ice:outputProgress
+			value="#{salarieContratTravailFormBB.fileProgressContratTravail}"
+			styleClass="uploadProgressBar" />
+		<br/>
+		<h:message for="inputFileNameContratTravail" errorStyle="color: red"/>
+		<ice:dataTable width="350px"
+			value="#{salarieContratTravailFormBB.fileListContratTravailTemp}" var="file"
+			rendered="#{not empty salarieContratTravailFormBB.fileListContratTravailTemp}">
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Nom du fichier" />
+				</f:facet>
+				<ice:panelGrid rendered="#{not file.fileError}">
+<!-- 					<a id="lien"
+						href="#{salarieContratTravailFormBB.url}#{file.fileInfo.fileName}"
+						target="_blank"> <ice:outputText
+						value="#{file.fileInfo.fileName}" /> </a> -->
+					<ice:commandLink actionListener="#{salarieContratTravailFormBB.download}"
+									 style="text-decoration: underline;" immediate="true">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</ice:commandLink>
+				</ice:panelGrid>
+				<ice:outputLabel
+					value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible."
+					style="color: red" rendered="#{file.fileError}" />
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Action" />
+				</f:facet>
+				<ice:commandLink value="Supprimer"
+					onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+					actionListener="#{salarieContratTravailFormBB.removeUploadedFileContratTravailTemp}"
+					style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+
+	<ice:commandButton id="modalPnlValiderContratTravail" 
+		type="submit"
+		value="Valider"
+		actionListener="#{salarieContratTravailFormBB.saveOrUpdateSalarieContratTravail}" />
+
+	<ice:commandButton id="modalPnlCloseContratTravail" 
+		type="submit"
+		value="Quitter" 
+		actionListener="#{salarieContratTravailFormBB.toggleModal}"
+		immediate="true" />
+</ice:panelGrid>
+
+<ice:panelPopup id="modalDelFile" 
+		draggable="true" 
+		rendered="true"
+		visible="#{salarieContratTravailFormBB.modalRenderedDelFile}"
+		style="width:285px;height:auto;top:-250px;left:200px;"
+		autoCentre="true" 
+		positionOnLoadOnly="true">
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+			<br />
+			<ice:commandButton id="delFile" value="oui"
+				actionListener="#{salarieContratTravailFormBB.removeUploadedFileContratTravailTemp}" />
+			<ice:commandButton id="cancelDelFile" value="non"
+				actionListener="#{salarieContratTravailFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+</html>

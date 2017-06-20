@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Servicegenerique"
+		table="SERVICEGENERIQUE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_SERVICE_GENERIQUE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="NomServiceGenerique"
+			column="NOM_SERVICE_GENERIQUE"
+			type="text"
+			not-null="false"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

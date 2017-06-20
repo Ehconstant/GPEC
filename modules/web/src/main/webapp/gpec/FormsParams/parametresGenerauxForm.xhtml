@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:define name="content">
+		<h:form>
+			<h3>Paramètres Généraux</h3>
+			<br />
+			<ice:panelGrid columns="2">
+				<ice:outputLabel for="entrepriseListParamsG" value="Entreprise " />
+				<ice:panelGroup styleClass="selectionListBoxGroup">
+					<ice:selectOneMenu id="entrepriseListParamsG"
+						value="#{paramsGenerauxFormBB.idEntrepriseSelected}"
+						style="overflow: auto;" 
+						valueChangeListener="#{paramsGenerauxFormBB.changeParamsG}" 
+						partialSubmit="true">
+						<f:selectItem itemLabel="" itemValue="-1" />
+						<f:selectItems value="#{paramsGenerauxFormBB.entrepriseList}" />
+					</ice:selectOneMenu>
+					
+						
+				</ice:panelGroup>
+			</ice:panelGrid>
+			<br />
+			<h:message for="ageLegalRetraiteAnN" errorStyle="color: red"></h:message>
+			<br />
+			<ice:panelGrid columns="2" rendered="#{paramsGenerauxFormBB.idEntrepriseSelected >0}">
+				<ice:outputLabel value="Age légal de la retraite" />
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+					
+						<ice:outputLabel value="#{paramsGenerauxFormBB.anneeN}" style="padding-left: 32px;" />
+						<ice:outputLabel value="#{paramsGenerauxFormBB.anneeN1}" style="padding-left: 32px;" />
+						<ice:outputLabel value="#{paramsGenerauxFormBB.anneeN2}" style="padding-left: 32px;" />
+						
+							<ice:inputText immediate="true" 
+								style="width:130px;"
+								onchange="this.form.submit()" 
+								rendered="#{not paramsGenerauxFormBB.ageLegalRetraiteAnNError}"
+								onkeypress="return lockForInteger(event);"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								id="ageLegalRetraiteAnN" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText immediate="true" 
+								onchange="this.form.submit()" 
+								rendered="#{paramsGenerauxFormBB.ageLegalRetraiteAnNError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								id="ageLegalRetraiteAnN" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText immediate="true"
+								onchange="this.form.submit()" 
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.ageLegalRetraiteAnN1Error}"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								onkeypress="return lockForInteger(event);"
+								id="ageLegalRetraiteAnN1" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText immediate="true"
+								onchange="this.form.submit()" 
+								rendered="#{paramsGenerauxFormBB.ageLegalRetraiteAnN1Error}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								id="ageLegalRetraiteAnN1" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText immediate="true"
+								onchange="this.form.submit()" 
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.ageLegalRetraiteAnN2Error}"
+								onkeypress="return lockForInteger(event);"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								id="ageLegalRetraiteAnN2" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText immediate="true"
+								onchange="this.form.submit()" 
+								rendered="#{paramsGenerauxFormBB.ageLegalRetraiteAnN2Error}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								id="ageLegalRetraiteAnN2" 
+								value="#{paramsGenerauxFormBB.ageLegalRetraiteAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+							
+				<ice:outputLabel value=""/>
+				<ice:outputLabel value=""/>			
+				
+				<ice:outputLabel value="EFFECTIFS (HORS APPRENTI)" />
+				<ice:outputLabel value="" />
+								
+				<ice:outputLabel value="Effectif physique total" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText immediate="true" 
+								id="effectifPhysiqueAnN"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifPhysiqueAnNError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText immediate="true" 
+								id="effectifPhysiqueAnN"
+								rendered="#{paramsGenerauxFormBB.effectifPhysiqueAnNError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="effectifPhysiqueAnN1"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifPhysiqueAnN1Error}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifPhysiqueAnN1"
+								rendered="#{paramsGenerauxFormBB.effectifPhysiqueAnN1Error}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							
+							<ice:inputText  immediate="true"
+								id="effectifPhysiqueAnN2"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifPhysiqueAnN2Error}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifPhysiqueAnN2"
+								rendered="#{paramsGenerauxFormBB.effectifPhysiqueAnN2Error}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.effectifPhysiqueAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>								
+									
+				<!-- ice:outputLabel value="Effectif physique" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+						<ice:inputText value="#{paramsGenerauxFormBB.effectifPhysiqueAnN}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+						<ice:inputText value="#{paramsGenerauxFormBB.effectifPhysiqueAnN1}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+						<ice:inputText value="#{paramsGenerauxFormBB.effectifPhysiqueAnN2}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup-->
+									
+				<!-- ice:outputLabel value="Effectif au 31/12" /-->
+				<ice:outputLabel value="Effectif physique annuel moyen au 31.12" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="effectifMoyenAnN"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifMoyenAnNError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="effectifMoyenAnN"
+								rendered="#{paramsGenerauxFormBB.effectifMoyenAnNError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>	
+								
+							<ice:inputText  immediate="true"
+								id="effectifMoyenAnN1"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifMoyenAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifMoyenAnN1"
+								rendered="#{paramsGenerauxFormBB.effectifMoyenAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>	
+								
+							<ice:inputText  immediate="true"
+								id="effectifMoyenAnN2"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifMoyenAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifMoyenAnN2"
+								rendered="#{paramsGenerauxFormBB.effectifMoyenAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifMoyenAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				<ice:outputLabel value="Effectif ETP (équivalent temps plein)" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="effectifEtpAnN"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifEtpAnNError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="effectifEtpAnN"
+								rendered="#{paramsGenerauxFormBB.effectifEtpAnNError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>	
+								
+							<ice:inputText  immediate="true"
+								id="effectifEtpAnN1"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifEtpAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifEtpAnN1"
+								rendered="#{paramsGenerauxFormBB.effectifEtpAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>	
+								
+							<ice:inputText  immediate="true"
+								id="effectifEtpAnN2"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.effectifEtpAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="effectifEtpAnN2"
+								rendered="#{paramsGenerauxFormBB.effectifEtpAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.effectifEtpAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>	
+					</ice:panelGrid>
+				</ice:panelGroup>
+							
+				<ice:outputLabel value=""/>
+				<ice:outputLabel value=""/>
+							
+				<ice:outputLabel value="TEMPS DE TRAVAIL EN HEURES ET EN JOURS" />
+				<ice:outputLabel value="" />
+							
+				<ice:outputLabel value="Nombre d'heures de travail annuel théorique pour un salarie en ETP" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNHeuresSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnNHeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNHeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNHeuresSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnNHeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNHeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1HeuresSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN1HeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1HeuresSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2HeuresSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN2HeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2HeuresSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				<ice:outputLabel value="Nombre de jours de travail annuel théorique pour un salarié en ETP " style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNJoursSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnNJoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNJoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNJoursSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnNJoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNJoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1JoursSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN1JoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1JoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1JoursSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN1JoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1JoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2JoursSal"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN2JoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2JoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2JoursSal"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN2JoursSalError}"
+								onkeypress="return lockForInteger(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkInteger}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2JoursSal}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				<!-- ice:outputLabel value="Durée annuelle du travail en jours pour l'effectif total" />
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+						<ice:inputText value="#{paramsGenerauxFormBB.dureeTravailAnNJoursEffectifTot}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+						<ice:inputText value="#{paramsGenerauxFormBB.dureeTravailAnN1JoursEffectifTot}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+						<ice:inputText value="#{paramsGenerauxFormBB.dureeTravailAnN2JoursEffectifTot}" onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup-->
+				
+								
+				
+				<ice:outputLabel value="Nombre d'heures de travail annuel réalisé" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNHeuresRealiseesEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnNHeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNHeuresRealiseesEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNHeuresRealiseesEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnNHeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNHeuresRealiseesEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1HeuresRealiseesEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN1HeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresRealiseesEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN1HeuresRealiseesEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1HeuresRealiseesEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2HeuresRealiseesEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN2HeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresRealiseesEffectifTot}"
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true"
+								id="dureeTravailAnN2HeuresRealiseesEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresRealiseesEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2HeuresRealiseesEffectifTot}"
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				
+				<ice:outputLabel value="Nombre de jours de travail annuel théorique pour l'effectif en ETP" style="font-weight:normal;"/>
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNJoursEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnNJoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNJoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnNJoursEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnNJoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnNJoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnN1JoursEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN1JoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1JoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnN1JoursEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN1JoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN1JoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnN2JoursEffectifTot"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.dureeTravailAnN2JoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2JoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="dureeTravailAnN2JoursEffectifTot"
+								rendered="#{paramsGenerauxFormBB.dureeTravailAnN2JoursEffectifTotError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.dureeTravailAnN2JoursEffectifTot}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+
+				 
+								
+				<ice:outputLabel value="MASSE SALARIALE BRUTE (EN €)" />
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.masseSalarialeAnNError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN"
+								rendered="#{paramsGenerauxFormBB.masseSalarialeAnNError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN1"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.masseSalarialeAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN1"
+								rendered="#{paramsGenerauxFormBB.masseSalarialeAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN2"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.masseSalarialeAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="masseSalarialeAnN2"
+								rendered="#{paramsGenerauxFormBB.masseSalarialeAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.masseSalarialeAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				<ice:outputLabel value="MONTANT DE LA CONTRIBUTION FORMATION (EN €)" />
+				<ice:panelGroup>
+					<ice:panelGrid columns="3">
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.pourcentageFormationAnNError}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN"
+								rendered="#{paramsGenerauxFormBB.pourcentageFormationAnNError}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN1"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.pourcentageFormationAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN1"
+								rendered="#{paramsGenerauxFormBB.pourcentageFormationAnN1Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN1}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+								
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN2"
+								style="width:130px;"
+								rendered="#{not paramsGenerauxFormBB.pourcentageFormationAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+							<ice:inputText  immediate="true" 
+								id="pourcentageFormationAnN2"
+								rendered="#{paramsGenerauxFormBB.pourcentageFormationAnN2Error}"
+								onkeypress="return lockForDouble(event);"
+								style="color:red;width:130px;"
+								onchange="this.form.submit()" 
+								valueChangeListener="#{paramsGenerauxFormBB.checkDouble}" 
+								value="#{paramsGenerauxFormBB.pourcentageFormationAnN2}" 
+								onfocus="document.getElementById('j_id95:j_id146').style.display = 'none';"/>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				
+				
+				<br />
+				<br />
+				<ice:panelGroup>
+					<ice:commandButton 
+							type="submit"
+							disabled="#{paramsGenerauxFormBB.canSave}"
+							onclick="if(document.getElementById('j_id95:j_id146') != null) {document.getElementById('j_id95:j_id146').style.display = 'block';}bloque(this);"
+			                value="Enregistrer"
+			                actionListener="#{paramsGenerauxFormBB.saveOrUpdateParamsG}"/>
+			        <ice:commandButton value="Quitter" immediate="true"
+						action="#{paramsGenerauxFormBB.quitter}" />                   
+				</ice:panelGroup>
+				
+				<ice:panelGroup>
+					<ice:commandButton value="Imprimer"
+						actionListener="#{paramsGenerauxFormBB.printParamsGeneraux}" />
+			   		<ice:outputLabel value="Les informations ont bien été enregistrées."
+			    				style="color: green;padding-left:20px;"
+			    				rendered="#{paramsGenerauxFormBB.modalRenderedConfirm}"/>
+				</ice:panelGroup>
+					
+			    <br />
+			    <br />
+			    
+			    <!--ice:panelPopup rendered="true" 
+								visible="#{paramsGenerauxFormBB.modalRenderedConfirm}"
+								draggable="false"
+								autoCentre="true"
+								modal="true">
+					<f:facet name="header">
+						<ice:panelGroup styleClass="popupHeaderWrapper">
+							<ice:outputText value="Confirmation d'enregistrement" styleClass="popupHeaderText" />
+						</ice:panelGroup>
+					</f:facet>
+					<f:facet name="body">
+						<ice:panelGroup styleClass="popupBody">
+							<ice:outputText value="Les informations ont bien été enregistrées." />
+							<br />
+							<ice:commandButton value="Ok"
+												actionListener="#{paramsGenerauxFormBB.toggleModalConfirm}" />
+						</ice:panelGroup>
+					</f:facet>
+				</ice:panelPopup-->
+			</ice:panelGrid>
+
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

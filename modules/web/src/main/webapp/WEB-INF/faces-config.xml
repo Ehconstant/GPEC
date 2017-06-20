@@ -1,0 +1,1683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+
+
+	<application>
+		<locale-config>
+			<default-locale>fr</default-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+	</application>
+
+	<application>
+		<view-handler>
+			com.icesoft.faces.facelets.D2DFaceletViewHandler
+		</view-handler>
+	</application>
+
+	<application>
+		<message-bundle>CCI</message-bundle>
+		<resource-bundle>
+			<base-name>CCI</base-name>
+			<var>CCI</var>
+		</resource-bundle>
+	</application>
+
+	<application>
+		<message-bundle>errors</message-bundle>
+		<resource-bundle>
+			<base-name>errors</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+
+	<application>
+		<message-bundle>ftp</message-bundle>
+		<resource-bundle>
+			<base-name>ftp</base-name>
+			<var>ftpvar</var>
+		</resource-bundle>
+	</application>
+
+
+	<validator>
+		<validator-id>dateRangeValidator</validator-id>
+		<validator-class>
+			com.cci.gpec.icefaces.component.calendar.DateRangeValidator
+		</validator-class>
+	</validator>
+
+	<validator>
+		<validator-id>validateDateTimeRange</validator-id>
+		<validator-class>
+			com.cci.gpec.web.validator.ValidateDateTimeRange
+		</validator-class>
+	</validator>
+
+	<validator>
+		<validator-id>selectOneMenuValidatorPoste</validator-id>
+		<validator-class>
+			com.cci.gpec.web.validator.SelectOneMenuValidatorPoste
+		</validator-class>
+	</validator>
+
+	<validator>
+		<validator-id>selectOneMenuValidator</validator-id>
+		<validator-class>
+			com.cci.gpec.web.validator.SelectOneMenuValidator
+		</validator-class>
+	</validator>
+	
+	<validator>
+		<validator-id>captchaValidator</validator-id>
+		<validator-class>com.cci.gpec.web.validator.CaptchaValidator</validator-class>
+	</validator>
+
+	<converter>
+		<converter-id>dateConverter</converter-id>
+		<converter-class>
+			com.cci.gpec.icefaces.component.calendar.DateConverter
+		</converter-class>
+	</converter>
+
+	<!--managed-bean>
+		<description>custom authentication provider</description>
+		<managed-bean-name>customAuthenticationProvider</managed-bean-name>
+		<managed-bean-class>
+		com.cci.gpec.security.CustomAuthenticationProvider
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		</managed-bean-->
+		
+	<managed-bean>
+		<managed-bean-name>captchaBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.captcha.CaptchaBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	 </managed-bean>
+
+	<managed-bean>
+		<description>Backing bean pour le login</description>
+		<managed-bean-name>loginBean</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Login.LoginBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour le planning des absences.
+		</description>
+		<managed-bean-name>planningAbsenceBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.planningAbsence.PlanningAbsenceBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour le tableau d'analyse Absences par nature.
+		</description>
+		<managed-bean-name>absencesNatureFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.absencesNature.AbsencesNatureFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour le tableau d'analyse Absences par métier.
+		</description>
+		<managed-bean-name>absencesMetierFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.absencesMetier.AbsencesMetierFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour le tableau d'analyse Turn Over.
+		</description>
+		<managed-bean-name>turnOverFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.turnOver.TurnOverFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour les paramètres généraux propres à
+			l'entreprise de l'application.
+		</description>
+		<managed-bean-name>paramsGenerauxFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.ParamsGeneraux.ParamsGenerauxFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean for dateSelect example.</description>
+		<managed-bean-name>exitBean</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.exit.ExitBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Resource test</description>
+		<managed-bean-name>MyResource</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.inputFile.MyResource
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean for dateSelect example.</description>
+		<managed-bean-name>scheduleController</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.primefaces.component.schedule.ScheduleController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>printFicheIndivSalarie</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheIndivSalarie
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>printFicheIndivRemuneration</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheIndivRemuneration
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>printFicheDePoste</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheDePoste
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>printParamsGeneraux</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintParamsGeneraux
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			printEntretienIndividuelSalarie
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintEntretienIndividuelSalarie
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			printEvenementIndividuelSalarie
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintEvenementIndividuelSalarie
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>printFicheMetier</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheMetier
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			printFicheMetierEntreprise
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.jasperreport.print.PrintFicheMetierEntreprise
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>departRetraiteServlet</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.servlet.DepartRetraiteServlet
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean for dateSelect example.</description>
+		<managed-bean-name>dateSelect</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.calendar.SelectInputDateBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des habilitations du salarié
+		</description>
+		<managed-bean-name>
+			salarieHabilitationsFormBB
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.habilitation.SalarieHabilitationsFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des formations du salarié
+		</description>
+		<managed-bean-name>salarieFormationsFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.formation.SalarieFormationsFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des absences du salarié
+		</description>
+		<managed-bean-name>salarieAbsencesFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Absence.SalarieAbsencesFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des absences du salarié
+		</description>
+		<managed-bean-name>salarieAccidentsFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Accident.SalarieAccidentsFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des parcours du salarié
+		</description>
+		<managed-bean-name>salarieParcoursFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.parcours.SalarieParcoursFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des contrats de travail
+		</description>
+		<managed-bean-name>salarieContratTravailFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.ContratTravail.SalarieContratTravailFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des entretiens du salarié
+		</description>
+		<managed-bean-name>salarieEntretiensFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Entretien.SalarieEntretiensFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des rémunérations du salarié
+		</description>
+		<managed-bean-name>
+			salarieRemunerationsFormBB
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.remuneration.SalarieRemunerationsFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean le formulaire des évènements du salarié
+		</description>
+		<managed-bean-name>salarieEvenementsFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Evenement.SalarieEvenementsFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- Basic Tree example bean-->
+
+	<managed-bean>
+		<description>Backing bean for tree navigation.</description>
+		<managed-bean-name>treeNavigation</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.icefaces.component.tree.TreeNavigation
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean that controls which content will be displayed
+			and the MenuGroupBeans that make up the left navigation of
+			the application
+		</description>
+		<managed-bean-name>navigation</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.icefaces.component.facelets.NavigationBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean pour le tableau des compétences
+		</description>
+		<managed-bean-name>tabCompetencesFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.tabCompetences.TabCompetencesFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des groupes.</description>
+		<managed-bean-name>groupeList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanGroupes
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des service generiques.
+		</description>
+		<managed-bean-name>serviceGeneriqueList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanServiceGeneriques
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des salaries.</description>
+		<managed-bean-name>salariesList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanSalaries
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean de l'organigramme</description>
+		<managed-bean-name>organigrammeBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.organigramme.OrganigrammeBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean de lexport xml</description>
+		<managed-bean-name>exportXml</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.jdom.ExportXml
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des entreprises.
+		</description>
+		<managed-bean-name>entrepriseList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanEntreprises
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des services.</description>
+		<managed-bean-name>serviceList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanServices
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des metiers.</description>
+		<managed-bean-name>metierList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanMetiers
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des fichers metier.
+		</description>
+		<managed-bean-name>ficheMetierList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanFicheMetier
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des metiers pour retraite.
+		</description>
+		<managed-bean-name>tableBeanRetraite</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanRetraites
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des famille de metiers.
+		</description>
+		<managed-bean-name>familleMetierList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanFamilleMetiers
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des famille de metiers.
+		</description>
+		<managed-bean-name>
+			familleDomaineFormationList
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanFamilleDomaineFormations
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des statuts.</description>
+		<managed-bean-name>statutList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanStatuts
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types absence.
+		</description>
+		<managed-bean-name>typeAbsenceList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeAbsences
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des domaines de formation.
+		</description>
+		<managed-bean-name>domaineFormationList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanDomaineFormations
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types accidents.
+		</description>
+		<managed-bean-name>typeAccidentList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeAccidents
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types lesions.
+		</description>
+		<managed-bean-name>typeLesionList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeLesions
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types habilitation.
+		</description>
+		<managed-bean-name>typeHabilitationList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeHabilitations
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types contrat.
+		</description>
+		<managed-bean-name>typeContratList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeContrats
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des types cause accident.
+		</description>
+		<managed-bean-name>typeCauseAccidentList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanTypeCauseAccidents
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean la liste des revenus complementaires.
+		</description>
+		<managed-bean-name>revenuComplementaireList</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.icefaces.component.dataTable.TableBeanRevenuComplementaire
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean la liste des salariés.</description>
+		<managed-bean-name>salarieFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.salarie.SalarieFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des entreprises.
+		</description>
+		<managed-bean-name>entrepriseFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.entreprise.EntrepriseFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean des projection plan senior.
+		</description>
+		<managed-bean-name>projectionPSBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.projectionps.ProjectionPSBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean des heures de formations</description>
+		<managed-bean-name>heureFormationBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.heureformation.HeureFormationBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean négociation salariale</description>
+		<managed-bean-name>negociationSalarialeBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.negociationSalariale.NegociationSalarialeBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>Backing bean suivi effectif</description>
+		<managed-bean-name>suiviEffectifBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.suiviEffectif.SuiviEffectifBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean des accident par metier</description>
+		<managed-bean-name>accidentMetierBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.accidentmetier.AccidentMetierBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean des arrets de travail</description>
+		<managed-bean-name>arretTravailBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.arrettravail.ArretTravailBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean de la mise à jour</description>
+		<managed-bean-name>updateBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.update.UpdateBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean de l'export de salarie excel
+		</description>
+		<managed-bean-name>excelBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.excel.ExcelBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean du filtre multi critère</description>
+		<managed-bean-name>filtreMultiBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.filtre.FiltreMultiBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Formulaire pour les services</description>
+		<managed-bean-name>serviceFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.service.ServiceFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du groupe.
+		</description>
+		<managed-bean-name>groupeFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.groupe.GroupeFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des domaines de
+			formation.
+		</description>
+		<managed-bean-name>domaineFormationFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.domaineformation.domaineFormationFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des metiers.
+		</description>
+		<managed-bean-name>metierFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.metier.MetierFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des fiches metier.
+		</description>
+		<managed-bean-name>ficheMetierFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.ficheMetier.FicheMetierFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des fiches de poste.
+		</description>
+		<managed-bean-name>ficheDePosteFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.ficheDePoste.FicheDePosteFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie des statuts.
+		</description>
+		<managed-bean-name>statutFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.statut.StatutFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type
+			d'absence.
+		</description>
+		<managed-bean-name>typeAbsenceFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typeabsence.TypeAbsenceFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type
+			d'accident.
+		</description>
+		<managed-bean-name>typeAccidentFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typeaccident.TypeAccidentFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type lesion.
+		</description>
+		<managed-bean-name>typeLesionFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typelesion.TypeLesionFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type
+			habilitation.
+		</description>
+		<managed-bean-name>typeHabilitationFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typehabilitation.TypeHabilitationFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du revenu
+			complementaire.
+		</description>
+		<managed-bean-name>
+			revenuComplementaireFormBB
+		</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.revenuComplementaire.RevenuComplementaireFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type contrat.
+		</description>
+		<managed-bean-name>typeContratFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typecontrat.TypeContratFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>Backing bean des pyramides des âges</description>
+		<managed-bean-name>pyramideFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.pyramide.PyramideFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean des pyramides de l'ancienneté
+		</description>
+		<managed-bean-name>pyramideAncienneteFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.pyramide.PyramideAncienneteFormBB
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean du Formulaire de saisie du nom du type cause
+			accident.
+		</description>
+		<managed-bean-name>typeCauseAccidentFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.typecauseaccident.TypeCauseAccidentFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean de la partie gauche de navigation.
+		</description>
+		<managed-bean-name>navigationBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.navigation.NavigationBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>
+			Backing bean de la partie login.
+		</description>
+		<managed-bean-name>loginBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.login.LoginBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>
+			Backing bean de la partie admin.
+		</description>
+		<managed-bean-name>adminFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.Admin.AdminFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+		<managed-bean>
+		<description>
+			Backing bean de la partie version d'essai.
+		</description>
+		<managed-bean-name>versionEssaiFormBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.VersionEssai.VersionEssaiFormBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<!-- managed-property>
+		<property-name>"annee"</property-name>
+		<value>#{salarieRemunerationsFormBB.annee}</value>
+		</managed-property>
+		<managed-property>
+		<property-name>"idSalarie"</property-name>
+		<value>#{salarieRemunerationsFormBB.idSalarie}</value>
+		</managed-property-->
+
+	<managed-bean>
+		<description>
+			Backing bean de la partie rattachement des fichiers.
+		</description>
+		<managed-bean-name>repriseDonneesBB</managed-bean-name>
+		<managed-bean-class>
+			com.cci.gpec.web.backingBean.rattachementFichier.RepriseDonneesBB
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>exportPyramideAge</from-outcome>
+			<to-view-id>/gpec/FormsGraph/pyramideForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>exportPyramideAnciennete</from-outcome>
+			<to-view-id>
+				/gpec/FormsGraph/pyramideAncienneteForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addGroupeForm</from-outcome>
+			<to-view-id>/gpec/FormsParams/groupeForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateGroupe</from-outcome>
+			<to-view-id>/gpec/FormsParams/groupes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>needUpdate</from-outcome>
+			<to-view-id>/gpec/FormsOutils/needUpdate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>departRetraite</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/departRetraite.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>notNeedUpdate</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/notNeedUpdate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addEntrepriseForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/entrepriseForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateEntreprise</from-outcome>
+			<to-view-id>/gpec/FormsParams/entreprises.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/FormsParams/groupe.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addGroupeForm</from-outcome>
+			<to-view-id>/gpec/FormsParams/groupeForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/heuresFormation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>heuresFormation</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/heuresFormation.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/negociationSalariale.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>negociationSalariale</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/negociationSalariale.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/suiviEffectif.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>suiviEffectif</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/suiviEffectif.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/versionEssaiForm.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>versionEssaiForm</from-outcome>
+			<to-view-id>
+				/gpec/versionEssaiForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addServiceForm</from-outcome>
+			<to-view-id>/gpec/FormsParams/serviceForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateService</from-outcome>
+			<to-view-id>/gpec/FormsParams/services.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addRevenuComplementaireForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/revenusComplementairesForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>
+				saveOrUpdateRevenuComplementaire
+			</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/revenusComplementaires.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addFraisProfForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/fraisProfForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>
+				saveOrUpdateRevenuComplementaireFraisProf
+			</from-outcome>
+			<to-view-id>/gpec/FormsParams/fraisProfs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/FormsParams/groupeForm.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>saveOrUpdateGroupe</from-outcome>
+			<to-view-id>/gpec/FormsParams/groupes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addMetierForm</from-outcome>
+			<to-view-id>/gpec/FormsParams/metierForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateMetier</from-outcome>
+			<to-view-id>/gpec/FormsParams/metiers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addFicheMetierForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/ficheMetierForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateFicheMetier</from-outcome>
+			<to-view-id>/gpec/FormsParams/ficheMetier.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addStatutForm</from-outcome>
+			<to-view-id>/gpec/statutForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateStatut</from-outcome>
+			<to-view-id>/gpec/statuts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeAbsenceForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typeAbsenceForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeAbsence</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typesAbsences.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addDomaineFormationForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/domaineFormationForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateDomaineFormation</from-outcome>
+			<to-view-id>/gpec/domainesFormation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeAccidentForm</from-outcome>
+			<to-view-id>/gpec/typeAccidentForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeAccident</from-outcome>
+			<to-view-id>/gpec/typesAccidents.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeLesionForm</from-outcome>
+			<to-view-id>/gpec/typeLesionForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeLesion</from-outcome>
+			<to-view-id>/gpec/typesLesions.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeHabilitationForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typeHabilitationForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeHabilitation</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typesHabilitations.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeContratForm</from-outcome>
+			<to-view-id>/gpec/typeContratForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeContrat</from-outcome>
+			<to-view-id>/gpec/typesContrats.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addTypeCauseAccidentForm</from-outcome>
+			<to-view-id>/gpec/typeCauseAccidentForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>saveOrUpdateTypeCauseAccident</from-outcome>
+			<to-view-id>/gpec/typesCausesAccidents.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>retourSalarie</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/retourSalarie.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/gpec/salaries.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addSalarie</from-outcome>
+			<to-view-id>/gpec/salarieForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>salaries</from-outcome>
+			<to-view-id>/gpec/salaries.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>linkFile</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/rattachementFichiersForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>saveOrUpdateFicheDePoste</from-outcome>
+			<to-view-id>
+				/gpec/FormsSalaries/salariePoste.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addRemunerationForm</from-outcome>
+			<to-view-id>
+				/gpec/FormsSalarie/SalarieRemunerationForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>saveOrUpdateRemuneration</from-outcome>
+			<to-view-id>
+				/gpec/FormsSalarie/SalarieRemuneration.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>addSalarie</from-outcome>
+			<to-view-id>/gpec/salarieForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>salaries</from-outcome>
+			<to-view-id>/gpec/salaries.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>entreprises</from-outcome>
+			<to-view-id>/gpec/FormsParams/entreprises.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>projectionPS</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/projectionPS.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>update</from-outcome>
+			<to-view-id>/gpec/FormsOutils/update.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>link</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/rattachementFichiers.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>admin</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/admin.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>superAdmin</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/superAdmin.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>addUser</from-outcome>
+			<to-view-id>/gpec/FormsParams/adminForm.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>ficheMetier</from-outcome>
+			<to-view-id>/gpec/FormsParams/ficheMetier.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>metiers</from-outcome>
+			<to-view-id>/gpec/FormsParams/metiers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>groupe</from-outcome>
+			<to-view-id>/gpec/FormsParams/groupes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>services</from-outcome>
+			<to-view-id>/gpec/FormsParams/services.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>heuresFormation</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/heuresFormation.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>negociationSalariale</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/negociationSalariale.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>suiviEffectif</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/suiviEffectif.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>metiers</from-outcome>
+			<to-view-id>/gpec/FormsParams/metiers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>accidentMetier</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/accidentMetier.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>statuts</from-outcome>
+			<to-view-id>/gpec/statuts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesAbsences</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typesAbsences.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>domainesFormation</from-outcome>
+			<to-view-id>/gpec/domainesFormation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesHabilitation</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/typesHabilitations.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>fraisProfs</from-outcome>
+			<to-view-id>/gpec/FormsParams/fraisProfs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>revenusComplementaires</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/revenusComplementaires.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesAccident</from-outcome>
+			<to-view-id>/gpec/typesAccidents.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesLesion</from-outcome>
+			<to-view-id>/gpec/typesLesions.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesContrat</from-outcome>
+			<to-view-id>/gpec/typesContrats.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesCausesAccident</from-outcome>
+			<to-view-id>/gpec/typesCausesAccidents.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>paramsGeneraux</from-outcome>
+			<to-view-id>
+				/gpec/FormsParams/parametresGenerauxForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>tableauxSuivi</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/tableauxSuivi.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>planningAbsence</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/planningAbsencesForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>arretTravail</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/arretTravail.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>absencesMetier</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/absencesMetier.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>absencesNature</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/absencesNature.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>turnOver</from-outcome>
+			<to-view-id>/gpec/FormsAnalyse/turnOver.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>tabCompetences</from-outcome>
+			<to-view-id>
+				/gpec/FormsAnalyse/tabCompetences.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/index2.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/index2.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>filtreMultiCriteres</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/filtreMultiCriteres.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>organigramme</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/organigramme.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>retourSalarie</from-outcome>
+			<to-view-id>
+				/gpec/FormsOutils/retourSalarie.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>refreshMigration</from-outcome>
+			<to-view-id>/gpec/salaries.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>accueil</from-outcome>
+			<to-view-id>/gpec/accueil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+</faces-config>

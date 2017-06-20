@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:define name="content">
+
+	<h:form>
+	<h3>Groupe</h3>
+	<ice:commandButton rendered="#{empty groupeList.groupesInventory}"
+					   value="Ajouter un groupe" 
+					   action="#{groupeList.add}">
+		     
+	</ice:commandButton>
+	<ice:dataTable value="#{groupeList.groupesInventory}" var="item" rendered="#{not empty groupeList.groupesInventory}">
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Nom" />
+			</f:facet>
+			<ice:outputText value="#{item.nom}" />
+		</ice:column>
+		
+		<ice:column>
+			<f:facet name="header">
+				<ice:outputText value="Action" />
+			</f:facet>
+	
+			<ice:commandButton value="Modifier" action="#{groupeList.saveOrUpdateGroupe}">
+					   		 
+			<f:setPropertyActionListener target="#{groupeList.id}" value="#{item.id}" />
+			<f:setPropertyActionListener target="#{groupeList.nom}" value="#{item.nom}" />
+			 
+			</ice:commandButton>
+			
+		</ice:column>
+		
+	</ice:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>

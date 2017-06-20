@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h:form id="idForm">
+
+			<h3>Entreprises</h3>
+			<ice:commandButton value="Ajouter une entreprise"
+				action="#{entrepriseFormBB.init}">
+
+			</ice:commandButton>&#xa0;&#xa0;<h:message for="dataTable:idSupprimer" style="color:red;" />
+
+			<ice:dataTable id="dataTable"
+				value="#{entrepriseList.entreprisesInventory}" var="item"
+				rendered="#{not empty entrepriseList.entreprisesInventory}">
+
+				<!-- Stock number -->
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Nom" />
+					</f:facet>
+					<ice:outputText value="#{item.nom}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Numéro de Siret" />
+					</f:facet>
+					<ice:outputText value="#{item.numSiret}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Code APE" />
+					</f:facet>
+					<ice:outputText value="#{item.codeApe}" />
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Date de création" />
+					</f:facet>
+					<ice:outputText value="#{item.dateCreation}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="#{dateSelect.timeZone}" />
+					</ice:outputText>
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="CCI de rattachement" />
+					</f:facet>
+					<ice:outputText value="#{item.cciRattachement}" />
+				</ice:column>
+
+				<ice:column style="white-space: nowrap;">
+					<f:facet name="header">
+						<ice:outputText value="Logo" />
+					</f:facet>
+					<ice:outputText value="/!\ Un fichier est associé à cette entreprise mais est introuvable ou illisible." 
+						style="color: red" 
+						rendered="#{item.fileError}"/>
+					<ice:panelGrid rendered="#{not empty item.justif and not item.fileError}" columns="2">
+<!-- 						<a id="lien" href="#{entrepriseFormBB.url}#{item.id}/#{item.justif.name}" target="_blank">
+							<ice:outputText rendered="#{not item.fileError}" value="#{item.justif.name}" />
+						</a> -->
+						<ice:commandLink actionListener="#{entrepriseFormBB.download}"
+										 style="text-decoration: underline;">
+							<ice:outputText value="#{item.justif.name}" />
+						</ice:commandLink>
+						<ice:commandLink 
+							actionListener="#{entrepriseFormBB.removeUploadedFileEntreprise}"
+							style="text-decoration: underline; color: red;"
+							panelConfirmation="deleteConfirmPanelFileEntreprise"
+							 >
+							<h:graphicImage url="../../style/overrideTab/css-images/popupclose.gif" alt="supprimer"/>
+							<ui:insert />
+						</ice:commandLink>
+					</ice:panelGrid>
+					<ice:panelGrid rendered="#{empty item.justif and not item.fileError}">
+						<ice:outputText value="-" />
+					</ice:panelGrid>
+					
+				</ice:column>
+
+				<ice:column>
+					<f:facet name="header">
+						<ice:outputText value="Action" />
+					</f:facet>
+
+					<ice:commandButton value="Modifier"
+						action="#{entrepriseFormBB.modifierAction}"
+						actionListener="#{entrepriseFormBB.modifierActionListener}">
+
+					</ice:commandButton>
+
+					<ice:commandButton id="idSupprimer" value="Supprimer"
+						action="#{entrepriseFormBB.supprimerEntreprise}"
+						panelConfirmation="deleteConfirmPanelEntreprise">
+						<f:setPropertyActionListener target="#{entrepriseFormBB.id}"
+							value="#{item.id}" />
+					</ice:commandButton>
+					<!-- Panel de confirmation de suppression -->
+					<ice:panelConfirmation id="deleteConfirmPanelEntreprise"
+						message="Êtes-vous sûr de vouloir supprimer cette entreprise ?"
+						acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+					<ice:panelConfirmation id="deleteConfirmPanelFileEntreprise"
+						message="Êtes-vous sûr de vouloir supprimer ce fichier ?"
+						acceptLabel="Oui" cancelLabel="Non" title="Confirmer" />
+
+				</ice:column>
+
+			</ice:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

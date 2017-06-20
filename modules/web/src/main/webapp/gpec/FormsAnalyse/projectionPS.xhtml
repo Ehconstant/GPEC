@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+ 
+	<br/>
+	<h3>Projection "plan d'action sénior"</h3>
+	<br/>
+	<ice:outputText rendered="#{empty projectionPSBB.entreprisesListItem}" value="Il n'existe pas encore d'entreprise."/>
+	<ice:form id="idForm">
+		<ice:panelGrid columns="2">
+			<ice:outputLabel rendered="#{not empty projectionPSBB.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+			<ice:panelGroup rendered="#{not empty projectionPSBB.entreprisesListItem}" styleClass="selectionListBoxGroup">
+				<ice:selectOneMenu id="selectEntreprise"
+					  partialSubmit="true"
+					  style="overflow: auto;"
+					  value="#{projectionPSBB.idEntreprise}"
+					  valueChangeListener="#{projectionPSBB.change}">
+					 
+					<f:selectItems value="#{projectionPSBB.entreprisesListItem}" />	
+				</ice:selectOneMenu>
+				<h:message for="idDataEntreprise1" />
+			</ice:panelGroup>
+			
+			<ice:outputLabel rendered="#{not empty projectionPSBB.servicesListItem}" value="Service " for="selectService"/>
+			<ice:panelGroup rendered="#{not empty projectionPSBB.servicesListItem}" styleClass="selectionListBoxGroup">
+				<ice:selectOneMenu id="selectService"
+					  partialSubmit="true"
+					  style="overflow: auto;"
+					  value="#{projectionPSBB.idService}"
+					  valueChangeListener="#{projectionPSBB.change}">
+					 
+					<f:selectItem itemLabel="" itemValue="-1"/>
+					<f:selectItems value="#{projectionPSBB.servicesListItem}" />	
+				</ice:selectOneMenu>
+				<h:message for="idDataService1" />
+			</ice:panelGroup>
+			
+			<ice:outputLabel rendered="#{not empty projectionPSBB.metiersListItem}" value="Métier " for="selectMetier"/>
+				<ice:panelGroup rendered="#{not empty projectionPSBB.metiersListItem}" styleClass="selectionListBoxGroup">
+				<ice:selectOneMenu id="selectMetier"
+					  partialSubmit="true"
+					  style="overflow: auto;"
+					  value="#{projectionPSBB.idMetier}"
+					  valueChangeListener="#{projectionPSBB.change}">
+					 
+					<f:selectItem itemLabel="" itemValue="-1"/>
+					<f:selectItems value="#{projectionPSBB.metiersListItem}" />	
+				</ice:selectOneMenu>
+				<h:message for="idDataMetier1" />
+			</ice:panelGroup>
+			</ice:panelGrid>
+	<br/>
+	<h:commandButton rendered="#{not empty projectionPSBB.listBean}"
+					 actionListener="#{projectionPSBB.download}" 
+					 value="Exporter au format Excel"/>
+
+	<ice:outputText rendered="#{empty projectionPSBB.listBean}" value="Aucun résultat pour les critères sélectionnés."/>
+	<ice:dataTable rendered="#{not empty projectionPSBB.listBean}" id="dataTable" value="#{projectionPSBB.listBean}" var="item">
+		<f:facet name="header">
+	        <ice:columnGroup>
+	            <ice:headerRow>
+	            	<ice:column colspan="6">
+			        	<ice:outputText value="Projection plan sénior"/>
+			        </ice:column>
+			    </ice:headerRow>
+                   
+                <ice:headerRow>
+                   	 <ice:column>
+						<ice:outputText value="Intitulés" />
+		             </ice:column>
+
+                 	<ice:column>
+		                <ice:outputText value="45-49 ans" 
+		                				style="width: 100px;"/>
+		            </ice:column>
+		            <ice:column>
+		                <ice:outputText value="50-54 ans" 
+		                				style="width: 100px;"/>
+		            </ice:column>
+		            <ice:column>
+		                <ice:outputText value="55 ans et +" 
+		                				style="width: 100px;"/>
+		            </ice:column>
+		             <ice:column>
+		                <ice:outputText value="% des 50 ans et + par rapport à l'effectif" 
+		                				style="width: 100px;"/>
+		            </ice:column>
+		            
+                 </ice:headerRow>
+                 
+           </ice:columnGroup>
+           
+        </f:facet>
+		
+		
+		<ice:column>
+			<div align='center'>
+				<ice:outputText value="#{item.nom}" />
+			</div>
+			<f:facet name="footer">
+				<div align='center'>
+					<ice:outputText value="Effectif total / âge" style="font-size: 13px; font-weight: bold" />
+				</div>
+			</f:facet>
+		</ice:column>
+		
+		<ice:column>
+			<div align='center'>
+				<ice:outputText value="#{item.tranche1}" />
+			</div>
+			<f:facet name="footer">
+				<div align='center'>
+					<ice:outputText style="font-size: 13px; font-weight: bold" 
+									value="#{projectionPSBB.totalTranche1}" />
+				</div>
+			</f:facet>
+		</ice:column>
+		
+		<ice:column>
+			<div align='center'>
+			<ice:outputText value="#{item.tranche2}" />
+			</div>
+			<f:facet name="footer">
+				<div align='center'>
+					<ice:outputText style="font-size: 13px; font-weight: bold" 
+									value="#{projectionPSBB.totalTranche2}" />
+				</div>
+			</f:facet>
+		</ice:column>
+		
+		<ice:column>
+			<div align='center'>
+				<ice:outputText value="#{item.tranche3}" />
+			</div>
+			<f:facet name="footer">
+				<div align='center'>
+					<ice:outputText style="font-size: 13px; font-weight: bold" 
+									value="#{projectionPSBB.totalTranche3}" />
+				</div>
+			</f:facet>
+		</ice:column>
+		
+		<ice:column>
+			<div align='center'>
+				<table>
+					<tr>
+						<td>
+							<ice:outputText value="#{item.taux}" />
+						</td>
+						<td>%</td>
+					</tr>
+				</table>
+			</div>
+			<f:facet name="footer">
+				<div align='center'>
+				<table>
+						<tr>
+							<td>
+								<ice:outputText style="font-size: 13px; font-weight: bold" 
+												value="#{projectionPSBB.tauxTotal}" />
+							</td>
+							<td>%</td>
+						</tr>
+					</table>
+				</div>
+			</f:facet>
+		</ice:column>
+		
+	</ice:dataTable> 
+	<br/>
+	</ice:form>
+	</ui:define>
+</ui:composition>

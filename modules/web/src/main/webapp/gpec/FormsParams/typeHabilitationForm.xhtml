@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ui:define name="content">
+		<h3>Formulaire nature d'habilitation</h3>
+
+		<ice:form id="Formulaire">
+			<h:outputText value="Nom d'habilitation " for="nom" />
+			<h:inputText id="nom" value="#{typeHabilitationFormBB.nom}"
+				required='true' requiredMessage="#{msg.required}" onkeypress="return noSubmitOnEnter(event);" />
+			<h:message for="nom" errorStyle="color: red" />
+			<br />
+			<br />
+			<ice:commandButton value="Valider"
+				rendered="#{typeHabilitationFormBB.affiche}"
+				actionListener="#{typeHabilitationFormBB.updateTest}" />
+
+			<ice:commandButton value="Valider"
+				rendered="#{not typeHabilitationFormBB.affiche}"
+				action="#{typeHabilitationFormBB.saveOrUpdateTypeHabilitationFin}" />
+			<ice:commandButton value="Annuler"
+				action="#{typeHabilitationFormBB.annuler}" immediate="true" />
+
+			<!-- Panel de confirmation de modification -->
+			<ice:panelPopup rendered="true"
+				visible="#{typeHabilitationFormBB.modalRenderedConfirm}"
+				draggable="false" autoCentre="true" modal="true">
+				<f:facet name="header">
+					<ice:panelGroup styleClass="popupHeaderWrapper">
+						<ice:outputText value="Confirmation d'enregistrement"
+							styleClass="popupHeaderText" />
+					</ice:panelGroup>
+				</f:facet>
+				<f:facet name="body">
+					<ice:panelGroup styleClass="popupBody">
+						<ice:outputText
+							value="Un salarié utilise déjà cette nature d'habilitation," />
+						<br />
+						<ice:outputText value="êtes-vous sûr de vouloir la modifier ?" />
+						<br />
+						<div style="text-align: center;"><ice:commandButton
+							value="Oui" action="#{typeHabilitationFormBB.validModif}" /> <ice:commandButton
+							value="Non" action="#{typeHabilitationFormBB.annulModif}" /></div>
+					</ice:panelGroup>
+				</f:facet>
+			</ice:panelPopup>
+		</ice:form>
+	</ui:define>
+
+</ui:composition>

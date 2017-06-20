@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cci.gpec.db">
+	<class
+		name="Planningembauche"
+		table="PLANNINGEMBAUCHE"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="integer"
+			column="ID_PLANNING_EMBAUCHE"
+		>
+			<generator class="identity"/>
+		</id>
+
+		<property
+			name="Annee"
+			column="ANNEE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="Quantite"
+			column="QUANTITE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+	
+		<set
+			name="METIERs"
+			table="METIERPLANNINGEMBAUCHE"
+			cascade="all"
+		>
+			<key column="ID_PLANNING_EMBAUCHE"/>
+			<many-to-many column="ID_METIER" class="Metier"/>
+		</set>
+
+
+	</class>	
+</hibernate-mapping>

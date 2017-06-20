@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="../../WEB-INF/pages/facelets/main-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	<ui:define name="content">
+	<head>
+		<link href="../style/panelGrid.css" rel="stylesheet" type="text/css" />
+	</head> 
+	<h3>Gestion des absences par métier en jours travaillés</h3>
+	<br/>
+	<ice:form id="idForm">
+	<ice:outputText rendered="#{empty absencesMetierFormBB.entreprisesListItem}" value="Il n'existe pas encore d'entreprise."/>
+	<ice:panelGrid columns="2">
+		<ice:outputLabel rendered="#{not empty absencesMetierFormBB.entreprisesListItem}" value="Entreprise " for="selectEntreprise"/>
+		<ice:panelGroup rendered="#{not empty absencesMetierFormBB.entreprisesListItem}" styleClass="selectionListBoxGroup">
+			<ice:selectOneMenu id="selectEntreprise"
+				  partialSubmit="true"
+				  style="overflow: auto;"
+				  value="#{absencesMetierFormBB.idEntreprise}"
+				  valueChangeListener="#{absencesMetierFormBB.change}">
+						 
+				<f:selectItems value="#{absencesMetierFormBB.entreprisesListItem}" />	
+			</ice:selectOneMenu>
+			<h:message for="idDataEntreprise1" />
+		</ice:panelGroup>
+		
+		<ice:outputLabel rendered="#{not empty absencesMetierFormBB.servicesListItem}" value="Service " for="selectService"/>
+		<ice:panelGroup rendered="#{not empty absencesMetierFormBB.servicesListItem}" styleClass="selectionListBoxGroup">
+			<ice:selectOneMenu id="selectService"
+				  partialSubmit="true"
+				  style="overflow: auto;"
+				  value="#{absencesMetierFormBB.idService}"
+				  valueChangeListener="#{absencesMetierFormBB.change}">
+					 
+				<f:selectItem itemLabel="" itemValue="-1"/>
+				<f:selectItems value="#{absencesMetierFormBB.servicesListItem}" />	
+			</ice:selectOneMenu>
+			<h:message for="idDataService1" />
+		</ice:panelGroup>
+	</ice:panelGrid>
+	<br/><br/>
+	<ice:outputText rendered="#{empty absencesMetierFormBB.listBean}" value="Aucun métier pour les critères sélectionnés."/>
+	<h:commandButton rendered="#{not empty absencesMetierFormBB.listBean}" actionListener="#{absencesMetierFormBB.download}" value="Exporter au format Excel"/>
+	
+	<ice:dataTable id="dataTableArretTravail" 
+				   rendered="#{not empty absencesMetierFormBB.listBean}" 
+				   columnWidths="150px,70px,70px,70px" 
+				   value="#{absencesMetierFormBB.listBean}" 
+				   var="item">
+			<f:facet name="header"> 
+		        <ice:columnGroup>
+		            <ice:headerRow>
+		            	<ice:column colspan="4">
+				        	<ice:outputText value="Absences par métier en jours travaillés"/>
+				        </ice:column>
+				    </ice:headerRow>
+	                   
+	                <ice:headerRow>
+	                   	 <ice:column>
+							<ice:outputText value="Métiers" />
+			             </ice:column>
+	
+	                 	<ice:column>
+			                <ice:outputText value="#{absencesMetierFormBB.twoYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{absencesMetierFormBB.oneYearAgo}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+			            <ice:column>
+			                <ice:outputText value="#{absencesMetierFormBB.curYear}" 
+			                				style="width: 100px;"/>
+			            </ice:column>
+	                 </ice:headerRow>
+	                 
+	           </ice:columnGroup>
+	           
+	        </f:facet> 
+			<ice:column>
+
+				<ice:outputText value="#{item.nom}" />
+				
+				<f:facet name="footer">
+				    	<ice:outputText value="Nombre de jours d'absences en jours travaillés / année" style="font-weight : bold;"/>
+			    </f:facet>
+			   
+			</ice:column>
+			
+			<ice:column>
+				<div style="text-align:right;padding-right:14px;" >
+					<ice:outputText value="#{item.nbAbsenceByMetierTwoYearAgo}" />
+				</div>
+				
+				<f:facet name="footer">
+					<ice:outputText value="#{absencesMetierFormBB.nbJourAbsenceTwoYearAgoDisplay}" 
+									style="font-size:11pt;height:25px;text-align:right;padding-right:14px;"/>
+			    </f:facet>
+			   
+			</ice:column>
+			
+			<ice:column>
+				<div style="text-align:right;padding-right:14px;" >
+					<ice:outputText value="#{item.nbAbsenceByMetierOneYearAgo}" />
+				</div>
+				<f:facet name="footer">
+				       <ice:outputText value="#{absencesMetierFormBB.nbJourAbsenceOneYearAgoDisplay}"
+				       				   style="font-size:11pt;height:25px;text-align:right;padding-right:14px;"/> 
+			    </f:facet>
+			   
+			</ice:column>
+			
+			<ice:column>
+				<div style="text-align:right;padding-right:14px;" >
+					<ice:outputText value="#{item.nbAbsenceByMetierCurYear}" />
+				</div>
+				<f:facet name="footer">
+				        <ice:outputText value="#{absencesMetierFormBB.nbJourAbsenceCurYearDisplay}" 
+				        				style="font-size:11pt;height:25px;text-align:right;padding-right:14px;"/>
+			    </f:facet>
+			    
+			</ice:column>
+			
+		</ice:dataTable>
+		<br/>
+		<ice:outputText rendered="#{absencesMetierFormBB.afficheErreur}">
+			Un des éléments suivants n'est pas spécifié dans les paramètres généraux :
+			<ul>
+				<li>Effectif au 31.12</li>
+				<li>Durée de travail théorique / jours / effectif total</li>
+			</ul>
+		</ice:outputText>
+		<br/>
+		<br/>
+		<ice:outputText value="Mémo: Les absences retenues pour ce tableau sont absence pour accident de travail, accident de trajet, maladie, maladie professionnelle, convenance personnelle, absence injustifiée, autre absence et les absences saisies par vos soins." />
+	</ice:form>
+	</ui:define>
+
+</ui:composition>

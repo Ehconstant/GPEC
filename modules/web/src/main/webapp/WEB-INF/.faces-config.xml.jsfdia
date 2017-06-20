@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="exportPyramideAge::#gpec#FormsGraph#pyramideForm.iface"
+    NAME="output" PATH="/gpec/FormsGraph/pyramideForm.iface"
+    TARGET="rules:#gpec#FormsGraph#pyramideForm.iface"
+    TITLE="exportPyramideAge" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#salaries.iface"
+  PATH="/gpec/salaries.iface" SHAPE="240,401,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#salaries.iface:0" NAME="item"
+   PATH="/gpec/salaries.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addSalarie::#gpec#salarieForm.iface"
+    NAME="output" PATH="/gpec/salarieForm.iface"
+    TARGET="rules:#gpec#salarieForm.iface" TITLE="addSalarie" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="salaries::#gpec#salaries.iface"
+    NAME="output1" PATH="/gpec/salaries.iface"
+    TARGET="rules:#gpec#salaries.iface" TITLE="salaries" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#salarieForm.iface"
+  PATH="/gpec/salarieForm.iface" SHAPE="240,289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::1" SHAPE="32,385,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::1" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="exportPyramideAnciennete::#gpec#FormsGraph#pyramideAncienneteForm.iface"
+    NAME="output" PATH="/gpec/FormsGraph/pyramideAncienneteForm.iface"
+    TARGET="rules:#gpec#FormsGraph#pyramideAncienneteForm.iface"
+    TITLE="exportPyramideAnciennete" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::2" SHAPE="32,161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addGroupeForm::#gpec#FormsParams#groupeForm.iface" NAME="output"
+    PATH="/gpec/FormsParams/groupeForm.iface"
+    TARGET="rules:#gpec#FormsParams#groupeForm.iface"
+    TITLE="addGroupeForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateGroupe::#gpec#FormsParams#groupes.iface"
+    NAME="output1" PATH="/gpec/FormsParams/groupes.iface"
+    TARGET="rules:#gpec#FormsParams#groupes.iface"
+    TITLE="saveOrUpdateGroupe" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#statuts.iface"
+  PATH="/gpec/statuts.iface" SHAPE="304,1009,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::3" SHAPE="32,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::3" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="needUpdate::#gpec#FormsOutils#needUpdate.iface" NAME="output"
+    PATH="/gpec/FormsOutils/needUpdate.iface"
+    TARGET="rules:#gpec#FormsOutils#needUpdate.iface" TITLE="needUpdate" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#domainesFormation.iface"
+  PATH="/gpec/domainesFormation.iface" SHAPE="304,1441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::4" SHAPE="48,1505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::4" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="departRetraite::#gpec#FormsAnalyse#departRetraite.iface"
+    NAME="output" PATH="/gpec/FormsAnalyse/departRetraite.iface"
+    TARGET="rules:#gpec#FormsAnalyse#departRetraite.iface"
+    TITLE="departRetraite" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::5" SHAPE="32,2353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::5" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="notNeedUpdate::#gpec#FormsOutils#notNeedUpdate.iface"
+    NAME="output" PATH="/gpec/FormsOutils/notNeedUpdate.iface"
+    TARGET="rules:#gpec#FormsOutils#notNeedUpdate.iface"
+    TITLE="notNeedUpdate" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::6" SHAPE="32,2609,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::6" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addEntrepriseForm::#gpec#FormsParams#entrepriseForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/entrepriseForm.iface"
+    TARGET="rules:#gpec#FormsParams#entrepriseForm.iface"
+    TITLE="addEntrepriseForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateEntreprise::#gpec#FormsParams#entreprises.iface"
+    NAME="output1" PATH="/gpec/FormsParams/entreprises.iface"
+    TARGET="rules:#gpec#FormsParams#entreprises.iface"
+    TITLE="saveOrUpdateEntreprise" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::7" SHAPE="32,2865,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::7" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addServiceForm::#gpec#FormsParams#serviceForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/serviceForm.iface"
+    TARGET="rules:#gpec#FormsParams#serviceForm.iface"
+    TITLE="addServiceForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateService::#gpec#FormsParams#services.iface"
+    NAME="output1" PATH="/gpec/FormsParams/services.iface"
+    TARGET="rules:#gpec#FormsParams#services.iface"
+    TITLE="saveOrUpdateService" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::8" SHAPE="32,3121,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::8" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addRevenuComplementaireForm::#gpec#FormsParams#revenusComplementairesForm.iface"
+    NAME="output"
+    PATH="/gpec/FormsParams/revenusComplementairesForm.iface"
+    TARGET="rules:#gpec#FormsParams#revenusComplementairesForm.iface"
+    TITLE="addRevenuComplementaireForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateRevenuComplementaire::#gpec#FormsParams#revenusComplementaires.iface"
+    NAME="output1" PATH="/gpec/FormsParams/revenusComplementaires.iface"
+    TARGET="rules:#gpec#FormsParams#revenusComplementaires.iface"
+    TITLE="saveOrUpdateRevenuComplementaire" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::9" SHAPE="32,3377,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::9" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addFraisProfForm::#gpec#FormsParams#fraisProfForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/fraisProfForm.iface"
+    TARGET="rules:#gpec#FormsParams#fraisProfForm.iface"
+    TITLE="addFraisProfForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateRevenuComplementaireFraisProf::#gpec#FormsParams#fraisProfs.iface"
+    NAME="output1" PATH="/gpec/FormsParams/fraisProfs.iface"
+    TARGET="rules:#gpec#FormsParams#fraisProfs.iface"
+    TITLE="saveOrUpdateRevenuComplementaireFraisProf" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::10" SHAPE="32,3633,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::10" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addMetierForm::#gpec#FormsParams#metierForm.iface" NAME="output"
+    PATH="/gpec/FormsParams/metierForm.iface"
+    TARGET="rules:#gpec#FormsParams#metierForm.iface"
+    TITLE="addMetierForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateMetier::#gpec#FormsParams#metiers.iface"
+    NAME="output1" PATH="/gpec/FormsParams/metiers.iface"
+    TARGET="rules:#gpec#FormsParams#metiers.iface"
+    TITLE="saveOrUpdateMetier" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::11" SHAPE="32,2209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::11" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addFicheMetierForm::#gpec#FormsParams#ficheMetierForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/ficheMetierForm.iface"
+    TARGET="rules:#gpec#FormsParams#ficheMetierForm.iface"
+    TITLE="addFicheMetierForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateFicheMetier::#gpec#FormsParams#ficheMetier.iface"
+    NAME="output1" PATH="/gpec/FormsParams/ficheMetier.iface"
+    TARGET="rules:#gpec#FormsParams#ficheMetier.iface"
+    TITLE="saveOrUpdateFicheMetier" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::12" SHAPE="48,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::12" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addStatutForm::#gpec#statutForm.iface"
+    NAME="output" PATH="/gpec/statutForm.iface"
+    TARGET="rules:#gpec#statutForm.iface" TITLE="addStatutForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="saveOrUpdateStatut::#gpec#statuts.iface"
+    NAME="output1" PATH="/gpec/statuts.iface"
+    TARGET="rules:#gpec#statuts.iface" TITLE="saveOrUpdateStatut" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#typeCauseAccidentForm.iface"
+  PATH="/gpec/typeCauseAccidentForm.iface" SHAPE="256,3649,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typeLesionForm.iface"
+  PATH="/gpec/typeLesionForm.iface" SHAPE="256,3137,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typeContratForm.iface"
+  PATH="/gpec/typeContratForm.iface" SHAPE="256,3393,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typeAccidentForm.iface"
+  PATH="/gpec/typeAccidentForm.iface" SHAPE="256,2881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#statutForm.iface"
+  PATH="/gpec/statutForm.iface" SHAPE="320,1777,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typesLesions.iface"
+  PATH="/gpec/typesLesions.iface" SHAPE="320,1713,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typesCausesAccidents.iface"
+  PATH="/gpec/typesCausesAccidents.iface" SHAPE="320,2305,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typesAccidents.iface"
+  PATH="/gpec/typesAccidents.iface" SHAPE="320,577,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#typesContrats.iface"
+  PATH="/gpec/typesContrats.iface" SHAPE="320,1937,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::13" SHAPE="48,305,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::13" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeAbsenceForm::#gpec#FormsParams#typeAbsenceForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/typeAbsenceForm.iface"
+    TARGET="rules:#gpec#FormsParams#typeAbsenceForm.iface"
+    TITLE="addTypeAbsenceForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeAbsence::#gpec#FormsParams#typesAbsences.iface"
+    NAME="output1" PATH="/gpec/FormsParams/typesAbsences.iface"
+    TARGET="rules:#gpec#FormsParams#typesAbsences.iface"
+    TITLE="saveOrUpdateTypeAbsence" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::14" SHAPE="32,417,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::14" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addDomaineFormationForm::#gpec#FormsAnalyse#domaineFormationForm.iface"
+    NAME="output" PATH="/gpec/FormsAnalyse/domaineFormationForm.iface"
+    TARGET="rules:#gpec#FormsAnalyse#domaineFormationForm.iface"
+    TITLE="addDomaineFormationForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateDomaineFormation::#gpec#domainesFormation.iface"
+    NAME="output1" PATH="/gpec/domainesFormation.iface"
+    TARGET="rules:#gpec#domainesFormation.iface"
+    TITLE="saveOrUpdateDomaineFormation" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::15" SHAPE="48,561,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::15" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeAccidentForm::#gpec#typeAccidentForm.iface" NAME="output"
+    PATH="/gpec/typeAccidentForm.iface"
+    TARGET="rules:#gpec#typeAccidentForm.iface"
+    TITLE="addTypeAccidentForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeAccident::#gpec#typesAccidents.iface"
+    NAME="output1" PATH="/gpec/typesAccidents.iface"
+    TARGET="rules:#gpec#typesAccidents.iface"
+    TITLE="saveOrUpdateTypeAccident" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::16" SHAPE="48,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::16" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeLesionForm::#gpec#typeLesionForm.iface" NAME="output"
+    PATH="/gpec/typeLesionForm.iface"
+    TARGET="rules:#gpec#typeLesionForm.iface" TITLE="addTypeLesionForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeLesion::#gpec#typesLesions.iface" NAME="output1"
+    PATH="/gpec/typesLesions.iface"
+    TARGET="rules:#gpec#typesLesions.iface"
+    TITLE="saveOrUpdateTypeLesion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsGraph#pyramideForm.iface"
+  PATH="/gpec/FormsGraph/pyramideForm.iface" SHAPE="240,545,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::17" SHAPE="48,1185,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::17" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeHabilitationForm::#gpec#FormsParams#typeHabilitationForm.iface"
+    NAME="output" PATH="/gpec/FormsParams/typeHabilitationForm.iface"
+    TARGET="rules:#gpec#FormsParams#typeHabilitationForm.iface"
+    TITLE="addTypeHabilitationForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeHabilitation::#gpec#FormsParams#typesHabilitations.iface"
+    NAME="output1" PATH="/gpec/FormsParams/typesHabilitations.iface"
+    TARGET="rules:#gpec#FormsParams#typesHabilitations.iface"
+    TITLE="saveOrUpdateTypeHabilitation" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsGraph#pyramideAncienneteForm.iface"
+  PATH="/gpec/FormsGraph/pyramideAncienneteForm.iface"
+  SHAPE="240,433,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#heuresFormation.iface"
+  PATH="/gpec/heuresFormation.iface" SHAPE="320,2161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#heuresFormation.iface:0" NAME="item"
+   PATH="/gpec/heuresFormation.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="heuresFormation::#gpec#FormsAnalyse#heuresFormation.iface"
+    NAME="output" PATH="/gpec/FormsAnalyse/heuresFormation.iface"
+    TARGET="rules:#gpec#FormsAnalyse#heuresFormation.iface"
+    TITLE="heuresFormation" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::18" SHAPE="48,1441,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::18" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeContratForm::#gpec#typeContratForm.iface" NAME="output"
+    PATH="/gpec/typeContratForm.iface"
+    TARGET="rules:#gpec#typeContratForm.iface"
+    TITLE="addTypeContratForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeContrat::#gpec#typesContrats.iface"
+    NAME="output1" PATH="/gpec/typesContrats.iface"
+    TARGET="rules:#gpec#typesContrats.iface"
+    TITLE="saveOrUpdateTypeContrat" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsParams#parametresGenerauxForm.iface"
+  PATH="/gpec/FormsParams/parametresGenerauxForm.iface"
+  SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#absencesMetier.iface"
+  PATH="/gpec/FormsAnalyse/absencesMetier.iface" SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#absencesNature.iface"
+  PATH="/gpec/FormsAnalyse/absencesNature.iface" SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#turnOver.iface"
+  PATH="/gpec/FormsAnalyse/turnOver.iface" SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsAnalyse#domaineFormationForm.iface"
+  PATH="/gpec/FormsAnalyse/domaineFormationForm.iface"
+  SHAPE="320,2913,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#arretTravail.iface"
+  PATH="/gpec/FormsAnalyse/arretTravail.iface" SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#accidentMetier.iface"
+  PATH="/gpec/FormsAnalyse/accidentMetier.iface" SHAPE="320,1457,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#departRetraite.iface"
+  PATH="/gpec/FormsAnalyse/departRetraite.iface" SHAPE="240,2689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#heuresFormation.iface"
+  PATH="/gpec/FormsAnalyse/heuresFormation.iface" SHAPE="528,3009,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#notNeedUpdate.iface"
+  PATH="/gpec/FormsOutils/notNeedUpdate.iface" SHAPE="240,4017,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#needUpdate.iface"
+  PATH="/gpec/FormsOutils/needUpdate.iface" SHAPE="240,1313,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#update.iface"
+  PATH="/gpec/FormsOutils/update.iface" SHAPE="320,2689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#projectionPS.iface"
+  PATH="/gpec/FormsAnalyse/projectionPS.iface" SHAPE="320,2689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#planningAbsencesForm.iface"
+  PATH="/gpec/FormsOutils/planningAbsencesForm.iface"
+  SHAPE="320,2721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#filtreMultiCriteres.iface"
+  PATH="/gpec/FormsOutils/filtreMultiCriteres.iface"
+  SHAPE="320,2753,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#organigramme.iface"
+  PATH="/gpec/FormsOutils/organigramme.iface" SHAPE="320,2785,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#groupeForm.iface"
+  PATH="/gpec/FormsParams/groupeForm.iface" SHAPE="256,1313,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#FormsParams#groupeForm.iface:0"
+   NAME="item" PATH="/gpec/FormsParams/groupeForm.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateGroupe::#gpec#FormsParams#groupe.iface"
+    NAME="output" PATH="/gpec/FormsParams/groupe.iface"
+    TARGET="rules:#gpec#FormsParams#groupe.iface"
+    TITLE="saveOrUpdateGroupe" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#groupes.iface"
+  PATH="/gpec/FormsParams/groupes.iface" SHAPE="256,2785,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#groupe.iface"
+  PATH="/gpec/FormsParams/groupe.iface" SHAPE="32,1441,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#FormsParams#groupe.iface:0" NAME="item"
+   PATH="/gpec/FormsParams/groupe.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addGroupeForm::#gpec#FormsParams#groupeForm.iface" NAME="output"
+    PATH="/gpec/FormsParams/groupeForm.iface"
+    TARGET="rules:#gpec#FormsParams#groupeForm.iface"
+    TITLE="addGroupeForm" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#entrepriseForm.iface"
+  PATH="/gpec/FormsParams/entrepriseForm.iface" SHAPE="256,5217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#entreprises.iface"
+  PATH="/gpec/FormsParams/entreprises.iface" SHAPE="256,5441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#serviceForm.iface"
+  PATH="/gpec/FormsParams/serviceForm.iface" SHAPE="256,5217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#services.iface"
+  PATH="/gpec/FormsParams/services.iface" SHAPE="256,5441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#metiers.iface"
+  PATH="/gpec/FormsParams/metiers.iface" SHAPE="256,5441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#metierForm.iface"
+  PATH="/gpec/FormsParams/metierForm.iface" SHAPE="256,5217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#typeAbsenceForm.iface"
+  PATH="/gpec/FormsParams/typeAbsenceForm.iface" SHAPE="256,5217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#typesAbsences.iface"
+  PATH="/gpec/FormsParams/typesAbsences.iface" SHAPE="256,5441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#typeHabilitationForm.iface"
+  PATH="/gpec/FormsParams/typeHabilitationForm.iface"
+  SHAPE="256,433,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#typesHabilitations.iface"
+  PATH="/gpec/FormsParams/typesHabilitations.iface" SHAPE="256,433,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#retourSalarie.iface"
+  PATH="/gpec/FormsOutils/retourSalarie.iface" SHAPE="304,2593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::19" SHAPE="32,2961,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::19" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addTypeCauseAccidentForm::#gpec#typeCauseAccidentForm.iface"
+    NAME="output26" PATH="/gpec/typeCauseAccidentForm.iface"
+    TARGET="rules:#gpec#typeCauseAccidentForm.iface"
+    TITLE="addTypeCauseAccidentForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateTypeCauseAccident::#gpec#typesCausesAccidents.iface"
+    NAME="output" PATH="/gpec/typesCausesAccidents.iface"
+    TARGET="rules:#gpec#typesCausesAccidents.iface"
+    TITLE="saveOrUpdateTypeCauseAccident" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#tabCompetences.iface"
+  PATH="/gpec/FormsAnalyse/tabCompetences.iface" SHAPE="304,4145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#ficheMetier.iface"
+  PATH="/gpec/FormsParams/ficheMetier.iface" SHAPE="304,4177,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::20" SHAPE="32,5553,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::20" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="retourSalarie::#gpec#FormsOutils#retourSalarie.iface"
+    NAME="output" PATH="/gpec/FormsOutils/retourSalarie.iface"
+    TARGET="rules:#gpec#FormsOutils#retourSalarie.iface"
+    TITLE="retourSalarie" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::21" SHAPE="32,5665,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::21" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="linkFile::#gpec#FormsParams#rattachementFichiersForm.iface"
+    NAME="output"
+    PATH="/gpec/FormsParams/rattachementFichiersForm.iface"
+    TARGET="rules:#gpec#FormsParams#rattachementFichiersForm.iface"
+    TITLE="linkFile" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::22" SHAPE="32,5889,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::22" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateFicheDePoste::#gpec#FormsSalaries#salariePoste.iface"
+    NAME="output" PATH="/gpec/FormsSalaries/salariePoste.iface"
+    TARGET="rules:#gpec#FormsSalaries#salariePoste.iface"
+    TITLE="saveOrUpdateFicheDePoste" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::23" SHAPE="32,817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::23" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="addRemunerationForm::#gpec#FormsSalarie#SalarieRemunerationForm.iface"
+    NAME="output"
+    PATH="/gpec/FormsSalarie/SalarieRemunerationForm.iface"
+    TARGET="rules:#gpec#FormsSalarie#SalarieRemunerationForm.iface"
+    TITLE="addRemunerationForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="saveOrUpdateRemuneration::#gpec#FormsSalarie#SalarieRemuneration.iface"
+    NAME="output1" PATH="/gpec/FormsSalarie/SalarieRemuneration.iface"
+    TARGET="rules:#gpec#FormsSalarie#SalarieRemuneration.iface"
+    TITLE="saveOrUpdateRemuneration" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules::24" SHAPE="32,1105,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::24" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addSalarie::#gpec#salarieForm.iface"
+    NAME="output" PATH="/gpec/salarieForm.iface"
+    TARGET="rules:#gpec#salarieForm.iface" TITLE="addSalarie" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="salaries::#gpec#salaries.iface"
+    NAME="output1" PATH="/gpec/salaries.iface"
+    TARGET="rules:#gpec#salaries.iface" TITLE="salaries" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsParams#revenusComplementaires.iface"
+  PATH="/gpec/FormsParams/revenusComplementaires.iface"
+  SHAPE="304,2401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsSalarie#SalarieRemunerationForm.iface"
+  PATH="/gpec/FormsSalarie/SalarieRemunerationForm.iface"
+  SHAPE="256,5905,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#fraisProfForm.iface"
+  PATH="/gpec/FormsParams/fraisProfForm.iface" SHAPE="304,4977,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#rattachementFichiers.iface"
+  PATH="/gpec/FormsParams/rattachementFichiers.iface"
+  SHAPE="304,1121,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsParams#revenusComplementairesForm.iface"
+  PATH="/gpec/FormsParams/revenusComplementairesForm.iface"
+  SHAPE="304,4465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsSalarie#SalarieRemuneration.iface"
+  PATH="/gpec/FormsSalarie/SalarieRemuneration.iface"
+  SHAPE="256,6049,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#fraisProfs.iface"
+  PATH="/gpec/FormsParams/fraisProfs.iface" SHAPE="304,977,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsSalaries#salariePoste.iface"
+  PATH="/gpec/FormsSalaries/salariePoste.iface" SHAPE="240,5793,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsOutils#tableauxSuivi.iface"
+  PATH="/gpec/FormsOutils/tableauxSuivi.iface" SHAPE="304,833,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsParams#rattachementFichiersForm.iface"
+  PATH="/gpec/FormsParams/rattachementFichiersForm.iface"
+  SHAPE="240,5569,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#negociationSalariale.iface"
+  PATH="/gpec/negociationSalariale.iface" SHAPE="32,7681,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#negociationSalariale.iface:0"
+   NAME="item" PATH="/gpec/negociationSalariale.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="negociationSalariale::#gpec#FormsAnalyse#negociationSalariale.iface"
+    NAME="output" PATH="/gpec/FormsAnalyse/negociationSalariale.iface"
+    TARGET="rules:#gpec#FormsAnalyse#negociationSalariale.iface"
+    TITLE="negociationSalariale" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#gpec#FormsAnalyse#negociationSalariale.iface"
+  PATH="/gpec/FormsAnalyse/negociationSalariale.iface"
+  SHAPE="240,7697,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::25" SHAPE="32,817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::25" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="entreprises::#gpec#FormsParams#entreprises.iface" NAME="output"
+    PATH="/gpec/FormsParams/entreprises.iface"
+    TARGET="rules:#gpec#FormsParams#entreprises.iface"
+    TITLE="entreprises" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="projectionPS::#gpec#FormsAnalyse#projectionPS.iface"
+    NAME="output1" PATH="/gpec/FormsAnalyse/projectionPS.iface"
+    TARGET="rules:#gpec#FormsAnalyse#projectionPS.iface"
+    TITLE="projectionPS" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="update::#gpec#FormsOutils#update.iface"
+    NAME="output2" PATH="/gpec/FormsOutils/update.iface"
+    TARGET="rules:#gpec#FormsOutils#update.iface" TITLE="update" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="link::#gpec#FormsParams#rattachementFichiers.iface"
+    NAME="output3" PATH="/gpec/FormsParams/rattachementFichiers.iface"
+    TARGET="rules:#gpec#FormsParams#rattachementFichiers.iface"
+    TITLE="link" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="admin::#gpec#FormsParams#admin.iface"
+    NAME="output4" PATH="/gpec/FormsParams/admin.iface"
+    TARGET="rules:#gpec#FormsParams#admin.iface" TITLE="admin" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="ficheMetier::#gpec#FormsParams#ficheMetier.iface" NAME="output5"
+    PATH="/gpec/FormsParams/ficheMetier.iface"
+    TARGET="rules:#gpec#FormsParams#ficheMetier.iface"
+    TITLE="ficheMetier" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="metiers::#gpec#FormsParams#metiers.iface"
+    NAME="output6" PATH="/gpec/FormsParams/metiers.iface"
+    TARGET="rules:#gpec#FormsParams#metiers.iface" TITLE="metiers" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="groupe::#gpec#FormsParams#groupes.iface"
+    NAME="output7" PATH="/gpec/FormsParams/groupes.iface"
+    TARGET="rules:#gpec#FormsParams#groupes.iface" TITLE="groupe" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="heuresFormation::#gpec#FormsAnalyse#heuresFormation.iface"
+    NAME="output8" PATH="/gpec/FormsAnalyse/heuresFormation.iface"
+    TARGET="rules:#gpec#FormsAnalyse#heuresFormation.iface"
+    TITLE="heuresFormation" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="negociationSalariale::#gpec#FormsAnalyse#negociationSalariale.iface"
+    NAME="output9" PATH="/gpec/FormsAnalyse/negociationSalariale.iface"
+    TARGET="rules:#gpec#FormsAnalyse#negociationSalariale.iface"
+    TITLE="negociationSalariale" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="suiviEffectif::#gpec#FormsAnalyse#suiviEffectif.iface"
+    NAME="output10" PATH="/gpec/FormsAnalyse/suiviEffectif.iface"
+    TARGET="rules:#gpec#FormsAnalyse#suiviEffectif.iface"
+    TITLE="suiviEffectif" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="accidentMetier::#gpec#FormsAnalyse#accidentMetier.iface"
+    NAME="output11" PATH="/gpec/FormsAnalyse/accidentMetier.iface"
+    TARGET="rules:#gpec#FormsAnalyse#accidentMetier.iface"
+    TITLE="accidentMetier" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="statuts::#gpec#statuts.iface"
+    NAME="output12" PATH="/gpec/statuts.iface"
+    TARGET="rules:#gpec#statuts.iface" TITLE="statuts" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="typesAbsences::#gpec#FormsParams#typesAbsences.iface"
+    NAME="output13" PATH="/gpec/FormsParams/typesAbsences.iface"
+    TARGET="rules:#gpec#FormsParams#typesAbsences.iface"
+    TITLE="typesAbsences" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="domainesFormation::#gpec#domainesFormation.iface"
+    NAME="output14" PATH="/gpec/domainesFormation.iface"
+    TARGET="rules:#gpec#domainesFormation.iface"
+    TITLE="domainesFormation" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="typesHabilitation::#gpec#FormsParams#typesHabilitations.iface"
+    NAME="output15" PATH="/gpec/FormsParams/typesHabilitations.iface"
+    TARGET="rules:#gpec#FormsParams#typesHabilitations.iface"
+    TITLE="typesHabilitation" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="fraisProfs::#gpec#FormsParams#fraisProfs.iface" NAME="output16"
+    PATH="/gpec/FormsParams/fraisProfs.iface"
+    TARGET="rules:#gpec#FormsParams#fraisProfs.iface" TITLE="fraisProfs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="revenusComplementaires::#gpec#FormsParams#revenusComplementaires.iface"
+    NAME="output17"
+    PATH="/gpec/FormsParams/revenusComplementaires.iface"
+    TARGET="rules:#gpec#FormsParams#revenusComplementaires.iface"
+    TITLE="revenusComplementaires" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="typesLesion::#gpec#typesLesions.iface"
+    NAME="output18" PATH="/gpec/typesLesions.iface"
+    TARGET="rules:#gpec#typesLesions.iface" TITLE="typesLesion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="typesContrat::#gpec#typesContrats.iface"
+    NAME="output19" PATH="/gpec/typesContrats.iface"
+    TARGET="rules:#gpec#typesContrats.iface" TITLE="typesContrat" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="typesCausesAccident::#gpec#typesCausesAccidents.iface"
+    NAME="output20" PATH="/gpec/typesCausesAccidents.iface"
+    TARGET="rules:#gpec#typesCausesAccidents.iface"
+    TITLE="typesCausesAccident" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="paramsGeneraux::#gpec#FormsParams#parametresGenerauxForm.iface"
+    NAME="output21"
+    PATH="/gpec/FormsParams/parametresGenerauxForm.iface"
+    TARGET="rules:#gpec#FormsParams#parametresGenerauxForm.iface"
+    TITLE="paramsGeneraux" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="tableauxSuivi::#gpec#FormsOutils#tableauxSuivi.iface"
+    NAME="output22" PATH="/gpec/FormsOutils/tableauxSuivi.iface"
+    TARGET="rules:#gpec#FormsOutils#tableauxSuivi.iface"
+    TITLE="tableauxSuivi" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="planningAbsence::#gpec#FormsOutils#planningAbsencesForm.iface"
+    NAME="output23" PATH="/gpec/FormsOutils/planningAbsencesForm.iface"
+    TARGET="rules:#gpec#FormsOutils#planningAbsencesForm.iface"
+    TITLE="planningAbsence" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="arretTravail::#gpec#FormsAnalyse#arretTravail.iface"
+    NAME="output24" PATH="/gpec/FormsAnalyse/arretTravail.iface"
+    TARGET="rules:#gpec#FormsAnalyse#arretTravail.iface"
+    TITLE="arretTravail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="absencesMetier::#gpec#FormsAnalyse#absencesMetier.iface"
+    NAME="output25" PATH="/gpec/FormsAnalyse/absencesMetier.iface"
+    TARGET="rules:#gpec#FormsAnalyse#absencesMetier.iface"
+    TITLE="absencesMetier" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="absencesNature::#gpec#FormsAnalyse#absencesNature.iface"
+    NAME="output26" PATH="/gpec/FormsAnalyse/absencesNature.iface"
+    TARGET="rules:#gpec#FormsAnalyse#absencesNature.iface"
+    TITLE="absencesNature" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="turnOver::#gpec#FormsAnalyse#turnOver.iface"
+    NAME="output27" PATH="/gpec/FormsAnalyse/turnOver.iface"
+    TARGET="rules:#gpec#FormsAnalyse#turnOver.iface" TITLE="turnOver" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="tabCompetences::#gpec#FormsAnalyse#tabCompetences.iface"
+    NAME="output28" PATH="/gpec/FormsAnalyse/tabCompetences.iface"
+    TARGET="rules:#gpec#FormsAnalyse#tabCompetences.iface"
+    TITLE="tabCompetences" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="exit::#index2.jsp" NAME="output29"
+    PATH="/index2.jsp" TARGET="rules:#index2.jsp" TITLE="exit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="home::#index2.jsp" NAME="output30"
+    PATH="/index2.jsp" TARGET="rules:#index2.jsp" TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="filtreMultiCriteres::#gpec#FormsOutils#filtreMultiCriteres.iface"
+    NAME="output31" PATH="/gpec/FormsOutils/filtreMultiCriteres.iface"
+    TARGET="rules:#gpec#FormsOutils#filtreMultiCriteres.iface"
+    TITLE="filtreMultiCriteres" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="organigramme::#gpec#FormsOutils#organigramme.iface"
+    NAME="output32" PATH="/gpec/FormsOutils/organigramme.iface"
+    TARGET="rules:#gpec#FormsOutils#organigramme.iface"
+    TITLE="organigramme" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="retourSalarie::#gpec#FormsOutils#retourSalarie.iface"
+    NAME="output33" PATH="/gpec/FormsOutils/retourSalarie.iface"
+    TARGET="rules:#gpec#FormsOutils#retourSalarie.iface"
+    TITLE="retourSalarie" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="refreshMigration::#gpec#salaries.iface"
+    NAME="output34" PATH="/gpec/salaries.iface"
+    TARGET="rules:#gpec#salaries.iface" TITLE="refreshMigration" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="accueil::#index2.jsp" NAME="output35"
+    PATH="/index2.jsp" TARGET="rules:#index2.jsp" TITLE="accueil" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#ficheMetierForm.iface"
+  PATH="/gpec/FormsParams/ficheMetierForm.iface" SHAPE="304,3393,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#index2.jsp" PATH="/index2.jsp"
+  SHAPE="304,833,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#suiviEffectif.iface"
+  PATH="/gpec/suiviEffectif.iface" SHAPE="32,7745,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#gpec#suiviEffectif.iface:0" NAME="item"
+   PATH="/gpec/suiviEffectif.iface" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="suiviEffectif::#gpec#FormsAnalyse#suiviEffectif.iface"
+    NAME="output" PATH="/gpec/FormsAnalyse/suiviEffectif.iface"
+    TARGET="rules:#gpec#FormsAnalyse#suiviEffectif.iface"
+    TITLE="suiviEffectif" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsAnalyse#suiviEffectif.iface"
+  PATH="/gpec/FormsAnalyse/suiviEffectif.iface" SHAPE="240,7761,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#admin.iface"
+  PATH="/gpec/FormsParams/admin.iface" SHAPE="304,833,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#gpec#FormsParams#adminForm.iface"
+  PATH="/gpec/FormsParams/adminForm.iface" SHAPE="304,7233,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

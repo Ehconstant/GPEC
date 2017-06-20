@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+<h3>Formulaire de saisie d'une formation</h3>
+
+<ice:panelGrid columns="2">
+
+	<ice:outputLabel value="Intitulé de la formation" />
+	<ice:panelGroup>
+		<h:inputText value="#{salarieFormationsFormBB.nomFormation}" 
+			style="width:441px;"
+			partialSubmit="false"
+			id="idFormation" 
+			onfocus="focus=this;focus.focus()"
+			onkeypress="return noSubmitOnEnter(event);" />
+		<h:message for="idFormation" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Volume d'heures" />
+	<ice:panelGroup>
+		<h:inputText value="#{salarieFormationsFormBB.volumeHoraire}"
+			id="idVolHeure" 
+			style="width:113px;"
+			converterMessage="#{msg.integerConverter}" 
+			valueChangeListener="#{salarieFormationsFormBB.checkDif}"
+			onchange="this.form.submit()" 
+			onfocus="focus=this;focus.focus()"
+			onkeypress="return noSubmitOnEnter(event);" />
+		<h:message for="idVolHeure" errorStyle="color: red"></h:message>
+	
+		<ice:outputLabel style="width:72px;margin-left:19px;margin-right:19px;" value="HORS DIF"/>
+		<h:inputText value="#{salarieFormationsFormBB.horsDifDisplay}"
+				valueChangeListener="#{salarieFormationsFormBB.checkDif}"
+				id="idHorsDif" 
+				onkeypress="return noSubmitOnEnter(event);"
+				style="width:72px;"
+				immediate="true"
+				onfocus="focus=this;focus.focus()"
+				onchange="this.form.submit()"
+				converterMessage="#{msg.integerOrDoubleConverter}" />
+				
+		<ice:outputLabel style="width:72px;margin-left:23px;margin-right:24px;" value="DIF  "/>
+		<h:inputText value="#{salarieFormationsFormBB.difDisplay}"
+				valueChangeListener="#{salarieFormationsFormBB.checkDif}"
+				id="idDif" 
+				onkeypress="return noSubmitOnEnter(event);"
+				style="width:72px;"
+				immediate="true"
+				onfocus="focus=this;focus.focus()"
+				onchange="this.form.submit()"
+				converterMessage="#{msg.integerOrDoubleConverter}" />
+				
+	</ice:panelGroup>
+	<ice:outputLabel value="" />
+	<h:message for="idDif" errorStyle="color: red;"></h:message>
+	
+	
+	<ice:outputLabel value="Coût de la formation" />
+	<ice:panelGroup>
+		<ice:outputLabel value="OPCA  " />
+		<h:inputText value="#{salarieFormationsFormBB.coutOpca}"
+			valueChangeListener="#{salarieFormationsFormBB.checkCoutOPCA}"
+			id="idCoutOPCA" 
+			onkeypress="return noSubmitOnEnter(event);"
+			style="width:72px"
+			partialSubmit="true"
+			onfocus="focus=this;focus.focus()"
+			onchange="this.form.submit()" />
+		<ice:outputLabel value="  €  " style="width:10px;"/>
+		
+		<ice:outputLabel value="ENTREPRISE  " />
+		<h:inputText value="#{salarieFormationsFormBB.coutEntreprise}"
+			valueChangeListener="#{salarieFormationsFormBB.checkCoutEntreprise}"
+			id="idCoutEntreprise" 
+			onkeypress="return noSubmitOnEnter(event);"
+			style="width:72px"
+			immediate="true"
+			onfocus="focus=this;focus.focus()"
+			onchange="this.form.submit()" />
+		<ice:outputLabel value="  €  " style="width:10px;"/>
+		
+		<ice:outputLabel value="AUTRE  " style="margin-left:5px;margin-right:5px;" />
+		<h:inputText value="#{salarieFormationsFormBB.coutAutre}"
+			valueChangeListener="#{salarieFormationsFormBB.checkCoutAutre}"
+			id="idCoutAutre" 
+			onkeypress="return noSubmitOnEnter(event);"
+			style="width:72px"
+			immediate="true"
+			onfocus="focus=this;focus.focus()"
+			onchange="this.form.submit()" />
+		<ice:outputLabel value="  €  " style="width:10px;"/>
+	</ice:panelGroup>
+	<ice:outputLabel value="" />
+	<h:message for="idCoutOPCA" errorStyle="color: red;"></h:message>
+	<ice:outputLabel value="" />
+	<h:message for="idCoutEntreprise" errorStyle="color: red;"></h:message>
+	<ice:outputLabel value="" />
+	<h:message for="idCoutAutre" errorStyle="color: red;"></h:message>
+
+
+	<!-- ice:outputLabel for="SlctDIF" value="DIF" />
+	<ice:panelGroup>
+		<ice:selectOneRadio id="SlctDIF"
+			value="#{salarieFormationsFormBB.dif}" partialSubmit="true">
+			<f:selectItem itemLabel="DIF" itemValue="1" />
+			<f:selectItem itemLabel="Hors DIF" itemValue="0" />
+		</ice:selectOneRadio>
+		<h:message for="idEqui" errorStyle="color: red"></h:message>
+	</ice:panelGroup-->
+	
+	<ice:outputLabel for="SlctMode" value="Titre obtenu" />
+	<ice:panelGroup>
+		<ice:selectOneRadio id="SlctMode"
+			value="#{salarieFormationsFormBB.mode}" partialSubmit="false">
+			<f:selectItem itemLabel="Qualifiant" itemValue="Qualifiant" />
+			<f:selectItem itemLabel="Diplômant" itemValue="Diplomant" />
+			<f:selectItem itemLabel="Attestation formation"
+				itemValue="Attestation formation" />
+		</ice:selectOneRadio>
+		<h:message for="idEqui" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	
+
+	<ice:outputLabel value="Domaine de Formation" />
+	<ice:panelGroup>
+		<ice:selectOneMenu id="domaineFormationList"
+			value="#{salarieFormationsFormBB.idDomaineFormationBeanSelected}"
+			partialSubmit="false" 
+			style="overflow: auto;">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItems
+				value="#{salarieFormationsFormBB.domaineFormationList}" />
+		</ice:selectOneMenu>
+		<h:message for="domaineFormationList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Organisme de formation" />
+	<ice:panelGroup>
+		<h:inputText value="#{salarieFormationsFormBB.organismeFormation}"
+			partialSubmit="false" 
+			style="width:150px;margin-left:2px;"
+			id="idOrgForm" 
+			onfocus="focus=this;focus.focus()" 
+			onkeypress="return noSubmitOnEnter(event);" />
+		<h:message for="idOrgForm" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Début de la formation (jj/mm/aaaa)" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="dateDebutFormation"
+			value="#{salarieFormationsFormBB.debutFormation}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			partialSubmit="true" 
+			immediate="true"  
+			valueChangeListener="#{salarieFormationsFormBB.checkPeriode}"
+			converterMessage="#{msg.dateTimeConverter}">
+			<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/>
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="dateDebutFormation" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+
+	<ice:outputLabel value="Fin de la formation (jj/mm/aaaa)" />
+	<ice:panelGroup>
+		<ice:selectInputDate id="dateFinFormation"
+			value="#{salarieFormationsFormBB.finFormation}"
+			highlightClass="weekend: august:" 
+			renderMonthAsDropdown="true"
+			renderYearAsDropdown="true" 
+			highlightUnit="DAY_OF_WEEK: MONTH"
+			highlightValue="1,7: 8" 
+			renderAsPopup="true"
+			partialSubmit="true" 
+			immediate="true" 
+			valueChangeListener="#{salarieFormationsFormBB.checkPeriode}"
+			converterMessage="#{msg.dateTimeConverter}">
+			<!-- <f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="#{dateSelect.timeZone}"/> -->
+			<f:converter converterId="dateConverter"
+				timeZone="#{dateSelect.timeZone}" />
+		</ice:selectInputDate>
+		<h:message for="dateFinFormation" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Nombre de jours ouvrés" />
+	<ice:panelGroup>
+		<h:inputText value="#{salarieFormationsFormBB.nombreJourOuvre}"
+			valueChangeListener="#{salarieFormationsFormBB.checkNbJoursOuvres}"
+			immediate="true"
+			onchange="this.form.submit()"
+			style="width:150px;margin-left:2px;"
+			id="idJourOuvre"
+			onfocus="focus=this;focus.focus()"
+			onkeypress="return noSubmitOnEnter(event);"/>
+	</ice:panelGroup>
+	<ice:outputLabel value="" />
+	<h:message for="idJourOuvre" errorStyle="color: red"></h:message>
+	
+	<ice:outputLabel value="Nature de l'absence" rendered="#{salarieFormationsFormBB.natureAbsRequired}" />
+	<ice:panelGroup id="panelGroupRequired" rendered="#{salarieFormationsFormBB.natureAbsRequired}" >
+		<ice:selectOneMenu id="typeAbsenceListRequired"
+			value="#{salarieFormationsFormBB.idTypeAbsenceSelected}"
+			partialSubmit="false" 
+			style="overflow: auto;">
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItem itemLabel="Période de formation" itemValue="16" />
+			<f:selectItem itemLabel="Période de formation en apprentissage"
+				itemValue="17" />
+		</ice:selectOneMenu>
+
+		<h:message for="typeAbsenceListRequired" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<ice:outputLabel value="Nature de l'absence" rendered="#{not salarieFormationsFormBB.natureAbsRequired}" />
+	<ice:panelGroup id="panelGroup" rendered="#{not salarieFormationsFormBB.natureAbsRequired}" >
+		<ice:selectOneMenu id="typeAbsenceList"
+			value="#{salarieFormationsFormBB.idTypeAbsenceSelected}"
+			partialSubmit="false" 
+			style="overflow: auto;"
+			disabled="true" >
+			<f:selectItem itemLabel="" itemValue="-1" />
+			<f:selectItem itemLabel="Période de formation" itemValue="16" />
+			<f:selectItem itemLabel="Période de formation en apprentissage"
+				itemValue="17" />
+		</ice:selectOneMenu>
+
+		<h:message for="typeAbsenceList" errorStyle="color: red"></h:message>
+	</ice:panelGroup>
+	
+	<c:choose>
+		<c:when test="#{salarieFormationsFormBB.isModif}">
+			<ice:outputLabel value="Mettre à jour l'absence générée ?" 
+				rendered="#{salarieFormationsFormBB.idAbsence != -1 and salarieFormationsFormBB.idAbsence != 0}" />
+			<ice:panelGroup rendered="#{salarieFormationsFormBB.idAbsence != -1 and salarieFormationsFormBB.idAbsence != 0}" >
+				<ice:selectBooleanCheckbox
+					value="#{salarieFormationsFormBB.majAbsence}" 
+					id="majAbsence"
+					partialSubmit="true" 
+					immediate="true"
+					disabled="#{salarieFormationsFormBB.idAbsence == -1}"
+					valueChangeListener="#{salarieFormationsFormBB.majCheckBox}"
+					onchange="if(!this.checked)alert('Attention, en choisissant de ne pas mettre à jour l\'absence automatique, elle sera supprimée.');" />
+			</ice:panelGroup>
+			
+			<ice:outputLabel value="Générer une absence ?" rendered="#{salarieFormationsFormBB.idAbsence == -1 or salarieFormationsFormBB.idAbsence == 0}" />
+			<ice:selectBooleanCheckbox
+				value="#{salarieFormationsFormBB.genereAbsence}" 
+				id="genereAbsence"
+				partialSubmit="true" 
+				immediate="true"
+				valueChangeListener="#{salarieFormationsFormBB.majCheckBox}"
+				rendered="#{salarieFormationsFormBB.idAbsence == -1 or salarieFormationsFormBB.idAbsence == 0}" />
+		</c:when>
+		<c:when test="#{!salarieFormationsFormBB.isModif}">
+			<ice:outputLabel value="Générer une absence ?" />
+			<ice:selectBooleanCheckbox
+				value="#{salarieFormationsFormBB.genereAbsence}" 
+				id="genereAbsence"
+				valueChangeListener="#{salarieFormationsFormBB.majCheckBox}"
+				partialSubmit="true" 
+				immediate="true" />
+		</c:when>
+	</c:choose>
+
+	<ice:outputLabel value="Justificatif" />
+	<ice:panelGroup>
+	<ice:inputFile id="inputFileNameFormation" 
+			width="500" 
+			autoUpload="true"
+			progressListener="#{salarieFormationsFormBB.fileUploadProgressFormation}"
+			actionListener="#{salarieFormationsFormBB.uploadFileFormation}"
+			disabled="#{not empty salarieFormationsFormBB.fileListFormationTemp}"
+			uploadDirectory="../#{salarieFormBB.uploadDir}/#{salarieFormBB.nomGroupeForUpload}/#{salarieFormationsFormBB.idSalarie}/formation/" />
+		<ice:outputProgress value="#{salarieFormationsFormBB.fileProgressFormation}"
+			styleClass="uploadProgressBar" />
+		<br/>
+		<h:message for="inputFileNameFormation" errorStyle="color: red"/>
+		<ice:outputLabel value="/!\ Un fichier d'absence existe déjà avec ce nom. Si vous validez, le fichier sera écrasé."
+						rendered="#{salarieFormationsFormBB.alreadyExist}"
+						style="color: red;"/>
+		<ice:dataTable width="350px"
+			value="#{salarieFormationsFormBB.fileListFormationTemp}" var="file"
+			rendered="#{not empty salarieFormationsFormBB.fileListFormationTemp}">
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Nom du fichier" />
+				</f:facet>
+				<!-- ice:outputResource 
+					rendered="#{not file.fileError}"
+					id="pdfResource1"
+					resource="#{file.byteArrayResource}"
+					fileName="#{file.fileInfo.fileName}" shared="false"
+					style="text-decoration: underline; color: red;" /-->
+				<ice:panelGrid rendered="#{not file.fileError}">
+					<!-- <a id="lien" href="#{salarieFormationsFormBB.url}#{file.fileInfo.fileName}" target="_blank">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</a> -->
+					<ice:commandLink actionListener="#{salarieFormationsFormBB.download}"
+									 style="text-decoration: underline;" immediate="true">
+						<ice:outputText value="#{file.fileInfo.fileName}" />
+					</ice:commandLink>
+				</ice:panelGrid>
+				<ice:outputLabel value="/!\ Un fichier est associé à ce salarié mais est introuvable ou illisible." 
+					style="color: red" 
+					rendered="#{file.fileError}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+					<ice:outputLabel value="Action" />
+				</f:facet>
+				<ice:commandLink value="Supprimer"
+					onclick="if(!confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?')){ return; };"
+					actionListener="#{salarieFormationsFormBB.removeUploadedFileFormationTemp}"
+					style="text-decoration: underline; color: red;">
+				</ice:commandLink>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+
+
+	<ice:commandButton id="idValider" 
+		value="Valider"
+		action="#{salarieFormationsFormBB.getRupture}" />
+	<ice:commandButton id="modalPnlCloseButton" 
+		type="submit"
+		value="Quitter"
+		actionListener="#{salarieFormationsFormBB.toggleModal}"
+		immediate="true" />
+</ice:panelGrid>
+
+<ice:panelPopup id="modalDelFile" 
+		draggable="true" 
+		rendered="true"
+		visible="#{salarieFormationsFormBB.modalRenderedDelFile}"
+		style="width:285px;height:auto;top:-250px;left:200px;"
+		autoCentre="true"
+		positionOnLoadOnly="true" >
+	<f:facet name="header">
+		<ice:outputText value="Confirmation" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Êtes-vous sûr de vouloir supprimer ce fichier ?" />
+			<br />
+			<ice:commandButton id="delFile" 
+				value="oui"
+				actionListener="#{salarieFormationsFormBB.removeUploadedFileFormationTemp}" />
+			<ice:commandButton id="cancelDelFile" 
+				value="non"
+				actionListener="#{salarieFormationsFormBB.cancelRemove}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+
+<ice:panelPopup id="modalPnlPopAbs" draggable="true" rendered="true"
+	visible="#{salarieFormationsFormBB.modalRenderedAbs}"
+	style="width:450px;height:auto;">
+	<f:facet name="header">
+		<ice:outputText value="Rupture de poste" styleClass="popupHeaderText" />
+	</f:facet>
+	<f:facet name="body">
+		<ice:panelGroup styleClass="popupHeaderWrapper">
+			<ice:outputText
+				value="Attention, il existe une rupture entre les postes pendant la période de formation selectionnée. Voulez-vous continuer ?" />
+
+			<ice:commandButton id="validAbs" value="Continuee et validee"
+				action="#{salarieFormationsFormBB.saveOrUpdateSalarieFormation}" />
+			<ice:commandButton id="annulAbs" value="Annuler"
+				actionListener="#{salarieFormationsFormBB.toggleModalRupture}" />
+		</ice:panelGroup>
+	</f:facet>
+</ice:panelPopup>
+</html>
